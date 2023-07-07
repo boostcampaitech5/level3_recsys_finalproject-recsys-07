@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "rechat"
+version = "0.1.0"
+description = "recsys chat"
+authors = ["osmin625 <tmdals179@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.99.1"
+dash = "^2.11.1"
+black = "^23.3.0"
+pytest = "^7.4.0"
+dash-bootstrap-templates = "^1.0.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
