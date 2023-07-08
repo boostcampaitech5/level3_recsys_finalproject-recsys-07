@@ -13,27 +13,35 @@ dash.register_page(__name__, path='/')
 # the styles for the main content position it to the right of the sidebar and
 # add some padding.
 CONTENT_STYLE = {
-    "margin-left": "18rem",
-    "margin-right": "2rem",
-    "padding": "2rem 1rem",
+    'width': '85vw',
+    "padding": "2vh 1vw",
     "display": 'flex',
 }
 
-
+FIGURE_BLANK = {
+    'width': '23vw',
+    'height': '20vh',
+    'padding':'2vh 2vw',
+    'background-color': '#ffffff',
+    'font-weight':'bold',
+    'margin': '1vh 1vw',
+}
 content = html.Div(
     [
-
-        html.H1('Multi-page app with Dash Pages'),
-        
         html.Div([
-            html.Div(
-                dcc.Link(
-                    f"{page['name']} - {page['path']}", href=page["relative_path"]
-                )
-            )
-            for page in dash.page_registry.values()
-        ]),
-    ]
+            'figure-1'
+        ],
+        style=FIGURE_BLANK),
+        html.Div([
+            'figure-2'
+        ],
+        style=FIGURE_BLANK),
+        html.Div([
+            'figure-3'
+        ],
+        style=FIGURE_BLANK),
+    ],
+    style=CONTENT_STYLE
 )
 
 layout_style = {
