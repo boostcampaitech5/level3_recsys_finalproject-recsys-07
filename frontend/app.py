@@ -1,30 +1,98 @@
 import os
 import dash
-from dash import Dash, dcc, html, Input, Output, dash_table, callback
+import pandas as pd
+import plotly.express as px
+from dash import Dash, dcc, html, Input, Output, dash_table, callback, State
 import dash_bootstrap_components as dbc
 from dash_bootstrap_templates import load_figure_template
 from dash.exceptions import PreventUpdate
 
 # dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
-# font_awsome = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+font_awsome = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+
+df = pd.read_csv('../data/durecdial/dev_pp.csv')
+
 app = Dash(
-    __name__, 
-    # external_stylesheets=[dbc.themes.JOURNAL, font_awsome],
-    # use_pages=False,
+    __name__,
+    external_stylesheets=[dbc.themes.BOOTSTRAP,font_awsome],
+    use_pages=True,
     # suppress_callback_exceptions=True,
-) # 페이지 스타일 변경
+)
+
+header_style = {
+    'height': '5vh',
+    'width': '85vw',
+    'background-color':'#e6e7e9',
+    'display':'flex',
+}
+
+SIDEBAR_STYLE = {
+    "height": '100vh',
+    "width": "15vw",
+    "background-color": "#1d262d",
+    'color':'#ffffff',
+    # "display": 'flex',
+}
+sidebar = html.Div(
+    [
+        html.Div("dash4chat",className="display-6",style={
+            'padding':'3vh 1vw',
+            'background-color':'#222d32',
+            'font-size':'2vw',
+            'font-weight':'bold',
+        }),
+        
+        dbc.Nav(
+            [
+                dbc.NavLink("Home", href="/", active="exact"),
+                dbc.NavLink("description", href="/description", active="exact"),
+                dbc.NavLink("qual-viz", href="/qual-viz", active="exact"),
+                dbc.NavLink("quan-viz", href="/quan-viz", active="exact"),
+            ],
+            # card=True,
+            vertical=True,
+            pills=True,
+
+        ),
+    ],
+    style=SIDEBAR_STYLE,
+)
 
 
-# username = 'mkdir'
-# load_figure_template("journal") # figure 스타일 변경
-
-app.layout = html.Div([
-    html.Div(children="Hello World!"),
-    # dcc.Store(id='store_user_state', storage_type='session'),
-    # dcc.Store(id='store_user_dataset', storage_type='session'),
-	# dash.page_container
-])
-
+header = html.Div(
+    [
+        dbc.Nav(
+            [
+                dbc.NavLink("Home", href="/", active="exact"),
+                dbc.NavLink("description", href="/description", active="exact"),
+                dbc.NavLink("qual-viz", href="/qual-viz", active="exact"),
+                dbc.NavLink("quan-viz", href="/quan-viz", active="exact"),
+            ],
+            # card=True,
+            horizontal=True,
+            pills=True,
+            style={
+                'width':'85vw',
+                'justify-content': 'space-evenly',
+            }
+        ),
+        html.Hr(),
+    ],
+    style=header_style
+)
+layout_style = {
+    'display': 'horizontal'
+}
+app.layout = html.Div(
+    [
+        
+        html.Span([
+        sidebar,
+        html.Div([header,
+        dash.page_container])],style={'display':'flex'})
+    ],
+    style=layout_style
+)
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=30002, host='0.0.0.0')
