@@ -97,7 +97,6 @@ layout_style = {
 }
 app.layout = html.Div(
     [
-        
         html.Span([
         sidebar,
         html.Div([header,
