@@ -20,17 +20,17 @@ app = Dash(
     suppress_callback_exceptions=True,
 )
 sidebar_show = [
-        dbc.Button(className='bi bi-list 2px',style={
-            'margin-left':'0.5vw',
-            'height':'5vh',
-            'font-size':'1.5vw',
-            'font-weight':'bold',    
-            'align-items': 'center',
-            'display': 'flex',
-            'background-color':'transparent',
-            'border':'transparent',
-            'color':'#e4e3fa',
-            },id='btn-sidebar'),
+        # dbc.Button(className='bi bi-list 2px',style={
+        #     'margin-left':'0.5vw',
+        #     'height':'5vh',
+        #     'font-size':'1.5vw',
+        #     'font-weight':'bold',    
+        #     'align-items': 'center',
+        #     'display': 'flex',
+        #     'background-color':'transparent',
+        #     'border':'transparent',
+        #     'color':'#e4e3fa',
+        #     },id='btn-sidebar'),
         
         dbc.Nav(
             [
@@ -53,17 +53,17 @@ sidebar_show = [
     ]
 
 sidebar_hidden = [
-        dbc.Button(className='bi bi-list 2px',style={
-            'height':'5vh',
-            'margin-left':'0.5vw',
-            'font-size':'1.5vw',
-            'font-weight':'bold',    
-            'align-items': 'center',
-            'display': 'flex',
-            'background-color':'transparent',
-            'border':'transparent',
-            'color':'#e4e3fa',
-            },id='btn-sidebar'),
+        # dbc.Button(className='bi bi-list 2px',style={
+        #     'height':'5vh',
+        #     'margin-left':'0.5vw',
+        #     'font-size':'1.5vw',
+        #     'font-weight':'bold',    
+        #     'align-items': 'center',
+        #     'display': 'flex',
+        #     'background-color':'transparent',
+        #     'border':'transparent',
+        #     'color':'#e4e3fa',
+        #     },id='btn-sidebar'),
         
         dbc.Nav(
             [
@@ -93,25 +93,43 @@ sidebar = html.Div(
 )
 
 
-navbar = dbc.NavbarSimple(
+navbar = dbc.Navbar(
     children=[
-        # dbc.NavItem(dbc.NavLink("Page 1", href="#")),
-        # dbc.DropdownMenu(
-        #     children=[
-        #         dbc.DropdownMenuItem("More pages", header=True),
-        #         dbc.DropdownMenuItem("Page 2", href="#"),
-        #         dbc.DropdownMenuItem("Page 3", href="#"),
-        #     ],
-        #     nav=True,
-        #     in_navbar=True,
-        #     label="More",
-        # ),
+        html.Div(
+            [   
+                dbc.Button(
+                    className='bi bi-list 2px',
+                    style={
+                        'height':'7vh',
+                        'margin-left':'0.5vw',
+                        'font-size':'1.5vw',
+                        'font-weight':'bold',    
+                        'align-items': 'center',
+                        'display': 'flex',
+                        'background-color':'transparent',
+                        'border':'transparent',
+                        'color':'#e4e3fa',
+                    },
+                    id='btn-sidebar'
+                ),
+                dbc.Button(children='Dash4Chat',style={
+                    'background-color':'transparent',
+                    'border':'transparent',
+                    'color':'#e4e3fa',
+                    'font-size':'1.5vw',
+                    'font-weight':'bold',    
+                    'margin-left':'1vw',
+                }),
+            ],
+            style=css.HEADER_BOX_SHOW,
+            id='header-side-box',
+            )
     ],
-    brand="Dash4Chat",
-    brand_href="",
-    color="dark",
-    dark=True,
-    fluid=True,
+    # brand="Dash4Chat",
+    # brand_href="",
+    color="#6690ff",
+    # dark=True,
+    # fluid=True,
     style=css.HEADER_STYLE,
 )
 layout_style = {
@@ -130,9 +148,10 @@ app.layout = html.Div(
 
 @app.callback(
     [
+        Output("header-side-box","style"),
         Output("sidebar", "style"),
         Output("sidebar", "children"),
-        Output("page-content", "style"),
+        Output("_pages_content", "style"),
         Output("side_click", "data"),
     ],
 
@@ -144,22 +163,25 @@ app.layout = html.Div(
 def toggle_sidebar(n, nclick):
     if n:
         if nclick == "SHOW":
+            header_sb_style = css.HEADER_BOX_HIDDEN
             sidebar_style = css.SIDEBAR_HIDDEN
             sidebar_children = sidebar_hidden
             content_style = css.CONTENT_SIDE_OFF
             cur_nclick = "HIDDEN"
         else:
+            header_sb_style = css.HEADER_BOX_SHOW
             sidebar_style = css.SIDEBAR_STYLE
             sidebar_children = sidebar_show
             content_style = css.CONTENT_SIDE_ON
             cur_nclick = "SHOW"
     else:
+        header_sb_style = css.HEADER_BOX_SHOW
         sidebar_style = css.SIDEBAR_STYLE
         sidebar_children = sidebar_show
         content_style = css.CONTENT_SIDE_ON
         cur_nclick = 'SHOW'
 
-    return sidebar_style, sidebar_children, content_style, cur_nclick
+    return header_sb_style, sidebar_style, sidebar_children, content_style, cur_nclick
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=30002)
