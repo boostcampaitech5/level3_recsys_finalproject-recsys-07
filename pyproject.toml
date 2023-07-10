@@ -13,6 +13,7 @@ dash = "^2.11.1"
 black = "^23.3.0"
 pytest = "^7.4.0"
 dash-bootstrap-templates = "^1.0.8"
+pandas = "^2.0.3"
 
 
 [build-system]
