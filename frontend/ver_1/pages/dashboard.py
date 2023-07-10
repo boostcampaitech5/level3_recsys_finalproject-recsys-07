@@ -13,7 +13,7 @@ dash.register_page(__name__, path='/')
 # the styles for the main content position it to the right of the sidebar and
 # add some padding.
 CONTENT_STYLE = {
-    'width': '85vw',
+    'width': '83vw',
     "padding": "2vh 1vw",
     "display": 'flex',
 }
