@@ -19,7 +19,7 @@ app = Dash(
     # suppress_callback_exceptions=True,
 )
 
-header_style = {
+HEADER_STYLE = {
     'height': '7vh',
     'width': '85vw',
     'background-color':'#6690ff',
@@ -43,7 +43,6 @@ sidebar = html.Div(
         html.Span([
             html.Button(className='bi bi-list 2px',style={
             # 'height':'5vh',
-            'padding':'1vh 1vw',
             'font-size':'1.5vw',
             'font-weight':'bold',    
             'align-items': 'center',
@@ -51,6 +50,14 @@ sidebar = html.Div(
             'background-color':'transparent',
             'border':'transparent',
             'color':'#e4e3fa',
+            "position": "fixed",
+            "left": "-16rem",    
+            "width": "16rem",
+            "height": "100%",
+            "z-index": 1,
+            "overflow-x": "hidden",
+            "transition": "all 0.5s",
+            "padding": "0rem 0rem",
             },id='toggle-sidebar'),
             html.Div("dash4chat",className="display-6",style={
             'height':'5vh',
@@ -91,56 +98,47 @@ sidebar = html.Div(
     # backdrop=False,
 )
 
-
-header = html.Div(
-    [
-        # dbc.Nav(
-        #     [
-        #         dbc.NavLink("Home", href="/", active="exact"),
-        #         dbc.NavLink("description", href="/description", active="exact"),
-        #         dbc.NavLink("qual-viz", href="/qual-viz", active="exact"),
-        #         dbc.NavLink("quan-viz", href="/quan-viz", active="exact"),
+navbar = dbc.NavbarSimple(
+    children=[
+        # dbc.NavItem(dbc.NavLink("Page 1", href="#")),
+        # dbc.DropdownMenu(
+        #     children=[
+        #         dbc.DropdownMenuItem("More pages", header=True),
+        #         dbc.DropdownMenuItem("Page 2", href="#"),
+        #         dbc.DropdownMenuItem("Page 3", href="#"),
         #     ],
-        #     # card=True,
-        #     horizontal=True,
-        #     pills=False,
-        #     style={
-        #         'width':'85vw',
-        #         'justify-content': 'space-evenly',
-        #     }
+        #     nav=True,
+        #     in_navbar=True,
+        #     label="More",
         # ),
-        html.Hr(),
     ],
-    style=header_style
+    brand="Dash4Chat",
+    brand_href="#",
+    color="dark",
+    dark=True,
+    fluid=True,
 )
 layout_style = {
     'display': 'horizontal',
-    
 }
 app.layout = html.Div(
     [
-        html.Div([
-            html.Span([
-            sidebar,
-            html.Div([header,
-            dash.page_container])],style={'display':'flex'})
-        ],
-        style={
-        }
-        )
+        navbar,
+        html.Span([sidebar,
+        dash.page_container,],style={'display':'flex'})
     ],
     style=layout_style
 )
 
-@app.callback(
-    Output("sidebar", "is_open"),
-    Input("toggle-sidebar", "n_clicks"),
-    State("sidebar", "is_open"),
-)
-def toggle_offcanvas(n_clicks, is_open):
-    if n_clicks:
-        return not is_open
-    return is_open
+# @app.callback(
+#     Output("sidebar", "is_open"),
+#     Input("toggle-sidebar", "n_clicks"),
+#     State("sidebar", "is_open"),
+# )
+# def toggle_offcanvas(n_clicks, is_open):
+#     if n_clicks:
+#         return not is_open
+#     return is_open
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=30002, host='0.0.0.0')
+    app.run_server(debug=True, port=30002)
