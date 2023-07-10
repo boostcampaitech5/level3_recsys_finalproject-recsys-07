@@ -41,7 +41,8 @@ content = html.Div(
         ],
         style=FIGURE_BLANK),
     ],
-    style=CONTENT_STYLE
+    style=CONTENT_STYLE,
+    id='page-content',
 )
 
 layout_style = {
