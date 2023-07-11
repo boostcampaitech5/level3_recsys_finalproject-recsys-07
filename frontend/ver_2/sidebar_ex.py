@@ -77,12 +77,16 @@ CONTENT_STYLE1 = {
 
 sidebar = html.Div(
     [
-        dbc.Button("Sidebar", outline=True, color="secondary", className="mr-1", id="btn_sidebar"),
+        dbc.Button(
+            "Sidebar",
+            outline=True,
+            color="secondary",
+            className="mr-1",
+            id="btn_sidebar",
+        ),
         html.H2("Sidebar", className="display-4"),
         html.Hr(),
-        html.P(
-            "A simple sidebar layout with navigation links", className="lead"
-        ),
+        html.P("A simple sidebar layout with navigation links", className="lead"),
         dbc.Nav(
             [
                 dbc.NavLink("Page 1", href="/page-1", id="page-1-link"),
@@ -97,13 +101,11 @@ sidebar = html.Div(
     style=SIDEBAR_STYLE,
 )
 
-content = html.Div(
-    id="page-content",
-    style=CONTENT_STYLE)
+content = html.Div(id="page-content", style=CONTENT_STYLE)
 
 app.layout = html.Div(
     [
-        dcc.Store(id='side_click'),
+        dcc.Store(id="side_click"),
         dcc.Location(id="url"),
         navbar,
         sidebar,
@@ -118,11 +120,10 @@ app.layout = html.Div(
         Output("page-content", "style"),
         Output("side_click", "data"),
     ],
-
     [Input("btn_sidebar", "n_clicks")],
     [
         State("side_click", "data"),
-    ]
+    ],
 )
 def toggle_sidebar(n, nclick):
     if n:
@@ -137,9 +138,10 @@ def toggle_sidebar(n, nclick):
     else:
         sidebar_style = SIDEBAR_STYLE
         content_style = CONTENT_STYLE
-        cur_nclick = 'SHOW'
+        cur_nclick = "SHOW"
 
     return sidebar_style, content_style, cur_nclick
+
 
 # this callback uses the current pathname to set the active state of the
 # corresponding nav link to true, allowing users to tell see page they are on
@@ -157,8 +159,17 @@ def toggle_active_links(pathname):
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def render_page_content(pathname):
     if pathname in ["/", "/page-1"]:
-        
-        return [html.P("This is the content of page 1!"),dbc.Button("Sidebar", outline=True, color="secondary", className="mr-1", id="btn_sidebar")]
+
+        return [
+            html.P("This is the content of page 1!"),
+            dbc.Button(
+                "Sidebar",
+                outline=True,
+                color="secondary",
+                className="mr-1",
+                id="btn_sidebar",
+            ),
+        ]
     elif pathname == "/page-2":
         return html.P("This is the content of page 2. Yay!")
     elif pathname == "/page-3":

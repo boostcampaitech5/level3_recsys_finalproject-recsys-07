@@ -26,7 +26,8 @@ connection = pymysql.connect(
 
 app.include_router(data.router)
 
-@app.get('/')
+
+@app.get("/")
 def printHello():
     return 'Hello World!'
 
@@ -41,3 +42,4 @@ def get_users():
             return result
     finally:
         connection.close()
+
