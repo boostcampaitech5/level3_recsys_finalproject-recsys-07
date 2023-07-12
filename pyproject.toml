@@ -16,6 +16,7 @@ dash-bootstrap-templates = "^1.0.8"
 pandas = "^2.0.3"
 pre-commit = "^3.3.3"
 flake8 = "^6.0.0"
+ipykernel = "^6.24.0"
 
 
 [build-system]
