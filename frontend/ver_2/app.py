@@ -18,17 +18,6 @@ app = Dash(
     suppress_callback_exceptions=True,
 )
 sidebar_show = [
-    # dbc.Button(className='bi bi-list 2px',style={
-    #     'margin-left':'0.5vw',
-    #     'height':'5vh',
-    #     'font-size':'1.5vw',
-    #     'font-weight':'bold',
-    #     'align-items': 'center',
-    #     'display': 'flex',
-    #     'background-color':'transparent',
-    #     'border':'transparent',
-    #     'color':'#e4e3fa',
-    #     },id='btn-sidebar'),
     dbc.Nav(
         [
             dbc.NavLink(
@@ -88,17 +77,6 @@ sidebar_show = [
 ]
 
 sidebar_hidden = [
-    # dbc.Button(className='bi bi-list 2px',style={
-    #     'height':'5vh',
-    #     'margin-left':'0.5vw',
-    #     'font-size':'1.5vw',
-    #     'font-weight':'bold',
-    #     'align-items': 'center',
-    #     'display': 'flex',
-    #     'background-color':'transparent',
-    #     'border':'transparent',
-    #     'color':'#e4e3fa',
-    #     },id='btn-sidebar'),
     dbc.Nav(
         [
             dbc.NavLink(
@@ -142,8 +120,6 @@ sidebar = html.Div(
     children=sidebar_show,
     style=css.SIDEBAR_STYLE,
     id="sidebar",
-    # is_open=True,
-    # backdrop=False,
 )
 
 
