@@ -1,5 +1,4 @@
 import dash
-import pandas as pd
 from dash import Dash, Input, Output, State, dcc, html
 import dash_bootstrap_components as dbc
 from assets import css
@@ -9,7 +8,6 @@ font_awsome = (
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
 )
 icons = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
-df = pd.read_csv("../../data/durecdial/dev_pp.csv")
 
 app = Dash(
     __name__,
@@ -178,7 +176,10 @@ app.layout = html.Div(
                 sidebar,
                 dash.page_container,
             ],
-            style={"display": "flex"},
+            style={
+                "display": "flex",
+                "min-width": "100%",
+            },
         ),
     ],
     style=layout_style,
