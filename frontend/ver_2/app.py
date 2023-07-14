@@ -1,7 +1,7 @@
 import dash
 from dash import Dash, Input, Output, State, dcc, html
 import dash_bootstrap_components as dbc
-from assets import css, sidebar
+from assets import sidebar
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 font_awsome = (
@@ -25,10 +25,10 @@ navbar = dbc.Navbar(
     children=[],
     # brand="Dash4Chat",
     # brand_href="",
-    color="#6690ff",
+    # color="#6690ff",
     # dark=True,
     # fluid=True,
-    style=css.HEADER_STYLE,
+    className="header",
 )
 layout_style = {
     "display": "horizontal",
@@ -44,7 +44,7 @@ app.layout = html.Div(
                 dash.page_container,
             ],
             id="page_content",
-            style=css.CONTENT_SIDE_ON,
+            className="sidebar side-show",
         ),
     ],
     style=layout_style,
@@ -53,9 +53,9 @@ app.layout = html.Div(
 
 @app.callback(
     [
-        Output("sidebar", "style"),
+        Output("sidebar", "className"),
         Output("sidebar", "children"),
-        Output("page_content", "style"),
+        Output("page_content", "className"),
         Output("side_click", "data"),
     ],
     [Input("btn-sidebar", "n_clicks")],
@@ -66,22 +66,22 @@ app.layout = html.Div(
 def toggle_sidebar(n, nclick):
     if n:
         if nclick == "SHOW":
-            sidebar_style = css.SIDEBAR_HIDDEN
+            sidebar_className = "sidebar side-hidden"
             sidebar_children = sidebar.sidebar_hidden
-            content_style = css.CONTENT_SIDE_OFF
+            content_className = "content content-side-hidden"
             cur_nclick = "HIDDEN"
         else:
-            sidebar_style = css.SIDEBAR_SHOW
+            sidebar_className = "sidebar side-show"
             sidebar_children = sidebar.sidebar_show
-            content_style = css.CONTENT_SIDE_ON
+            content_className = "content content-side-show"
             cur_nclick = "SHOW"
     else:
-        sidebar_style = css.SIDEBAR_SHOW
+        sidebar_className = "sidebar side-show"
         sidebar_children = sidebar.sidebar_show
-        content_style = css.CONTENT_SIDE_ON
+        content_className = "content content-side-show"
         cur_nclick = "SHOW"
 
-    return sidebar_style, sidebar_children, content_style, cur_nclick
+    return sidebar_className, sidebar_children, content_className, cur_nclick
 
 
 if __name__ == "__main__":

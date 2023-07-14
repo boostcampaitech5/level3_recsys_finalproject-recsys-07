@@ -1,6 +1,5 @@
 from dash import html
 import dash_bootstrap_components as dbc
-from assets import css
 
 sidebar_show = [
     dbc.Nav(
@@ -8,19 +7,7 @@ sidebar_show = [
             html.Div(
                 [
                     dbc.Button(
-                        className="bi bi-list 2px",
-                        style={
-                            "height": "7vh",
-                            "margin-left": "0.5vw",
-                            "font-size": "1.5vw",
-                            # "font-weight": "bold",
-                            "font-family": "Satoshi, sans-serif",
-                            "align-items": "center",
-                            "display": "flex",
-                            "background-color": "transparent",
-                            "border": "transparent",
-                            "color": "#e4e3fa",
-                        },
+                        className="bi bi-list 2px btn-sidebar",
                         id="btn-sidebar",
                     ),
                     dbc.Button(
@@ -28,11 +15,10 @@ sidebar_show = [
                         style={
                             "background-color": "transparent",
                             "border": "transparent",
-                            "color": "#e4e3fa",
+                            "color": "white",
                             "font-size": "1.5vw",
-                            # "font-weight": "bold",
+                            "font-weight": "bold",
                             "font-family": "Satoshi, sans-serif",
-                            "margin-left": "1vw",
                         },
                     ),
                 ],
@@ -50,7 +36,7 @@ sidebar_show = [
                 ],
                 href="/overview",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [
@@ -59,7 +45,7 @@ sidebar_show = [
                 ],
                 href="/conversation",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [
@@ -70,7 +56,7 @@ sidebar_show = [
                 ],
                 href="/user",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [
@@ -81,20 +67,21 @@ sidebar_show = [
                 ],
                 href="/qualitative",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
         ],
         # card=True,
         vertical=True,
-        pills=False,
+        pills=True,
         style={
-            "margin-left": "2vw",
+            "margin-left": "1vw",
             "align-items": "left",
             "color": "#ffffff",
             # "font-weight": "bold",
             "font-size": "1vw",
             "font-family": "Satoshi, sans-serif",
         },
+        className="side-nav",
     ),
 ]
 
@@ -121,25 +108,25 @@ sidebar_hidden = [
                 [html.Span(className="bi bi-house-door", style={"padding": "0vh 1vw"})],
                 href="/",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
                 href="/description",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [html.Span(className="bi bi-bar-chart", style={"padding": "0vh 1vw"})],
                 href="/qual-viz",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
             dbc.NavLink(
                 [html.Span(className="bi bi-card-text", style={"padding": "0vh 1vw"})],
                 href="/quan-viz",
                 active="exact",
-                style=css.NAVSTYLE,
+                className="side-nav",
             ),
         ],
         # card=True,
@@ -156,6 +143,6 @@ sidebar_hidden = [
 
 sidebar = html.Div(
     children=sidebar_show,
-    style=css.SIDEBAR_SHOW,
+    className="sidebar side-show",
     id="sidebar",
 )
