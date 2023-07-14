@@ -1381,6 +1381,17 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pytailwindcss"
+version = "0.2.0"
+description = "Standalone Tailwind CSS CLI, installable via pip. Use Tailwind CSS without Node.js."
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "pytailwindcss-0.2.0-py3-none-any.whl", hash = "sha256:30e7bd3b78de19a39a7e66329db02d393ee540f010924397b4d780e85041fae4"},
+    {file = "pytailwindcss-0.2.0.tar.gz", hash = "sha256:112718583a33f42c57b2718270dd0e0605574da0023cab4829fad3a98ebe450b"},
+]
+
+[[package]]
 name = "pytest"
 version = "7.4.0"
 description = "pytest: simple powerful testing with Python"
@@ -1863,4 +1874,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8.1,<4.0"
-content-hash = "263e224352268e2b0d44e3f0fb8a6f5a7c37f13f53bd2ffb83883922ac0ec060"
+content-hash = "ea5a84d15ef3ad3e61ba747513f451ded4d53b699ac5a2b1959595d7d71fdbb5"
