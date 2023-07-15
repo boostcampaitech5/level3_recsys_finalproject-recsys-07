@@ -87,7 +87,6 @@ def toggle_sidebar(n, nclick):
         cur_nclick,
     )
 
-
 @app.callback(
     Output("pie-chart", "figure"),
     Input("column-radio", "value"),

@@ -15,6 +15,7 @@
 }
 
 @layer utilities {
+
 .sidebar {
     position: fixed;
     min-height: 100vh;
