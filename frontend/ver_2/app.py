@@ -20,16 +20,6 @@ app = Dash(
 )
 app.scripts.config.serve_locally = True
 
-
-navbar = dbc.Navbar(
-    children=[],
-    # brand="Dash4Chat",
-    # brand_href="",
-    # color="#6690ff",
-    # dark=True,
-    # fluid=True,
-    className="header",
-)
 layout_style = {
     "display": "horizontal",
 }
@@ -40,11 +30,9 @@ app.layout = html.Div(
         sidebar.sidebar,
         html.Div(
             [
-                navbar,
                 dash.page_container,
             ],
             id="page_content",
-            className="sidebar side-show",
         ),
     ],
     style=layout_style,

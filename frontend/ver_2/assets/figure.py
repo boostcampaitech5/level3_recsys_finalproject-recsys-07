@@ -44,3 +44,24 @@ def draw_bar_chart(df, column, min_range=0, max_range=50, horizontal=False):
         paper_bgcolor="rgba(0,0,0,0)"
     )  # figure에서는 테두리를 둥글게 만들 수 없어서 배경색을 투명하게 설정.
     return fig
+
+
+def draw_line_chart(dataframe, column, min_range=0, max_range=50, smooth=True):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+    smooth : 그래프 부드럽게 그리는 여부
+    """
+    if smooth:
+        shape = "spline"
+    else:
+        shape = "linear"
+    df = dataframe[[column, "sentence_index"]].value_counts().to_frame()
+    df.columns = ["count"]
+    df.reset_index(inplace=True)
+    df.sort_values(by=[column, "sentence_index"], inplace=True)
+    fig = px.line(
+        df, x="sentence_index", y="count", color="goal_type", line_shape=shape
+    )
+    # fig.show()
+    return fig

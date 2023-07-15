@@ -12,14 +12,7 @@ sidebar_show = [
                     ),
                     dbc.Button(
                         children="Dash4Chat",
-                        style={
-                            "background-color": "transparent",
-                            "border": "transparent",
-                            "color": "white",
-                            "font-size": "1.5vw",
-                            "font-weight": "bold",
-                            "font-family": "Satoshi, sans-serif",
-                        },
+                        className="btn-title",
                     ),
                 ],
                 style={
