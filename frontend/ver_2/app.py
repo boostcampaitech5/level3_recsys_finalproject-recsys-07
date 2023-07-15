@@ -30,6 +30,11 @@ app.layout = html.Div(
         sidebar.sidebar,
         html.Div(
             [
+                dbc.Navbar(
+                    children=[],
+                    className="header",
+                    id="header",
+                ),
                 dash.page_container,
             ],
             id="page_content",
@@ -41,6 +46,7 @@ app.layout = html.Div(
 
 @app.callback(
     [
+        Output("header", "className"),
         Output("sidebar", "className"),
         Output("sidebar", "children"),
         Output("page_content", "className"),
@@ -54,22 +60,31 @@ app.layout = html.Div(
 def toggle_sidebar(n, nclick):
     if n:
         if nclick == "SHOW":
+            header_className = "header content-side-hidden"
             sidebar_className = "sidebar side-hidden"
             sidebar_children = sidebar.sidebar_hidden
             content_className = "content content-side-hidden"
             cur_nclick = "HIDDEN"
         else:
+            header_className = "header content-side-show"
             sidebar_className = "sidebar side-show"
             sidebar_children = sidebar.sidebar_show
             content_className = "content content-side-show"
             cur_nclick = "SHOW"
     else:
+        header_className = "header content-side-show"
         sidebar_className = "sidebar side-show"
         sidebar_children = sidebar.sidebar_show
         content_className = "content content-side-show"
         cur_nclick = "SHOW"
 
-    return sidebar_className, sidebar_children, content_className, cur_nclick
+    return (
+        header_className,
+        sidebar_className,
+        sidebar_children,
+        content_className,
+        cur_nclick,
+    )
 
 
 if __name__ == "__main__":

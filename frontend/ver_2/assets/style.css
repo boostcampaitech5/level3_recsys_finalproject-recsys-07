@@ -32,21 +32,23 @@
 }
 
 .content-side-show {
-    margin-left: 15vw;
+    left: 15vw;
     width: 85vw;
 }
 
 .content-side-hidden {
-    margin-left: 4vw;
+    left: 4vw;
     width: 96vw;
 }
 
 .content {
-    position:sticky;
+    top:7vh;
+    position:fixed;
     overflow: auto;
     height: 100vh;
     transition: all 0.5s;
     background-color: #f1f5f9;
+    padding: 3vh 2vw;
 }
 
 .side-nav {
@@ -77,6 +79,7 @@
     padding: 20px 0px 5px 0px;
     color:black;
 }
+
 .figure-card  {
     min-width: 17vw;
     min-height: 20vh;
@@ -116,6 +119,20 @@
   }
 }
 
+.header {
+  top:0px;
+  min-height: 7vh;
+  min-width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  --bs-navbar-padding-y: 0rem;
+  border-bottom: 1px solid #d9dee4;
+  box-shadow: 5px 0px 5px 2px #d9dee4;
+  position: fixed;
+  z-index: 999;
+  transition: all 0.5s;
+}
+
 .btn-title {
   background-color: transparent;
   border: transparent;
@@ -129,17 +146,6 @@
   background-color: transparent;
   border: transparent;
   color: #6273e5;
-}
-
-.header {
-    min-height: 7vh;
-    min-width: 100%;
-    background-color: #ffffff;
-    display: flex;
-    --bs-navbar-padding-y: 0rem;
-    border-bottom: 1px solid #d9dee4;
-    box-shadow: 5px 0px 5px 2px #d9dee4;
-    position: sticky;
 }
 
 .nav-link {
