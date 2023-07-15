@@ -1,7 +1,9 @@
 import dash
 from dash import Dash, Input, Output, State, dcc, html
 import dash_bootstrap_components as dbc
-from assets import sidebar
+import plotly.express as px
+import plotly.graph_objects as go
+from assets import sidebar, data
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 font_awsome = (
@@ -9,7 +11,6 @@ font_awsome = (
 )
 icons = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
 external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
-
 
 app = Dash(
     __name__,
@@ -85,6 +86,96 @@ def toggle_sidebar(n, nclick):
         content_className,
         cur_nclick,
     )
+
+@app.callback(
+    Output("pie-chart", "figure"),
+    Input("column-radio", "value"),
+    Input("si-slider", "value"),
+)
+def draw_pie_chart(column, range):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+    """
+    min_range = range[0]
+    max_range = range[1]
+    df = (
+        data.df[[column]]
+        .loc[
+            (data.df["sentence_index"] >= min_range)
+            & (data.df["sentence_index"] <= max_range)
+        ]
+        .value_counts()
+        .to_frame()
+    )
+    df.columns = ["count"]
+    df.reset_index(inplace=True)
+    if df.shape[0] > 10:
+        df.loc[9] = ["기타", df["count"].iloc[10:].sum()]
+        df = df.iloc[:10]
+    fig = go.Figure(data=[go.Pie(labels=df[column], values=df["count"])])
+    fig.update_traces(textinfo="percent")
+    fig.update_layout(title=f"{column} Distribution")
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)"
+    )  # figure에서는 테두리를 둥글게 만들 수 없어서 배경색을 투명하게 설정.
+    # fig.show()
+    return fig
+
+
+@app.callback(
+    Output("bar-chart", "figure"),
+    Input("column-radio", "value"),
+    Input("si-slider", "value"),
+)
+def draw_bar_chart(column, range, horizontal=False):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+    horizontal : 가로 출력 여부
+    """
+    min_range = range[0]
+    max_range = range[1]
+    df = (
+        data.df[[column]]
+        .loc[
+            (data.df["sentence_index"] >= min_range)
+            & (data.df["sentence_index"] <= max_range)
+        ]
+        .value_counts()
+        .to_frame()
+        .reset_index()
+    )
+    df.columns = [column, "count"]
+    if horizontal:
+        fig = px.bar(df, x="count", y=column, orientation="h")
+    else:
+        fig = px.bar(df, x=column, y="count")
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)"
+    )  # figure에서는 테두리를 둥글게 만들 수 없어서 배경색을 투명하게 설정.
+    return fig
+
+
+# def draw_line_chart(column, min_range=0, max_range=50, smooth=True):
+#     """
+#     column : 출력 원하는 column명
+#     min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+#     smooth : 그래프 부드럽게 그리는 여부
+#     """
+#     if smooth:
+#         shape = "spline"
+#     else:
+#         shape = "linear"
+#     df = data.df[[column, "sentence_index"]].value_counts().to_frame()
+#     df.columns = ["count"]
+#     df.reset_index(inplace=True)
+#     df.sort_values(by=[column, "sentence_index"], inplace=True)
+#     fig = px.line(
+#         df, x="sentence_index", y="count", color="goal_type", line_shape=shape
+#     )
+#     # fig.show()
+#     return fig
 
 
 if __name__ == "__main__":

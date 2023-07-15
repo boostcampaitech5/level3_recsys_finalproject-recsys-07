@@ -1,11 +1,9 @@
 import dash
-import pandas as pd
 from dash import html, dcc
-from assets import figure
+from assets import figure, data
 
 dash.register_page(__name__)
 
-df = pd.read_csv("../../data/durecdial/dev_pp.csv")
 layout = html.Div(
     children=[
         html.Div(
@@ -13,7 +11,7 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(className="bi bi-clipboard-data round card-icon"),
-                        html.Div(df.size, className="card-value"),
+                        html.Div(data.size, className="card-value"),
                         html.Div("# of instances (rows)"),
                     ],
                     className="figure-card",
@@ -21,7 +19,7 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(className="bi bi-people-fill round card-icon"),
-                        html.Div(children=[df.size], className="card-value"),
+                        html.Div(children=[data.user_count], className="card-value"),
                         html.Div("# of users"),
                     ],
                     className="figure-card",
@@ -31,7 +29,7 @@ layout = html.Div(
                         html.Div(
                             className="bi bi-layout-three-columns round card-icon",
                         ),
-                        html.Div(len(df.columns), className="card-value"),
+                        html.Div(len(data.columns), className="card-value"),
                         html.Div("# of features (columns)"),
                     ],
                     className="figure-card",
@@ -39,10 +37,21 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(className="bi bi-chat-left-dots round card-icon"),
-                        html.Div("# of topics"),
-                        html.Div(len(df["goal_topic"].unique())),
-                        html.Div("# of goal_type"),
-                        html.Div(len(df["goal_type"].unique())),
+                        html.Div(
+                            [
+                                html.Div(
+                                    len(data.df["goal_topic"].unique()),
+                                    className="card-value",
+                                ),
+                                html.Div(
+                                    len(data.df["goal_type"].unique()),
+                                    className="card-value",
+                                ),
+                                html.Div("# of topics"),
+                                html.Div("# of goal_type"),
+                            ],
+                            className="grid grid-cols-2 grid-rows-2",
+                        ),
                     ],
                     className="figure-card",
                 ),
@@ -53,58 +62,113 @@ layout = html.Div(
             children=[
                 html.Div(
                     dcc.Graph(
-                        figure=figure.draw_line_chart(df, "goal_type"),
+                        figure=figure.draw_line_chart(data.df, "goal_type"),
                         className="fig",
                     ),
                     className="col-start-1 col-end-5",
                 ),
                 html.Div(
                     dcc.Graph(
-                        figure=figure.draw_pie_chart(df, "goal_topic"),
+                        figure=figure.draw_pie_chart(data.df, "goal_topic"),
                         className="fig",
                     ),
                     className="col-start-5 col-end-7",
                 ),
                 html.Div(
-                    className="col-start-1 col-end-2 fig",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_pie_chart(df, "goal_type"),
-                        className="fig",
-                    ),
-                    className="col-start-2 col-end-4",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_bar_chart(df, "wday"),
-                        className="fig",
-                    ),
-                    className="col-start-4 col-end-7",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_pie_chart(df, "place"),
-                        className="fig",
-                    ),
-                    className="col-start-1 col-end-3",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_pie_chart(df, "topic"),
-                        className="fig",
-                    ),
-                    className="col-start-3 col-end-5",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_bar_chart(df, "time", horizontal=True),
-                        className="fig",
-                    ),
-                    className="col-start-5 col-end-7",
+                    children=[
+                        html.Div(
+                            [
+                                dcc.Graph(
+                                    figure=figure.draw_pie_chart(data.df, "goal_type"),
+                                    id="pie-chart",
+                                    className="fig",
+                                ),
+                            ],
+                            className="col-start-1 col-end-3 row-start-1 row-end-3",
+                        ),
+                        html.Div(
+                            [
+                                dcc.RangeSlider(
+                                    0, data.max_si, 1, value=[0, 10], id="si-slider"
+                                ),
+                                html.Div(id="slider-output"),
+                            ],
+                            className="col-start-3 col-end-7 row-start-1 row-end-2 fig p-6",
+                        ),
+                        html.Div(
+                            dcc.Graph(
+                                figure=figure.draw_bar_chart(data.df, "wday"),
+                                className="fig",
+                                id="bar-chart",
+                            ),
+                            className="col-start-3 col-end-6 row-start-2 row-end-3",
+                        ),
+                        html.Div(
+                            dcc.RadioItems(
+                                options=[
+                                    {
+                                        "label": html.Span(
+                                            "time", className="p-3 text-lg"
+                                        ),
+                                        "value": "time",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "place", className="p-3 text-lg"
+                                        ),
+                                        "value": "place",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "date", className="p-3 text-lg"
+                                        ),
+                                        "value": "date",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "topic", className="p-3 text-lg"
+                                        ),
+                                        "value": "topic",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "wday", className="p-3 text-lg"
+                                        ),
+                                        "value": "wday",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "sentence_index", className="p-3 text-lg"
+                                        ),
+                                        "value": "sentence_index",
+                                    },
+                                    # {'label':html.Span('sentence',className='p-3 text-lg'),'value':'sentence'},
+                                    # {'label':html.Span('goal_topic',className='p-3 text-lg'),'value':'goal_topic'},
+                                    {
+                                        "label": html.Span(
+                                            "goal_type", className="p-3 text-lg"
+                                        ),
+                                        "value": "goal_type",
+                                    },
+                                    # {'label':html.Span('knowledge',className='p-3 text-lg'),'value':'knowledge'},
+                                ],
+                                value="goal_type",
+                                id="column-radio",
+                                className="fig p-4",
+                            ),
+                            className="col-start-6 col-end-7 row-start-2 row-end-3",
+                        ),
+                    ],
+                    className="col-start-1 col-end-7 row-start-2 row-end-4 grid-cols-6 grid grid-row-2",
                 ),
             ],
-            className="grid grid-cols-6 grid-rows-6",
+            className="grid grid-cols-6",
+        ),
+        html.Div(
+            "Loading...",
+            style={
+                "padding": "20px",
+            },
         ),
     ],
     className="content no-scrollbar flex flex-col",

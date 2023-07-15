@@ -6,6 +6,9 @@
 
 
 @layer base {
+  div {
+    font-family: 'Satoshi', 'sans-serif';
+  }
 }
 
 @layer components {
@@ -90,7 +93,6 @@
     height: 20vh;
     padding: 2vh 2vw;
     background-color: #ffffff;
-    font-weight: bold;
     font-family: 'Satoshi', 'sans-serif';
     margin: 1vh 1vw;
     box-shadow: rgb(215 218 221) 2px 2px 10px 1px;
@@ -146,6 +148,16 @@
   background-color: transparent;
   border: transparent;
   color: #6273e5;
+}
+
+.btn-primary {
+    --bs-btn-active-bg: transparent;
+    --bs-btn-active-color:#3f3fb9;
+}
+
+.btn-title:active {
+  background-color: transparent;
+  border: transparent;
 }
 
 .nav-link {
