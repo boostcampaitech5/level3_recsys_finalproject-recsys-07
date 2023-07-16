@@ -32,7 +32,27 @@ app.layout = html.Div(
         html.Div(
             [
                 dbc.Navbar(
-                    children=[],
+                    children=[
+                        dcc.Dropdown(
+                            [
+                                {
+                                    "label": html.Span(
+                                        ["DuRecDial2.0"], style={"font-size": 20}
+                                    ),
+                                    "value": "DuRecDial2.0",
+                                },
+                                {
+                                    "label": html.Span(
+                                        ["ReDial"], style={"font-size": 20}
+                                    ),
+                                    "value": "ReDial",
+                                },
+                            ],
+                            value="DuRecDial2.0",
+                            className="data-selector",
+                            optionHeight=50,
+                        )
+                    ],
                     className="header",
                     id="header",
                 ),
@@ -86,6 +106,7 @@ def toggle_sidebar(n, nclick):
         content_className,
         cur_nclick,
     )
+
 
 @app.callback(
     Output("pie-chart", "figure"),
@@ -176,6 +197,36 @@ def draw_bar_chart(column, range, horizontal=False):
 #     )
 #     # fig.show()
 #     return fig
+
+# 'user_id', 'user_profile_age_range', 'user_profile_name',
+#    'user_profile_residence', 'user_profile_accepted_food',
+#    'user_profile_accepted_movies', 'user_profile_accepted_music',
+#    'user_profile_rejected_music', 'user_profile_gender',
+#    'user_profile_accepted_celebrities', 'user_profile_accepted_movie',
+#    'user_profile_reject', 'user_profile_rejected_movies',
+#    'user_profile_occupation', 'user_profile_accepted_music.1',
+#    'user_profile_accepted_poi', 'user_profile_favorite_news',
+#    'user_profile_accepted_news', 'user_profile_poi',
+@app.callback(
+    Output("user-dialog", "data"),
+    Output("user-name", "children"),
+    Output("user-gender", "children"),
+    Output("user-age", "children"),
+    Output("user-residence", "children"),
+    Output("user-occupation", "children"),
+    # Output('user-place','children'),
+    Input("user-id", "value"),
+)
+def get_user_info(user_id):
+    user = data.df[data.df.user_id == user_id]
+    return (
+        user.to_dict("records"),
+        user["user_profile_name"].iloc[0],
+        user["user_profile_gender"].iloc[0],
+        user["user_profile_age_range"].iloc[0],
+        user["user_profile_residence"].iloc[0],
+        user["user_profile_occupation"].iloc[0],
+    )  # , user['user_profile_place'].iloc[0]
 
 
 if __name__ == "__main__":
