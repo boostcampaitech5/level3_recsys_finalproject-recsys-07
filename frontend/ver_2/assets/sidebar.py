@@ -34,9 +34,9 @@ sidebar_show = [
             dbc.NavLink(
                 [
                     html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"}),
-                    html.Span("Conversation"),
+                    html.Span("User"),
                 ],
-                href="/conversation",
+                href="/user",
                 active="exact",
                 className="side-nav",
             ),
@@ -45,9 +45,9 @@ sidebar_show = [
                     html.Span(
                         className="bi bi-bar-chart", style={"padding": "0vh 1vw"}
                     ),
-                    html.Span("User"),
+                    html.Span("Quantative"),
                 ],
-                href="/user",
+                href="/quantative",
                 active="exact",
                 className="side-nav",
             ),

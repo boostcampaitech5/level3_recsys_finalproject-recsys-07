@@ -65,3 +65,43 @@ def draw_line_chart(dataframe, column, min_range=0, max_range=50, smooth=True):
     )
     # fig.show()
     return fig
+
+
+def draw_gender_pie_chart(df, column):
+    """
+    column: 출력 원하는 column명
+    """
+    df = df[column].value_counts().to_frame()
+    df.columns = ["count"]
+
+    fig = go.Figure(data=[go.Pie(labels=df.index.to_list(), values=df["count"])])
+    fig.update_traces(textinfo="percent")
+    fig.update_layout(title=f"{column} Distribution")  # 제목
+
+    # fig.show()
+    return fig
+
+
+def draw_gender_bar_chart(df, column, gender="", range=5, horizontal=False):
+    """
+    column : 출력 원하는 column명
+    gender : 성별 (default= '', Female, Male)
+    range : 몇 개까지 출력할 것인지 범위
+    horizontal : 가로 출력 여부
+    """
+    if gender != "":
+        df = df[df["user_profile_gender"] == f"{gender}"]
+        df = df[column].value_counts().to_frame()
+    else:
+        df = df[column].value_counts().to_frame()
+    df = df[:range]
+    df.columns = ["count"]
+
+    lab = df.index.to_list()[:range]
+
+    if horizontal:
+        fig = px.bar(df, x="count", y=lab, orientation="h", text_auto=True)
+    else:
+        fig = px.bar(df, x=lab, y="count", text_auto=True)
+    # fig.show()
+    return fig
