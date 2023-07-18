@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+<script>
+
+    // set the dimensions and margins of the graph
+    const margin = {top: 60, right: 30, bottom: 20, left:150},
+        width = 500 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+    
+    // append the svg object to the body of the page
+    const svg = d3.select("#my_dataviz")
+      .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform",
+              `translate(${margin.left}, ${margin.top})`);
+    
+    //read data
+    d3.csv("../data/durecdial/dev_data_pp.csv").then(function(data) {
+      // Get the different categories and count them
+      const categories = [...new Set(data.map(e => e.goal_type))]
+      const n = categories.length
+    
+      // Add X axis
+      const x = d3.scaleLinear()
+        .domain([0, 30])
+        .range([ 0, width ]);
+      svg.append("g")
+        .attr("transform", `translate(0, ${height})`)
+        .call(d3.axisBottom(x));
+    
+      // Create a Y scale for densities
+      const y = d3.scaleLinear()
+        .domain([0, 0.4])
+        .range([ height, 0]);
+    
+      // Create the Y axis for names
+      const yName = d3.scaleBand()
+        .domain(categories)
+        .range([0, height])
+        .paddingInner(1)
+      svg.append("g")
+        .call(d3.axisLeft(yName));
+    
+      // Compute kernel density estimation for each column:
+      const kde = kernelDensityEstimator(kernelEpanechnikov(7), x.ticks(40)) // increase this 40 for more accurate density.
+      const allDensity = []
+      for (i = 0; i < n; i++) {
+          key = categories[i] // 각 y축의 category 항목들(goal_type)에 대해
+          density = kde( data.map(function(d){  return d[key]; }) )
+          allDensity.push({key: key, density: density})
+      }
+     
+    
+      // Add areas
+      svg.selectAll("areas")
+        .data(allDensity) // 이만큼의 영역을 색칠 
+        .join("path")
+          .attr("transform", function(d){return(`translate(0, ${(yName(d.key)-height)})`)})
+          .datum(function(d){return(d.density)})
+          .attr("fill", "#69b3a2")
+          .attr("stroke", "#000")
+          .attr("stroke-width", 1)
+          .attr("d",  d3.line()
+              .curve(d3.curveBasis)
+              .x(function(d) { return x(d[0]); })
+              .y(function(d) { return y(d[1]); })
+          )
+    
+    })
+    
+    // This is what I need to compute kernel density estimation
+    function kernelDensityEstimator(kernel, X) {
+      return function(V) {
+        return X.map(function(x) {
+          return [x, d3.mean(V, function(v) { return kernel(x - v); })];
+        });
+      };
+    }
+    function kernelEpanechnikov(k) {
+      return function(v) {
+        return Math.abs(v /= k) <= 1 ? 0.75 * (1 - v * v) / k : 0;
+      };
+    }
+    </script>
