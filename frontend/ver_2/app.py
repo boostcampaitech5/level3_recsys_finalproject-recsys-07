@@ -198,35 +198,65 @@ def draw_bar_chart(column, range, horizontal=False):
 #     # fig.show()
 #     return fig
 
-# 'user_id', 'user_profile_age_range', 'user_profile_name',
-#    'user_profile_residence', 'user_profile_accepted_food',
-#    'user_profile_accepted_movies', 'user_profile_accepted_music',
-#    'user_profile_rejected_music', 'user_profile_gender',
-#    'user_profile_accepted_celebrities', 'user_profile_accepted_movie',
-#    'user_profile_reject', 'user_profile_rejected_movies',
-#    'user_profile_occupation', 'user_profile_accepted_music.1',
-#    'user_profile_accepted_poi', 'user_profile_favorite_news',
-#    'user_profile_accepted_news', 'user_profile_poi',
+
+# name gender age residence occupation place
+
+
 @app.callback(
     Output("user-dialog", "data"),
+    Output("raw-data", "data"),
     Output("user-name", "children"),
     Output("user-gender", "children"),
     Output("user-age", "children"),
     Output("user-residence", "children"),
     Output("user-occupation", "children"),
-    # Output('user-place','children'),
+    Output("user-food+", "children"),
+    Output("user-movies+", "children"),
+    Output("user-movies-", "children"),
+    Output("user-movie+", "children"),
+    Output("user-music1+", "children"),
+    Output("user-music2+", "children"),
+    Output("user-music-", "children"),
+    Output("user-celebrity+", "children"),
+    Output("user-reject", "children"),
+    Output("user-poi+", "children"),
+    Output("user-poi", "children"),
+    Output("user-news+", "children"),
+    Output("user-news", "children"),
     Input("user-id", "value"),
 )
 def get_user_info(user_id):
     user = data.df[data.df.user_id == user_id]
     return (
         user.to_dict("records"),
+        user.to_dict("records"),
         user["user_profile_name"].iloc[0],
         user["user_profile_gender"].iloc[0],
         user["user_profile_age_range"].iloc[0],
         user["user_profile_residence"].iloc[0],
         user["user_profile_occupation"].iloc[0],
-    )  # , user['user_profile_place'].iloc[0]
+        user["user_profile_accepted_food"].iloc[0],
+        user["user_profile_accepted_movies"].iloc[0],
+        user["user_profile_rejected_movies"].iloc[0],
+        user["user_profile_accepted_movie"].iloc[0],
+        user["user_profile_accepted_music"].iloc[0],
+        user["user_profile_accepted_music.1"].iloc[0],
+        user["user_profile_rejected_music"].iloc[0],
+        user["user_profile_accepted_celebrities"].iloc[0],
+        user["user_profile_reject"].iloc[0],
+        user["user_profile_accepted_poi"].iloc[0],
+        user["user_profile_poi"].iloc[0],
+        user["user_profile_favorite_news"].iloc[0],
+        user["user_profile_accepted_news"].iloc[0],
+    )
+
+
+@app.callback(
+    Output("raw-data", "columns"),
+    Input("column-list", "value"),
+)
+def get_selected_column(column_list):
+    return [{"name": c, "id": c} for c in column_list]
 
 
 if __name__ == "__main__":

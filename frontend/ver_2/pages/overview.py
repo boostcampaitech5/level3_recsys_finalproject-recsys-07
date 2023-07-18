@@ -1,5 +1,5 @@
 import dash
-from dash import html, dcc
+from dash import dcc, html
 from assets import figure, data
 
 dash.register_page(__name__)
@@ -8,6 +8,12 @@ layout = html.Div(
     children=[
         html.Div(
             children=[
+                html.Div(
+                    children=[
+                        html.Div("데이터셋 개요", className="title"),
+                    ],
+                    className="col-start-1 col-end-5",
+                ),
                 html.Div(
                     children=[
                         html.Div(className="bi bi-clipboard-data round card-icon"),
@@ -61,18 +67,12 @@ layout = html.Div(
         html.Div(
             children=[
                 html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_line_chart(data.df, "goal_type"),
-                        className="fig",
-                    ),
-                    className="col-start-1 col-end-5",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_pie_chart(data.df, "goal_topic"),
-                        className="fig",
-                    ),
-                    className="col-start-5 col-end-7",
+                    children=[
+                        html.Div(
+                            "상황별 분포(주제, 장소, 요일, 시간)", className="card-value title"
+                        ),
+                    ],
+                    className="col-start-1 col-end-7",
                 ),
                 html.Div(
                     children=[
@@ -84,7 +84,7 @@ layout = html.Div(
                                     className="fig",
                                 ),
                             ],
-                            className="col-start-1 col-end-3 row-start-1 row-end-3",
+                            className="col-start-1 col-end-3 row-start-2 row-end-6",
                         ),
                         html.Div(
                             [
@@ -93,7 +93,7 @@ layout = html.Div(
                                 ),
                                 html.Div(id="slider-output"),
                             ],
-                            className="col-start-3 col-end-7 row-start-1 row-end-2 fig p-6",
+                            className="col-start-3 col-end-7 row-start-2 row-end-3 fig p-6",
                         ),
                         html.Div(
                             dcc.Graph(
@@ -101,7 +101,7 @@ layout = html.Div(
                                 className="fig",
                                 id="bar-chart",
                             ),
-                            className="col-start-3 col-end-6 row-start-2 row-end-3",
+                            className="col-start-3 col-end-7 row-start-3 row-end-7",
                         ),
                         html.Div(
                             dcc.RadioItems(
@@ -136,12 +136,12 @@ layout = html.Div(
                                         ),
                                         "value": "wday",
                                     },
-                                    {
-                                        "label": html.Span(
-                                            "sentence_index", className="p-3 text-lg"
-                                        ),
-                                        "value": "sentence_index",
-                                    },
+                                    # {
+                                    #     "label": html.Span(
+                                    #         "sentence_index", className="p-3 text-lg"
+                                    #     ),
+                                    #     "value": "sentence_index",
+                                    # },
                                     # {'label':html.Span('sentence',className='p-3 text-lg'),'value':'sentence'},
                                     # {'label':html.Span('goal_topic',className='p-3 text-lg'),'value':'goal_topic'},
                                     {
@@ -154,12 +154,34 @@ layout = html.Div(
                                 ],
                                 value="goal_type",
                                 id="column-radio",
-                                className="fig p-4",
+                                className="fig p-4 column-radio",
                             ),
-                            className="col-start-6 col-end-7 row-start-2 row-end-3",
+                            className="col-start-1 col-end-3 row-start-6 row-end-7",
                         ),
                     ],
-                    className="col-start-1 col-end-7 row-start-2 row-end-4 grid-cols-6 grid grid-row-2",
+                    className="col-start-1 col-end-7 row-start-2 row-end-4 grid-cols-6 grid grid-row-6",
+                ),
+                html.Div(
+                    children=[
+                        html.Div(
+                            "대화 경과에 따른 의도 분포 / 대화 의도 분포", className="card-value title"
+                        ),
+                    ],
+                    className="col-start-1 col-end-7",
+                ),
+                html.Div(
+                    dcc.Graph(
+                        figure=figure.draw_line_chart(data.df, "goal_type"),
+                        className="fig",
+                    ),
+                    className="col-start-1 col-end-5",
+                ),
+                html.Div(
+                    dcc.Graph(
+                        figure=figure.draw_pie_chart(data.df, "goal_topic"),
+                        className="fig",
+                    ),
+                    className="col-start-5 col-end-7",
                 ),
             ],
             className="grid grid-cols-6",

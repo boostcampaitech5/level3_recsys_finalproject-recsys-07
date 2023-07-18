@@ -68,6 +68,13 @@
     --bs-nav-link-padding-x: 0.4rem;
 }
 
+.title{
+    font-family: 'Satoshi', 'sans-serif';
+    font-weight: bold;
+    font-size: 30px;
+    padding: 20px 0px 0px 0px;
+    color:rgb(29, 29, 29);
+}
 .card-icon {
     padding: 25px;
     background-color: #eff2f7;
@@ -114,6 +121,12 @@
     min-width:20vw;
     padding: 1vh 0vw 1vh 5vw;
     border-radius: 0px;
+}
+
+.column-radio {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .Select-control {

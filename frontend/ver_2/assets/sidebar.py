@@ -33,32 +33,31 @@ sidebar_show = [
             ),
             dbc.NavLink(
                 [
+                    html.Span(
+                        className="bi bi-layout-three-columns",
+                        style={"padding": "0vh 1vw"},
+                    ),
+                    html.Span("Instance"),
+                ],
+                href="/instance",
+                active="exact",
+                className="side-nav",
+            ),
+            dbc.NavLink(
+                [
+                    html.Span(className="bi bi-cpu", style={"padding": "0vh 1vw"}),
+                    html.Span("Evaluation"),
+                ],
+                href="/evaluation",
+                active="exact",
+                className="side-nav",
+            ),
+            dbc.NavLink(
+                [
                     html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"}),
-                    html.Span("User"),
+                    html.Span("Visualization"),
                 ],
-                href="/user",
-                active="exact",
-                className="side-nav",
-            ),
-            dbc.NavLink(
-                [
-                    html.Span(
-                        className="bi bi-bar-chart", style={"padding": "0vh 1vw"}
-                    ),
-                    html.Span("Quantative"),
-                ],
-                href="/quantative",
-                active="exact",
-                className="side-nav",
-            ),
-            dbc.NavLink(
-                [
-                    html.Span(
-                        className="bi bi-card-text", style={"padding": "0vh 1vw"}
-                    ),
-                    html.Span("Qualitative"),
-                ],
-                href="/qualitative",
+                href="/visualization",
                 active="exact",
                 className="side-nav",
             ),
@@ -104,19 +103,24 @@ sidebar_hidden = [
                 className="side-nav",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
+                [
+                    html.Span(
+                        className="bi bi-layout-three-columns",
+                        style={"padding": "0vh 1vw"},
+                    )
+                ],
                 href="/description",
                 active="exact",
                 className="side-nav",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-bar-chart", style={"padding": "0vh 1vw"})],
+                [html.Span(className="bi bi-cpu", style={"padding": "0vh 1vw"})],
                 href="/qual-viz",
                 active="exact",
                 className="side-nav",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-card-text", style={"padding": "0vh 1vw"})],
+                [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
                 href="/quan-viz",
                 active="exact",
                 className="side-nav",
