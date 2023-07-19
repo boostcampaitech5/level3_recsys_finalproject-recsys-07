@@ -13,6 +13,7 @@ sidebar_show = [
                     dbc.Button(
                         children="Dash4Chat",
                         className="btn-title",
+                        href="/",
                     ),
                 ],
                 style={
@@ -52,15 +53,15 @@ sidebar_show = [
                 active="exact",
                 className="side-nav",
             ),
-            dbc.NavLink(
-                [
-                    html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"}),
-                    html.Span("Visualization"),
-                ],
-                href="/visualization",
-                active="exact",
-                className="side-nav",
-            ),
+            # dbc.NavLink(
+            #     [
+            #         html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"}),
+            #         html.Span("Visualization"),
+            #     ],
+            #     href="/visualization",
+            #     active="exact",
+            #     className="side-nav",
+            # ),
         ],
         # card=True,
         vertical=True,
@@ -98,7 +99,7 @@ sidebar_hidden = [
             ),
             dbc.NavLink(
                 [html.Span(className="bi bi-house-door", style={"padding": "0vh 1vw"})],
-                href="/",
+                href="/overview",
                 active="exact",
                 className="side-nav",
             ),
@@ -109,22 +110,22 @@ sidebar_hidden = [
                         style={"padding": "0vh 1vw"},
                     )
                 ],
-                href="/description",
+                href="/instance",
                 active="exact",
                 className="side-nav",
             ),
             dbc.NavLink(
                 [html.Span(className="bi bi-cpu", style={"padding": "0vh 1vw"})],
-                href="/qual-viz",
+                href="/evaluation",
                 active="exact",
                 className="side-nav",
             ),
-            dbc.NavLink(
-                [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
-                href="/quan-viz",
-                active="exact",
-                className="side-nav",
-            ),
+            # dbc.NavLink(
+            #     [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
+            #     href="/qual",
+            #     active="exact",
+            #     className="side-nav",
+            # ),
         ],
         # card=True,
         vertical=True,
