@@ -67,7 +67,7 @@ def draw_line_chart(dataframe, column, min_range=0, max_range=50, smooth=True):
     return fig
 
 
-def draw_gender_pie_chart(df, column):
+def draw_user_pie_chart(df, column):
     """
     column: 출력 원하는 column명
     """
@@ -79,10 +79,11 @@ def draw_gender_pie_chart(df, column):
     fig.update_layout(title=f"{column} Distribution")  # 제목
 
     # fig.show()
+    # age_range, gender, occupation, reject
     return fig
 
 
-def draw_gender_bar_chart(df, column, gender="", range=5, horizontal=False):
+def draw_user_bar_chart(df, column, gender="", range=5, horizontal=False):
     """
     column : 출력 원하는 column명
     gender : 성별 (default= '', Female, Male)

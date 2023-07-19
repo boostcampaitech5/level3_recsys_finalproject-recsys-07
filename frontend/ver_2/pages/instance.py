@@ -1,6 +1,6 @@
 import dash
 from dash import html, dcc, dash_table
-from assets import data
+from assets import data, figure
 
 dash.register_page(__name__)
 
@@ -25,53 +25,126 @@ layout = html.Div(
     children=[
         html.Div(
             children=[
+                # 좌측에 표시할 정보
                 html.Div(
                     children=[
-                        dcc.Input(
-                            id="user-id",
-                            type="number",
-                            placeholder="Search user-ID",
-                            value=5,
-                        )
+                        # title
+                        html.Div(
+                            children=[
+                                html.Div(
+                                    "유저 프로필에 따른 대화 주제 분포", className="card-value title"
+                                ),
+                            ],
+                            className="row-start-1 row-end-2",
+                        ),
+                        # pie-chart
+                        html.Div(
+                            [
+                                # age_range, gender, occupation, reject
+                                dcc.Graph(
+                                    figure=figure.draw_user_pie_chart(
+                                        data.df, "user_profile_gender"
+                                    ),
+                                    id="user-pie-chart",
+                                    className="fig",
+                                ),
+                            ],
+                            className="row-start-2 row-end-3",
+                        ),
+                        # radio-button
+                        html.Div(
+                            dcc.RadioItems(
+                                options=[
+                                    {
+                                        "label": html.Span(
+                                            "age", className="p-3 text-lg"
+                                        ),
+                                        "value": "user_profile_age_range",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "gender", className="p-3 text-lg"
+                                        ),
+                                        "value": "user_profile_gender",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "occupation", className="p-3 text-lg"
+                                        ),
+                                        "value": "user_profile_occupation",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            "reject", className="p-3 text-lg"
+                                        ),
+                                        "value": "user_profile_reject",
+                                    },
+                                ],
+                                value="user_profile_gender",
+                                id="user-column-radio",
+                                className="fig p-4 column-radio",
+                            ),
+                            className="row-start-3 row-end-4",
+                        ),
+                        # input
+                        html.Div(
+                            children=[
+                                dcc.Input(
+                                    id="user-id",
+                                    type="number",
+                                    placeholder="Search user-ID",
+                                    value=5,
+                                )
+                            ],
+                            className="row-start-4 row-end-5 p-4 fig",
+                        ),
+                        # user-info
+                        html.Div(
+                            # name gender age residence occupation place
+                            children=[
+                                html.Div("name", className="col-start-1 col-end-2 p-2"),
+                                html.Div(
+                                    children=[],
+                                    id="user-name",
+                                    className="user-info col-start-2 col-end-3 p-2",
+                                ),
+                                html.Div(
+                                    "gender", className="col-start-1 col-end-2 p-2"
+                                ),
+                                html.Div(
+                                    children=[],
+                                    id="user-gender",
+                                    className="user-info col-start-2 col-end-3 p-2",
+                                ),
+                                html.Div("age", className="col-start-1 col-end-2 p-2"),
+                                html.Div(
+                                    children=[],
+                                    id="user-age",
+                                    className="user-info col-start-2 col-end-3 p-2",
+                                ),
+                                html.Div(
+                                    "residence", className="col-start-1 col-end-2 p-2"
+                                ),
+                                html.Div(
+                                    children=[],
+                                    id="user-residence",
+                                    className="user-info col-start-2 col-end-3 p-2",
+                                ),
+                                html.Div(
+                                    "occupation", className="col-start-1 col-end-2 p-2"
+                                ),
+                                html.Div(
+                                    children=[],
+                                    id="user-occupation",
+                                    className="user-info col-start-2 col-end-3 p-2",
+                                ),
+                            ],
+                            className="row-start-5 row-end-6 grid grid-rows-3 grid-cols-2 fig p-4",
+                        ),
                     ],
-                    className="col-start-1 col-end-3 row-start-1 row-end-2 p-4 fig",
+                    className="col-start-1 col-end-3 row-start-1 row-end-7 grid grid-rows-6",
                 ),
-                html.Div(
-                    # name gender age residence occupation place
-                    children=[
-                        html.Div("name", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="user-name",
-                            className="user-info col-start-2 col-end-3 p-2",
-                        ),
-                        html.Div("gender", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="user-gender",
-                            className="user-info col-start-2 col-end-3 p-2",
-                        ),
-                        html.Div("age", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="user-age",
-                            className="user-info col-start-2 col-end-3 p-2",
-                        ),
-                        html.Div("residence", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="user-residence",
-                            className="user-info col-start-2 col-end-3 p-2",
-                        ),
-                        html.Div("occupation", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="user-occupation",
-                            className="user-info col-start-2 col-end-3 p-2",
-                        ),
-                    ],
-                    className="col-start-1 col-end-3 row-start-2 row-end-4 grid grid-rows-3 grid-cols-2 fig p-4",
-                ),
+                # sentence table
                 html.Div(
                     children=[
                         html.Div(
@@ -118,6 +191,7 @@ layout = html.Div(
             ],
             className="grid grid-cols-6 grid-rows-6",
         ),
+        # 원본 데이터 살펴보기
         html.Div(
             [
                 html.Div(
