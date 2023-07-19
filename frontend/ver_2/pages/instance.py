@@ -32,10 +32,42 @@ layout = html.Div(
                         html.Div(
                             children=[
                                 html.Div(
-                                    "유저 프로필에 따른 대화 주제 분포", className="card-value title"
+                                    "유저 프로필에 따른 대화 주제 분포",
+                                    className="row-start-1 row-end-2 card-value title",
+                                ),
+                                dcc.RadioItems(
+                                    options=[
+                                        {
+                                            "label": html.Span(
+                                                "age", className="p-3 text-lg"
+                                            ),
+                                            "value": "user_profile_age_range",
+                                        },
+                                        {
+                                            "label": html.Span(
+                                                "gender", className="p-3 text-lg"
+                                            ),
+                                            "value": "user_profile_gender",
+                                        },
+                                        {
+                                            "label": html.Span(
+                                                "occupation", className="p-3 text-lg"
+                                            ),
+                                            "value": "user_profile_occupation",
+                                        },
+                                        {
+                                            "label": html.Span(
+                                                "reject", className="p-3 text-lg"
+                                            ),
+                                            "value": "user_profile_reject",
+                                        },
+                                    ],
+                                    value="user_profile_gender",
+                                    id="user-column-radio",
+                                    className="fig p-4 column-radio row-start-2 row-end-3",
                                 ),
                             ],
-                            className="row-start-1 row-end-2",
+                            className="row-start-1 row-end-2 grid grid-rows-2",
                         ),
                         # pie-chart
                         html.Div(
@@ -48,55 +80,20 @@ layout = html.Div(
                                     id="user-pie-chart",
                                     className="fig",
                                 ),
+                                # input
+                                html.Div(
+                                    children=[
+                                        dcc.Input(
+                                            id="user-id",
+                                            type="number",
+                                            placeholder="Search user-ID",
+                                            value=5,
+                                        )
+                                    ],
+                                    className="row-start-2 row-end-3 p-4 fig",
+                                ),
                             ],
-                            className="row-start-2 row-end-3",
-                        ),
-                        # radio-button
-                        html.Div(
-                            dcc.RadioItems(
-                                options=[
-                                    {
-                                        "label": html.Span(
-                                            "age", className="p-3 text-lg"
-                                        ),
-                                        "value": "user_profile_age_range",
-                                    },
-                                    {
-                                        "label": html.Span(
-                                            "gender", className="p-3 text-lg"
-                                        ),
-                                        "value": "user_profile_gender",
-                                    },
-                                    {
-                                        "label": html.Span(
-                                            "occupation", className="p-3 text-lg"
-                                        ),
-                                        "value": "user_profile_occupation",
-                                    },
-                                    {
-                                        "label": html.Span(
-                                            "reject", className="p-3 text-lg"
-                                        ),
-                                        "value": "user_profile_reject",
-                                    },
-                                ],
-                                value="user_profile_gender",
-                                id="user-column-radio",
-                                className="fig p-4 column-radio",
-                            ),
-                            className="row-start-3 row-end-4",
-                        ),
-                        # input
-                        html.Div(
-                            children=[
-                                dcc.Input(
-                                    id="user-id",
-                                    type="number",
-                                    placeholder="Search user-ID",
-                                    value=5,
-                                )
-                            ],
-                            className="row-start-4 row-end-5 p-4 fig",
+                            className="row-start-2 row-end-4",
                         ),
                         # user-info
                         html.Div(
@@ -139,7 +136,7 @@ layout = html.Div(
                                     className="user-info col-start-2 col-end-3 p-2",
                                 ),
                             ],
-                            className="row-start-5 row-end-6 grid grid-rows-3 grid-cols-2 fig p-4",
+                            className="row-start-5 row-end-7 grid grid-rows-3 grid-cols-2 fig p-4",
                         ),
                     ],
                     className="col-start-1 col-end-3 row-start-1 row-end-7 grid grid-rows-6",
@@ -189,7 +186,7 @@ layout = html.Div(
                     className="col-start-3 col-end-7 row-start-1 row-end-7 flex",
                 ),
             ],
-            className="grid grid-cols-6 grid-rows-6",
+            className="grid grid-cols-6 grid-rows-6 h-screen",
         ),
         # 원본 데이터 살펴보기
         html.Div(
@@ -382,13 +379,7 @@ layout = html.Div(
                     className="col-start-3 col-end-7 row-start-2 row-end-7 p-4",
                 ),
             ],
-            className="grid grid-cols-6 grid-rows-6",
-        ),
-        html.Div(
-            "Loading...",
-            style={
-                "padding": "20px",
-            },
+            className="grid grid-cols-6 grid-rows-6 h-screen",
         ),
     ],
     className="content no-scrollbar flex flex-col",

@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 from assets import sidebar, data
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
-font_awsome = (
+font_awesome = (
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
 )
 icons = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
@@ -14,7 +14,7 @@ external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.
 
 app = Dash(
     __name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP, font_awsome, icons],
+    external_stylesheets=[dbc.themes.BOOTSTRAP, font_awesome, icons],
     external_scripts=external_script,
     use_pages=True,
     suppress_callback_exceptions=True,
