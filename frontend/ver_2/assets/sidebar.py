@@ -16,15 +16,13 @@ sidebar_show = [
                         href="/",
                     ),
                 ],
-                style={
-                    "display": "flex",
-                },
                 id="header-side-box",
+                className="side-header",
             ),
             dbc.NavLink(
                 [
                     html.Span(
-                        className="bi bi-house-door", style={"padding": "0vh 1vw"}
+                        className="bi bi-house-door side-nav-icon",
                     ),
                     html.Span("Overview"),
                 ],
@@ -35,8 +33,7 @@ sidebar_show = [
             dbc.NavLink(
                 [
                     html.Span(
-                        className="bi bi-layout-three-columns",
-                        style={"padding": "0vh 1vw"},
+                        className="bi bi-layout-three-columns side-nav-icon",
                     ),
                     html.Span("Instance"),
                 ],
@@ -46,35 +43,18 @@ sidebar_show = [
             ),
             dbc.NavLink(
                 [
-                    html.Span(className="bi bi-cpu", style={"padding": "0vh 1vw"}),
+                    html.Span(
+                        className="bi bi-cpu side-nav-icon",
+                    ),
                     html.Span("Evaluation"),
                 ],
                 href="/evaluation",
                 active="exact",
                 className="side-nav",
             ),
-            # dbc.NavLink(
-            #     [
-            #         html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"}),
-            #         html.Span("Visualization"),
-            #     ],
-            #     href="/visualization",
-            #     active="exact",
-            #     className="side-nav",
-            # ),
         ],
-        # card=True,
         vertical=True,
         pills=True,
-        style={
-            "margin-left": "1vw",
-            "align-items": "left",
-            "color": "#ffffff",
-            # "font-weight": "bold",
-            "font-size": "1vw",
-            "font-family": "Satoshi, sans-serif",
-        },
-        className="side-nav",
     ),
 ]
 
@@ -82,23 +62,15 @@ sidebar_hidden = [
     dbc.Nav(
         [
             dbc.Button(
-                className="bi bi-list 2px",
-                style={
-                    "height": "7vh",
-                    "margin-left": "0.5vw",
-                    "font-size": "1.5vw",
-                    # "font-weight": "bold",
-                    "font-family": "Satoshi, sans-serif",
-                    "align-items": "center",
-                    "display": "flex",
-                    "background-color": "transparent",
-                    "border": "transparent",
-                    "color": "#e4e3fa",
-                },
+                className="bi bi-list 2px btn-sidebar",
                 id="btn-sidebar",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-house-door", style={"padding": "0vh 1vw"})],
+                [
+                    html.Span(
+                        className="bi bi-house-door side-nav-icon",
+                    )
+                ],
                 href="/overview",
                 active="exact",
                 className="side-nav",
@@ -106,8 +78,7 @@ sidebar_hidden = [
             dbc.NavLink(
                 [
                     html.Span(
-                        className="bi bi-layout-three-columns",
-                        style={"padding": "0vh 1vw"},
+                        className="bi bi-layout-three-columns side-nav-icon",
                     )
                 ],
                 href="/instance",
@@ -115,7 +86,7 @@ sidebar_hidden = [
                 className="side-nav",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-cpu", style={"padding": "0vh 1vw"})],
+                [html.Span(className="bi bi-cpu side-nav-icon")],
                 href="/evaluation",
                 active="exact",
                 className="side-nav",
@@ -127,15 +98,8 @@ sidebar_hidden = [
             #     className="side-nav",
             # ),
         ],
-        # card=True,
         vertical=True,
         pills=False,
-        style={
-            "align-items": "left",
-            "color": "#aeaeec",
-            "font-weight": "bold",
-            "font-size": "1vw",
-        },
     ),
 ]
 
