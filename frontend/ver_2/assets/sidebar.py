@@ -11,7 +11,7 @@ sidebar_show = [
                         id="btn-sidebar",
                     ),
                     dbc.Button(
-                        children="Dash4Chat",
+                        children="DASHMON",
                         className="btn-title",
                         href="/",
                     ),
@@ -29,6 +29,7 @@ sidebar_show = [
                 href="/overview",
                 active="exact",
                 className="side-nav",
+
             ),
             dbc.NavLink(
                 [
@@ -40,6 +41,7 @@ sidebar_show = [
                 href="/instance",
                 active="exact",
                 className="side-nav",
+
             ),
             dbc.NavLink(
                 [

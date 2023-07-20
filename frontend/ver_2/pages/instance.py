@@ -32,26 +32,58 @@ layout = html.Div(
                         html.Div(
                             children=[
                                 html.Div(
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     "유저 프로필에 따른 대화 주제 분포",
+=======
+                                    "• 사용자 그룹 별 대화 주제 분석",
+>>>>>>> Stashed changes
+=======
+                                    "• 사용자 그룹 별 대화 주제 분석",
+>>>>>>> Stashed changes
                                     className="row-start-1 row-end-2 card-value title",
                                 ),
                                 dcc.RadioItems(
                                     options=[
                                         {
                                             "label": html.Span(
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                                 "age", className="p-3 text-lg"
+=======
+                                                "나이", className="p-3 text-lg"
+>>>>>>> Stashed changes
+=======
+                                                "나이", className="p-3 text-lg"
+>>>>>>> Stashed changes
                                             ),
                                             "value": "user_profile_age_range",
                                         },
                                         {
                                             "label": html.Span(
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                                 "gender", className="p-3 text-lg"
+=======
+                                                "성별", className="p-3 text-lg"
+>>>>>>> Stashed changes
+=======
+                                                "성별", className="p-3 text-lg"
+>>>>>>> Stashed changes
                                             ),
                                             "value": "user_profile_gender",
                                         },
                                         {
                                             "label": html.Span(
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                                 "occupation", className="p-3 text-lg"
+=======
+                                                "고용상태", className="p-3 text-lg"
+>>>>>>> Stashed changes
+=======
+                                                "고용상태", className="p-3 text-lg"
+>>>>>>> Stashed changes
                                             ),
                                             "value": "user_profile_occupation",
                                         },
@@ -83,11 +115,27 @@ layout = html.Div(
                                 # input
                                 html.Div(
                                     children=[
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                                        html.H1(children=['Instance Index✏️']),
+>>>>>>> Stashed changes
+=======
+                                        html.H1(children=['Instance Index✏️']),
+>>>>>>> Stashed changes
                                         dcc.Input(
                                             id="user-id",
                                             type="number",
                                             placeholder="Search user-ID",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                             value=5,
+=======
+                                            value=5
+>>>>>>> Stashed changes
+=======
+                                            value=5
+>>>>>>> Stashed changes
                                         )
                                     ],
                                     className="row-start-2 row-end-3 p-4 fig",
@@ -193,7 +241,7 @@ layout = html.Div(
             [
                 html.Div(
                     children=[
-                        html.Div("원본 데이터 살펴보기", className="card-value title"),
+                        html.Div("•Raw Data Viewer", className="card-value title"),
                     ],
                     className="col-start-1 col-end-3 row-start-1 row-end-2",
                 ),
@@ -291,7 +339,7 @@ layout = html.Div(
                             className="user-info col-start-2 col-end-3 p-2",
                         ),
                         html.Div(
-                            "accpeted_celebrity", className="col-start-1 col-end-2 p-2"
+                            "accepted_celebrity", className="col-start-1 col-end-2 p-2"
                         ),
                         html.Div(
                             children=[],

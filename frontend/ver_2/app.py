@@ -31,32 +31,33 @@ app.layout = html.Div(
         sidebar.sidebar,
         html.Div(
             [
-                dbc.Navbar(
+                    dbc.Navbar(
                     children=[
-                        dcc.Dropdown(
-                            [
-                                {
-                                    "label": html.Span(
-                                        ["DuRecDial2.0"], style={"font-size": 20}
-                                    ),
-                                    "value": "DuRecDial2.0",
-                                },
-                                {
-                                    "label": html.Span(
-                                        ["ReDial"], style={"font-size": 20}
-                                    ),
-                                    "value": "ReDial",
-                                },
-                            ],
-                            value="DuRecDial2.0",
-                            className="data-selector",
-                            optionHeight=50,
-                        )
-                    ],
-                    className="header",
-                    id="header",
-                ),
-                dash.page_container,
+                            html.H1(children=['Select Dataset🗃️ →'],style={'margin-left':'3%','font-weight':'bold','font-size':'150%'}),
+                            dcc.Dropdown(
+                                [
+                                    {
+                                        "label": html.Span(
+                                            ["DuRecDial2.0 (sample)"], style={"font-size": 20}
+                                        ),
+                                        "value": "DuRecDial2.0",
+                                    },
+                                    {
+                                        "label": html.Span(
+                                            ["ReDial (sample)"], style={"font-size": 20}
+                                        ),
+                                        "value": "ReDial",
+                                    },
+                                ],
+                                value="DuRecDial2.0",
+                                className="data-selector",
+                                optionHeight=50,
+                            )
+                        ],
+                        className="header",
+                        id="header",
+                    ),
+                    dash.page_container,
             ],
             id="page_content",
         ),

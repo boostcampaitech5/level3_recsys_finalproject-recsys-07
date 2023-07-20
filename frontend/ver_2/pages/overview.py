@@ -10,7 +10,7 @@ layout = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div("데이터셋 개요", className="title"),
+                        html.Div("• 데이터셋 개괄", className="title",style={'margin-bottom':'0.8%'}),
                     ],
                     className="col-start-1 col-end-5",
                 ),
@@ -18,7 +18,7 @@ layout = html.Div(
                     children=[
                         html.Div(className="bi bi-clipboard-data round card-icon"),
                         html.Div(data.size, className="card-value"),
-                        html.Div("# of instances (rows)"),
+                        html.Div("Instances (Rows)"),
                     ],
                     className="figure-card",
                 ),
@@ -26,7 +26,7 @@ layout = html.Div(
                     children=[
                         html.Div(className="bi bi-people-fill round card-icon"),
                         html.Div(children=[data.user_count], className="card-value"),
-                        html.Div("# of users"),
+                        html.Div("Users"),
                     ],
                     className="figure-card",
                 ),
@@ -36,7 +36,7 @@ layout = html.Div(
                             className="bi bi-layout-three-columns round card-icon",
                         ),
                         html.Div(len(data.columns), className="card-value"),
-                        html.Div("# of features (columns)"),
+                        html.Div("Features (Columns)"),
                     ],
                     className="figure-card",
                 ),
@@ -53,8 +53,8 @@ layout = html.Div(
                                     len(data.df["goal_type"].unique()),
                                     className="card-value",
                                 ),
-                                html.Div("# of topics"),
-                                html.Div("# of goal_type"),
+                                html.Div("Topics"),
+                                html.Div("Goal Types"),
                             ],
                             className="grid grid-cols-2 grid-rows-2",
                         ),
@@ -69,7 +69,7 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(
-                            "상황별 분포(주제, 장소, 요일, 시간)", className="card-value title"
+                            "• 특성 별 분포 시각화", className="card-value title"
                         ),
                     ],
                     className="col-start-1 col-end-7",
@@ -108,31 +108,31 @@ layout = html.Div(
                                 options=[
                                     {
                                         "label": html.Span(
-                                            "time", className="p-3 text-lg"
+                                            "시간", className="p-3 text-lg"
                                         ),
                                         "value": "time",
                                     },
                                     {
                                         "label": html.Span(
-                                            "place", className="p-3 text-lg"
+                                            "장소", className="p-3 text-lg"
                                         ),
                                         "value": "place",
                                     },
                                     {
                                         "label": html.Span(
-                                            "date", className="p-3 text-lg"
+                                            "날짜", className="p-3 text-lg"
                                         ),
                                         "value": "date",
                                     },
                                     {
                                         "label": html.Span(
-                                            "topic", className="p-3 text-lg"
+                                            "주제", className="p-3 text-lg"
                                         ),
                                         "value": "topic",
                                     },
                                     {
                                         "label": html.Span(
-                                            "wday", className="p-3 text-lg"
+                                            "요일", className="p-3 text-lg"
                                         ),
                                         "value": "wday",
                                     },
@@ -146,7 +146,7 @@ layout = html.Div(
                                     # {'label':html.Span('goal_topic',className='p-3 text-lg'),'value':'goal_topic'},
                                     {
                                         "label": html.Span(
-                                            "goal_type", className="p-3 text-lg"
+                                            "발화 목적 (Goal Type)", className="p-3 text-lg"
                                         ),
                                         "value": "goal_type",
                                     },
@@ -164,7 +164,7 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(
-                            "대화 경과에 따른 의도 분포 / 대화 의도 분포", className="card-value title"
+                            "• 대화 의도 분포 시각화", className="card-value title"
                         ),
                     ],
                     className="col-start-1 col-end-7",
