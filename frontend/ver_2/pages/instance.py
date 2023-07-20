@@ -1,6 +1,6 @@
 import dash
 from dash import html, dcc, dash_table
-from assets import data
+from assets import data, figure
 
 dash.register_page(__name__)
 
