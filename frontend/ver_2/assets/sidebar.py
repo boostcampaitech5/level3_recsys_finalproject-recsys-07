@@ -91,6 +91,12 @@ sidebar_hidden = [
                 active="exact",
                 className="side-nav",
             ),
+            # dbc.NavLink(
+            #     [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
+            #     href="/qual",
+            #     active="exact",
+            #     className="side-nav",
+            # ),
         ],
         vertical=True,
         pills=False,
