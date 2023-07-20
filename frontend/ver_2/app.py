@@ -144,6 +144,23 @@ def draw_pie_chart(column, range):
     return fig
 
 
+@app.callback(Output("user-pie-chart", "figure"), Input("user-column-radio", "value"))
+def draw_user_pie_chart(column):
+    """
+    column: 출력 원하는 column명
+    """
+    df = data.df[column].value_counts().to_frame()
+    df.columns = ["count"]
+
+    fig = go.Figure(data=[go.Pie(labels=df.index.to_list(), values=df["count"])])
+    fig.update_traces(textinfo="percent")
+    fig.update_layout(title=f"{column} Distribution")  # 제목
+
+    # fig.show()
+    # age_range, gender, occupation, reject
+    return fig
+
+
 @app.callback(
     Output("bar-chart", "figure"),
     Input("column-radio", "value"),
@@ -260,4 +277,4 @@ def get_selected_column(column_list):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=30002)
+    app.run_server(host="0.0.0.0", debug=True, port=30002)

@@ -55,12 +55,12 @@ layout = html.Div(
                                             ),
                                             "value": "user_profile_occupation",
                                         },
-                                        {
-                                            "label": html.Span(
-                                                "reject", className="p-3 text-lg"
-                                            ),
-                                            "value": "user_profile_reject",
-                                        },
+                                        # {
+                                        #     "label": html.Span(
+                                        #         "reject", className="p-3 text-lg"
+                                        #     ),
+                                        #     "value": "user_profile_reject",
+                                        # },
                                     ],
                                     value="user_profile_gender",
                                     id="user-column-radio",
