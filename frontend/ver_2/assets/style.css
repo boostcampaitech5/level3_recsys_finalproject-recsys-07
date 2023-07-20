@@ -4,6 +4,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes blink-effect {
+  50% {
+    color: #6273e5;
+  }
+  100% {
+    color: #1A2434';
+  }
+}
 
 @layer base {
   div {
@@ -13,6 +21,15 @@
 
 @layer components {
 }
+
+@font-face {
+  font-family: Pretendard;
+  src: url(“/fonts/Pretendard-ExtraBold.ttf”) format(“truetype”);
+  }
+  
+  *, html, body {
+  font-family: Pretendard;
+  }
 
 @layer utilities {
 
@@ -225,4 +242,8 @@
   background-color: transparent;
   border: transparent;
   color: white;
+}
+
+.blink {
+  animation: blink-effect 0.7s step-end infinite;
 }
