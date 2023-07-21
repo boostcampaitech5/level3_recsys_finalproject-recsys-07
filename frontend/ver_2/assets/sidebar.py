@@ -29,7 +29,6 @@ sidebar_show = [
                 href="/overview",
                 active="exact",
                 className="side-nav",
-
             ),
             dbc.NavLink(
                 [
@@ -41,16 +40,26 @@ sidebar_show = [
                 href="/instance",
                 active="exact",
                 className="side-nav",
-
+            ),
+            dbc.NavLink(
+                [
+                    html.Span(
+                        className="bi bi-columns side-nav-icon",
+                    ),
+                    html.Span("Data Analysis"),
+                ],
+                href="/dataanalysis",
+                active="exact",
+                className="side-nav",
             ),
             dbc.NavLink(
                 [
                     html.Span(
                         className="bi bi-cpu side-nav-icon",
                     ),
-                    html.Span("Evaluation"),
+                    html.Span("Model Evaluation"),
                 ],
-                href="/evaluation",
+                href="/modelevaluation",
                 active="exact",
                 className="side-nav",
             ),
@@ -88,17 +97,17 @@ sidebar_hidden = [
                 className="side-nav",
             ),
             dbc.NavLink(
-                [html.Span(className="bi bi-cpu side-nav-icon")],
-                href="/evaluation",
+                [html.Span(className="bi bi-columns side-nav-icon")],
+                href="/dataanalysis",
                 active="exact",
                 className="side-nav",
             ),
-            # dbc.NavLink(
-            #     [html.Span(className="bi bi-columns", style={"padding": "0vh 1vw"})],
-            #     href="/qual",
-            #     active="exact",
-            #     className="side-nav",
-            # ),
+            dbc.NavLink(
+                [html.Span(className="bi bi-cpu side-nav-icon")],
+                href="/modelevaluation",
+                active="exact",
+                className="side-nav",
+            ),
         ],
         vertical=True,
         pills=False,
