@@ -75,7 +75,7 @@ layout = html.Div(
                                 # age_range, gender, occupation, reject
                                 dcc.Graph(
                                     figure=figure.draw_user_pie_chart(
-                                        data.df, "user_profile_gender"
+                                        data.df_user, "user_profile_gender"
                                     ),
                                     id="user-pie-chart",
                                     className="fig",
@@ -83,13 +83,13 @@ layout = html.Div(
                                 # input
                                 html.Div(
                                     children=[
-                                        html.H1(children=['Instance Index✏️']),
+                                        html.H1(children=["Instance Index✏️"]),
                                         dcc.Input(
                                             id="user-id",
                                             type="number",
                                             placeholder="Search user-ID",
-                                            value=5
-                                        )
+                                            value=5,
+                                        ),
                                     ],
                                     className="row-start-2 row-end-3 p-4 fig",
                                 ),
@@ -146,7 +146,7 @@ layout = html.Div(
                     children=[
                         html.Div(
                             dash_table.DataTable(
-                                data=data.df.to_dict("records"),
+                                data=data.df_sentence.to_dict("records"),
                                 columns=[
                                     {"name": c, "id": c}
                                     for c in ["sentence_index", "sentence"]
@@ -192,7 +192,7 @@ layout = html.Div(
             [
                 html.Div(
                     children=[
-                        html.Div("•Raw Data Viewer", className="card-value title"),
+                        html.Div("• Raw Data Viewer", className="card-value title"),
                     ],
                     className="col-start-1 col-end-3 row-start-1 row-end-2",
                 ),
@@ -334,7 +334,7 @@ layout = html.Div(
                 ),
                 html.Div(
                     dash_table.DataTable(
-                        data=data.df.to_dict("records"),
+                        data=data.df_sentence.to_dict("records"),
                         columns=[
                             {"name": c, "id": c}
                             for c in [

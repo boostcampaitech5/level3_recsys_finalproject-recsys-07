@@ -1,6 +1,7 @@
 import dash
 from dash import dcc, html
-from assets import figure, data
+from assets import figure
+from assets.data import df_sentence, size, max_si, user_count, columns
 
 dash.register_page(__name__)
 
@@ -10,14 +11,18 @@ layout = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div("• 데이터셋 개괄", className="title",style={'margin-bottom':'0.8%'}),
+                        html.Div(
+                            "• 데이터셋 개괄",
+                            className="title",
+                            style={"margin-bottom": "0.8%"},
+                        ),
                     ],
                     className="col-start-1 col-end-5",
                 ),
                 html.Div(
                     children=[
                         html.Div(className="bi bi-clipboard-data round card-icon"),
-                        html.Div(data.size, className="card-value"),
+                        html.Div(size, className="card-value"),
                         html.Div("Instances (Rows)"),
                     ],
                     className="figure-card",
@@ -25,7 +30,7 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(className="bi bi-people-fill round card-icon"),
-                        html.Div(children=[data.user_count], className="card-value"),
+                        html.Div(children=[user_count], className="card-value"),
                         html.Div("Users"),
                     ],
                     className="figure-card",
@@ -35,7 +40,7 @@ layout = html.Div(
                         html.Div(
                             className="bi bi-layout-three-columns round card-icon",
                         ),
-                        html.Div(len(data.columns), className="card-value"),
+                        html.Div(len(columns), className="card-value"),
                         html.Div("Features (Columns)"),
                     ],
                     className="figure-card",
@@ -46,11 +51,11 @@ layout = html.Div(
                         html.Div(
                             [
                                 html.Div(
-                                    len(data.df["goal_topic"].unique()),
+                                    len(df_sentence["goal_topic"].unique()),
                                     className="card-value",
                                 ),
                                 html.Div(
-                                    len(data.df["goal_type"].unique()),
+                                    len(df_sentence["goal_type"].unique()),
                                     className="card-value",
                                 ),
                                 html.Div("Topics"),
@@ -68,9 +73,7 @@ layout = html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div(
-                            "• 특성 별 분포 시각화", className="card-value title"
-                        ),
+                        html.Div("• 특성 별 분포 시각화", className="card-value title"),
                     ],
                     className="col-start-1 col-end-7",
                 ),
@@ -79,7 +82,9 @@ layout = html.Div(
                         html.Div(
                             [
                                 dcc.Graph(
-                                    figure=figure.draw_pie_chart(data.df, "goal_type"),
+                                    figure=figure.draw_pie_chart(
+                                        df_sentence, "goal_type"
+                                    ),
                                     id="pie-chart",
                                     className="fig",
                                 ),
@@ -89,7 +94,7 @@ layout = html.Div(
                         html.Div(
                             [
                                 dcc.RangeSlider(
-                                    0, data.max_si, 1, value=[0, 10], id="si-slider"
+                                    0, max_si, 1, value=[0, 10], id="si-slider"
                                 ),
                                 html.Div(id="slider-output"),
                             ],
@@ -97,7 +102,7 @@ layout = html.Div(
                         ),
                         html.Div(
                             dcc.Graph(
-                                figure=figure.draw_bar_chart(data.df, "wday"),
+                                figure=figure.draw_bar_chart(df_sentence, "wday"),
                                 className="fig",
                                 id="bar-chart",
                             ),
@@ -163,22 +168,20 @@ layout = html.Div(
                 ),
                 html.Div(
                     children=[
-                        html.Div(
-                            "• 대화 의도 분포 시각화", className="card-value title"
-                        ),
+                        html.Div("• 대화 의도 분포 시각화", className="card-value title"),
                     ],
                     className="col-start-1 col-end-7",
                 ),
                 html.Div(
                     dcc.Graph(
-                        figure=figure.draw_line_chart(data.df, "goal_type"),
+                        figure=figure.draw_line_chart(df_sentence, "goal_type"),
                         className="fig",
                     ),
                     className="col-start-1 col-end-5",
                 ),
                 html.Div(
                     dcc.Graph(
-                        figure=figure.draw_pie_chart(data.df, "goal_topic"),
+                        figure=figure.draw_pie_chart(df_sentence, "goal_topic"),
                         className="fig",
                     ),
                     className="col-start-5 col-end-7",

@@ -26,7 +26,7 @@
   font-family: Pretendard;
   src: url(“/fonts/Pretendard-ExtraBold.ttf”) format(“truetype”);
   }
-  
+
   *, html, body {
   font-family: Pretendard;
   }
@@ -52,8 +52,8 @@
 }
 
 .side-hidden {
-    min-width: 4vw;
-    width:4vw;
+    min-width: 5vw;
+    width:5vw;
 }
 
 .side-nav {
@@ -69,8 +69,8 @@
 }
 
 .content-side-hidden {
-    left: 4vw;
-    width: 96vw;
+    left: 5vw;
+    width: 95vw;
 }
 
 .content {
