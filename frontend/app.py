@@ -3,7 +3,8 @@ from dash import Dash, Input, Output, State, dcc, html
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
-from assets import sidebar, data
+from assets import sidebar
+from assets.data import df_user, df_sentence
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 font_awesome = (
@@ -130,10 +131,10 @@ def draw_pie_chart(column, range):
     min_range = range[0]
     max_range = range[1]
     df = (
-        data.df[[column]]
+        df_sentence[[column]]
         .loc[
-            (data.df["sentence_index"] >= min_range)
-            & (data.df["sentence_index"] <= max_range)
+            (df_sentence["sentence_index"] >= min_range)
+            & (df_sentence["sentence_index"] <= max_range)
         ]
         .value_counts()
         .to_frame()
@@ -158,7 +159,7 @@ def draw_user_pie_chart(column):
     """
     column: 출력 원하는 column명
     """
-    df = data.df[column].value_counts().to_frame()
+    df = df_user[column].value_counts().to_frame()
     df.columns = ["count"]
 
     fig = go.Figure(data=[go.Pie(labels=df.index.to_list(), values=df["count"])])
@@ -184,10 +185,10 @@ def draw_bar_chart(column, range, horizontal=False):
     min_range = range[0]
     max_range = range[1]
     df = (
-        data.df[[column]]
+        df_sentence[[column]]
         .loc[
-            (data.df["sentence_index"] >= min_range)
-            & (data.df["sentence_index"] <= max_range)
+            (df_sentence["sentence_index"] >= min_range)
+            & (df_sentence["sentence_index"] <= max_range)
         ]
         .value_counts()
         .to_frame()
@@ -214,7 +215,7 @@ def draw_bar_chart(column, range, horizontal=False):
 #         shape = "spline"
 #     else:
 #         shape = "linear"
-#     df = data.df[[column, "sentence_index"]].value_counts().to_frame()
+#     df = df[[column, "sentence_index"]].value_counts().to_frame()
 #     df.columns = ["count"]
 #     df.reset_index(inplace=True)
 #     df.sort_values(by=[column, "sentence_index"], inplace=True)
@@ -252,10 +253,11 @@ def draw_bar_chart(column, range, horizontal=False):
     Input("user-id", "value"),
 )
 def get_user_info(user_id):
-    user = data.df[data.df.user_id == user_id]
+    user = df_user[df_user.user_id == user_id]
+    sentence = df_sentence[df_sentence.user_id == user_id]
     return (
-        user.to_dict("records"),
-        user.to_dict("records"),
+        sentence.to_dict("records"),
+        sentence.to_dict("records"),
         user["user_profile_name"].iloc[0],
         user["user_profile_gender"].iloc[0],
         user["user_profile_age_range"].iloc[0],

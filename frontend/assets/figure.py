@@ -61,7 +61,12 @@ def draw_line_chart(dataframe, column, min_range=0, max_range=50, smooth=True):
     df.reset_index(inplace=True)
     df.sort_values(by=[column, "sentence_index"], inplace=True)
     fig = px.line(
-        df, x="sentence_index", y="count", color="goal_type", line_shape=shape, color_discrete_sequence=px.colors.qualitative.Set1,
+        df,
+        x="sentence_index",
+        y="count",
+        color="goal_type",
+        line_shape=shape,
+        color_discrete_sequence=px.colors.qualitative.Set1,
     )
     # fig.show()
     return fig
@@ -101,8 +106,21 @@ def draw_user_bar_chart(df, column, gender="", range=5, horizontal=False):
     lab = df.index.to_list()[:range]
 
     if horizontal:
-        fig = px.bar(df, x="count", y=lab, orientation="h", text_auto=True,color_discrete_sequence=px.colors.qualitative.Set1)
+        fig = px.bar(
+            df,
+            x="count",
+            y=lab,
+            orientation="h",
+            text_auto=True,
+            color_discrete_sequence=px.colors.qualitative.Set1,
+        )
     else:
-        fig = px.bar(df, x=lab, y="count", text_auto=True,color_discrete_sequence=px.colors.qualitative.Set1)
+        fig = px.bar(
+            df,
+            x=lab,
+            y="count",
+            text_auto=True,
+            color_discrete_sequence=px.colors.qualitative.Set1,
+        )
     # fig.show()
     return fig
