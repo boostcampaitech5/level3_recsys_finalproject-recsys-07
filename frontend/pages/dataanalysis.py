@@ -1,41 +1,49 @@
 import dash
-from dash import html
+from dash import dcc, html, dash_table
 
 dash.register_page(__name__)
 
-CONTENT_STYLE = {
-    "width": "85vw",
-    "padding": "2vh 1vw",
-    "display": "flex",
-}
-
-FIGURE_BLANK = {
-    "width": "23vw",
-    "height": "20vh",
-    "padding": "2vh 2vw",
-    "background-color": "#ffffff",
-    "font-weight": "bold",
-    "margin": "1vh 1vw",
-}
-content = html.Div(
-    [
-        html.Div(["figure-4"], style=FIGURE_BLANK),
-        html.Div(["figure-5"], style=FIGURE_BLANK),
-        html.Div(["figure-6"], style=FIGURE_BLANK),
-    ],
-    style=CONTENT_STYLE,
-)
-
-layout_style = {
-    # 'display': 'flex'
-    "background-color": "#e6e7e9",
-    "height": "95vh",
-}
-
 layout = html.Div(
     [
-        # dcc.Location(id="url"),
-        content,
+        html.Div(
+            [
+                html.Div(  # 소제목
+                    "• 추천 효과 및 효율",
+                    className="title p-4",
+                    style={"grid-area": "1 / 1 / span 1 / span 4"},
+                ),
+                html.Div(
+                    # 성공 실패 bar chart
+                ),
+                html.Div(
+                    # 추천 효율 graph
+                ),
+                html.Div(  # 소제목
+                    "• 데이터 품질",
+                    className="title p-4",
+                    style={"grid-area": "10 / 1 / span 1 / span 4"},
+                ),
+                html.Div(
+                    # perflexity graph
+                    id="perflexity",
+                ),
+                html.Div(
+                    # n-gram graph
+                    id="n-gram",
+                ),
+                      # dcc.Location(id="url"),
+                html.Div(
+                    [
+                        # 1. slider - train_sentence_xs.csv파일에 index 사용
+                        # 2. 성공, 실패 figure
+                        # 3. 성공 대화 data_table(추천한 대화+추천받은대화)
+                        # 4. 실패 대화 data_table(추천한 대화+추천받은대화)
+                    ]
+                ),
+            ],
+            className="grid grid-cols-12 grid-rows-36",
+            id="instance-grid",
+        ),
     ],
-    style=layout_style,
+    className="content no-scrollbar",
 )

@@ -8,11 +8,6 @@ opts.extend(
     [
         {"label": c, "value": c}
         for c in [
-            "time",
-            "place",
-            "date",
-            "topic",
-            "wday",
             "goal_topic",
             "goal_type",
             "knowledge",
@@ -65,11 +60,20 @@ layout = html.Div(
                             id="user-id",
                             type="number",
                             placeholder="Search user-ID",
-                            value=5,
+                            value=11,
+                            style={
+                                "font-weight": "bold",
+                                "border": "solid 2px #ffdada",
+                            },
                         ),
                     ],
                     className="p-4 fig f-3",
-                    style={"grid-area": "9 / 1 / span 1 / span 5"},
+                    style={
+                        "grid-area": "9 / 1 / span 1 / span 5",
+                        "display": "flex",
+                        "align-items": "center",
+                        "justify-content": "space-around",
+                    },
                 ),
                 html.Div(  # 유저 프로필
                     [
@@ -311,11 +315,6 @@ layout = html.Div(
                     id="column-list",
                     value=[
                         "sentence_index",
-                        "time",
-                        "place",
-                        "date",
-                        "topic",
-                        "wday",
                         "goal_topic",
                         "goal_type",
                         "knowledge",
@@ -325,16 +324,10 @@ layout = html.Div(
                 html.Div(
                     [
                         dash_table.DataTable(
-                            # data=data.df_sentence.to_dict("records"),
                             columns=[
                                 {"name": c, "id": c}
                                 for c in [
                                     "sentence_index",
-                                    "time",
-                                    "place",
-                                    "date",
-                                    "topic",
-                                    "wday",
                                     "goal_topic",
                                     "goal_type",
                                     "knowledge",
