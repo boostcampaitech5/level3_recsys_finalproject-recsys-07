@@ -1,7 +1,7 @@
 import dash
 from dash import dcc, html
 from assets import figure
-from assets.data import df_sentence, size, max_si, user_count, columns
+from assets.data import df_sentence, size, max_si, user_count, columns, df_user
 
 dash.register_page(__name__)
 
@@ -102,7 +102,7 @@ layout = html.Div(
                         ),
                         html.Div(
                             dcc.Graph(
-                                figure=figure.draw_bar_chart(df_sentence, "wday"),
+                                figure=figure.draw_bar_chart(df_user, "wday"),
                                 className="fig",
                                 id="bar-chart",
                             ),
@@ -141,21 +141,12 @@ layout = html.Div(
                                         ),
                                         "value": "wday",
                                     },
-                                    # {
-                                    #     "label": html.Span(
-                                    #         "sentence_index", className="p-3 text-lg"
-                                    #     ),
-                                    #     "value": "sentence_index",
-                                    # },
-                                    # {'label':html.Span('sentence',className='p-3 text-lg'),'value':'sentence'},
-                                    # {'label':html.Span('goal_topic',className='p-3 text-lg'),'value':'goal_topic'},
                                     {
                                         "label": html.Span(
                                             "발화 목적 (Goal Type)", className="p-3 text-lg"
                                         ),
                                         "value": "goal_type",
                                     },
-                                    # {'label':html.Span('knowledge',className='p-3 text-lg'),'value':'knowledge'},
                                 ],
                                 value="goal_type",
                                 id="column-radio",
