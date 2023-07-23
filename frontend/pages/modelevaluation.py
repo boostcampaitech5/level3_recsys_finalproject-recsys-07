@@ -16,7 +16,7 @@ layout = html.Div(
                 html.Div(
                     [
                         dash_table.DataTable(
-                            data=model_eval,
+                            data=model_eval.to_dict("records"),
                             columns=[
                                 {"name": c, "id": c}
                                 for c in [
