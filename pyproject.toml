@@ -19,6 +19,7 @@ flake8 = "^6.0.0"
 ipykernel = "^6.24.0"
 pytailwindcss = "^0.2.0"
 jinja2 = "^3.1.2"
+networkx = "^3.1"
 
 
 [build-system]
