@@ -3,39 +3,38 @@ from dash import html
 
 dash.register_page(__name__)
 
-CONTENT_STYLE = {
-    "width": "85vw",
-    "padding": "2vh 1vw",
-    "display": "flex",
-}
-
-FIGURE_BLANK = {
-    "width": "23vw",
-    "height": "20vh",
-    "padding": "2vh 2vw",
-    "background-color": "#ffffff",
-    "font-weight": "bold",
-    "margin": "1vh 1vw",
-}
-content = html.Div(
-    [
-        html.Div(["figure-4"], style=FIGURE_BLANK),
-        html.Div(["figure-5"], style=FIGURE_BLANK),
-        html.Div(["figure-6"], style=FIGURE_BLANK),
-    ],
-    style=CONTENT_STYLE,
-)
-
-layout_style = {
-    # 'display': 'flex'
-    "background-color": "#e6e7e9",
-    "height": "95vh",
-}
-
 layout = html.Div(
     [
-        # dcc.Location(id="url"),
-        content,
+        html.Div(
+            [
+                html.Div(  # 소제목
+                    "• 추천 효과 및 효율",
+                    className="title p-4",
+                    style={"grid-area": "1 / 1 / span 1 / span 4"},
+                ),
+                html.Div(
+                    # 성공 실패 bar chart
+                ),
+                html.Div(
+                    # 추천 효율 graph
+                ),
+                html.Div(  # 소제목
+                    "• 데이터 품질",
+                    className="title p-4",
+                    style={"grid-area": "10 / 1 / span 1 / span 4"},
+                ),
+                html.Div(
+                    # perflexity graph
+                    id="perflexity",
+                ),
+                html.Div(
+                    # n-gram graph
+                    id="n-gram",
+                ),
+            ],
+            className="grid grid-cols-12 grid-rows-36",
+            id="instance-grid",
+        ),
     ],
-    style=layout_style,
+    className="content no-scrollbar",
 )

@@ -130,15 +130,26 @@ def draw_pie_chart(column, range):
     """
     min_range = range[0]
     max_range = range[1]
-    df = (
-        df_sentence[[column]]
-        .loc[
-            (df_sentence["sentence_index"] >= min_range)
-            & (df_sentence["sentence_index"] <= max_range)
-        ]
-        .value_counts()
-        .to_frame()
-    )
+    if column in ["wday", "topic", "date", "place", "time"]:
+        df = (
+            df_user[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+        )
+    else:
+        df = (
+            df_sentence[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+        )
     df.columns = ["count"]
     df.reset_index(inplace=True)
     if df.shape[0] > 10:
@@ -184,16 +195,28 @@ def draw_bar_chart(column, range, horizontal=False):
     """
     min_range = range[0]
     max_range = range[1]
-    df = (
-        df_sentence[[column]]
-        .loc[
-            (df_sentence["sentence_index"] >= min_range)
-            & (df_sentence["sentence_index"] <= max_range)
-        ]
-        .value_counts()
-        .to_frame()
-        .reset_index()
-    )
+    if column in ["wday", "topic", "date", "place", "time"]:
+        df = (
+            df_user[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+            .reset_index()
+        )
+    else:
+        df = (
+            df_sentence[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+            .reset_index()
+        )
     df.columns = [column, "count"]
     if horizontal:
         fig = px.bar(df, x="count", y=column, orientation="h")
