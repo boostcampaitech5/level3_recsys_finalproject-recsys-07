@@ -310,5 +310,141 @@ def get_selected_column(column_list):
     return [{"name": c, "id": c} for c in column_list]
 
 
+@app.callback(
+    Output("sf-bar-chart", "figure"),
+    Input("sf-column-radio", "value"),
+    Input("da-slider", "value"),
+)
+def draw_recommend_sf_chart(column, range):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 index 범위(시간의 범위), 기본값 [0, 100]
+    """
+    min_range = range[0]
+    max_range = range[1]
+
+    # 라벨
+    top_labels = ["Success", "Failure"]
+
+    # 차트 색깔
+    colors = [px.colors.qualitative.Plotly, px.colors.qualitative.Plotly[1]]
+
+    # 데이터
+    if column in df_user.columns:
+        value_counts = df_user[column][
+            min_range : max_range + 1  # noqa: E203
+        ].value_counts()
+    else:
+        value_counts = df_sentence[column][
+            min_range : max_range + 1  # noqa: E203
+        ].value_counts()
+    total_count = value_counts.sum()
+    df_percentage = value_counts / total_count * 100
+    x_data = [[df_percentage[0].round(1), df_percentage[1].round(1)]]
+    # id값(아직 보이게 설정안함)
+    y_data = ["success_failure Distribution"]
+
+    fig = go.Figure()
+
+    for i in range(0, len(x_data[0])):
+        for xd, yd in zip(x_data, y_data):
+            fig.add_trace(
+                go.Bar(
+                    x=[xd[i]],
+                    y=[yd],
+                    orientation="h",
+                    marker=dict(
+                        color=colors[i], line=dict(color="rgb(248, 248, 249)", width=1)
+                    ),
+                )
+            )
+
+    fig.update_layout(
+        title=dict(
+            text=f"{y_data[0]}",
+            font=dict(size=36),
+            x=0.5,
+            pad=dict(b=1000, t=1000),
+        ),
+        xaxis=dict(
+            showgrid=False,
+            showline=False,
+            showticklabels=False,
+            zeroline=False,
+        ),
+        yaxis=dict(
+            showgrid=False,
+            showline=False,
+            showticklabels=False,
+            zeroline=False,
+        ),
+        barmode="stack",
+        paper_bgcolor="rgb(248, 248, 255)",
+        plot_bgcolor="rgb(248, 248, 255)",
+        showlegend=False,
+        margin=dict(t=140, b=80),
+    )
+
+    annotations = []
+
+    for yd, xd in zip(y_data, x_data):
+        # labeling the first percentage of each bar (x_axis)
+        annotations.append(
+            dict(
+                xref="x",
+                yref="y",
+                x=xd[0] / 2,
+                y=yd,
+                text=str(xd[0]) + "%",
+                font=dict(family="Arial", size=20, color="rgb(248, 248, 255)"),
+                showarrow=False,
+            )
+        )
+        # labeling the first Likert scale (on the top)
+        annotations.append(
+            dict(
+                xref="x",
+                yref="paper",
+                x=xd[0] / 2,
+                y=1.1,
+                text=top_labels[0],
+                font=dict(family="Arial", size=20, color="rgb(67, 67, 67)"),
+                showarrow=False,
+            )
+        )
+        space = xd[0]
+        for i in range(1, len(xd)):
+            # labeling the rest of percentages for each bar (x_axis)
+            annotations.append(
+                dict(
+                    xref="x",
+                    yref="y",
+                    x=space + (xd[i] / 2),
+                    y=yd,
+                    text=str(xd[i]) + "%",
+                    font=dict(family="Arial", size=20, color="rgb(248, 248, 255)"),
+                    showarrow=False,
+                )
+            )
+            # labeling the Likert scale
+            if yd == y_data[-1]:
+                annotations.append(
+                    dict(
+                        xref="x",
+                        yref="paper",
+                        x=space + (xd[i] / 2),
+                        y=1.1,
+                        text=top_labels[i],
+                        font=dict(family="Arial", size=20, color="rgb(67, 67, 67)"),
+                        showarrow=False,
+                    )
+                )
+            space += xd[i]
+
+    fig.update_layout(annotations=annotations)
+    # fig.show()
+    return fig
+
+
 if __name__ == "__main__":
     app.run_server(host="0.0.0.0", debug=True, port=30005)
