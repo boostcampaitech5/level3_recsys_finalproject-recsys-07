@@ -1,6 +1,7 @@
 import dash
 from dash import dcc, html, dash_table
 from assets.data import df_user, columns_u
+from assets.figure import perflexity, ngram
 
 dash.register_page(__name__)
 
@@ -142,30 +143,34 @@ layout = html.Div(
                         "justify-content": "space-around",
                     },
                 ),
-                html.Div(
-                    # 추천 효율 graph
-                    dcc.Graph(
-                        id="da-graph",
-                        className="fig",
-                        style={"grid-area": "15 / 1 / span 15 / span 10"},
-                    ),
+                # 추천 효율 graph
+                dcc.Graph(
+                    id="da-graph",
+                    className="fig",
+                    style={"grid-area": "15 / 1 / span 15 / span 10"},
                 ),
                 html.Div(  # 소제목
                     "• 데이터 품질",
                     className="title p-4",
                     style={"grid-area": "10 / 1 / span 1 / span 4"},
                 ),
-                html.Div(
-                    # perflexity graph
-                    id="perflexity",
+                # perflexity graph
+                dcc.Graph(
+                    figure=perflexity(),
+                    id="perflexity-dist",
+                    className="fig",
+                    style={"grid-area": "15 / 1 / span 15 / span 10"},
                 ),
-                html.Div(
-                    # n-gram graph
+                # n-gram graph
+                dcc.Graph(
+                    figure=ngram(),
                     id="n-gram",
+                    className="fig",
+                    style={"grid-area": "15 / 1 / span 15 / span 10"},
                 ),
                 # dcc.Location(id="url"),
             ],
-            # className="grid grid-cols-12 grid-rows-36",
+            className="grid grid-cols-12 grid-rows-36",
             id="instance-grid",
         ),
     ],

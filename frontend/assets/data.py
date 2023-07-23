@@ -1,6 +1,9 @@
 import pandas as pd
 
-# df = pd.read_csv("../data/durecdial/dev_sentiment.csv")
+# nltk.download('stopwords')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('all')
+
 df_user = pd.read_csv("../data/durecdial/train_user_xs.csv")
 df_sentence = pd.read_csv("../data/durecdial/train_sentence_xs.csv")
 model_eval = pd.read_csv("../data/model_metric/model_eval.csv")

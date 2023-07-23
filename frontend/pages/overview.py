@@ -1,7 +1,7 @@
 import dash
 from dash import dcc, html
 from assets import figure
-from assets.data import df_sentence, size, max_si, user_count, columns, df_user
+from assets.data import df_sentence, size, max_si, user_count, columns
 
 dash.register_page(__name__)
 
@@ -82,9 +82,9 @@ layout = html.Div(
                         html.Div(
                             [
                                 dcc.Graph(
-                                    figure=figure.draw_pie_chart(
-                                        df_sentence, "goal_type"
-                                    ),
+                                    # figure=figure.draw_pie_chart(
+                                    #     df_sentence, "goal_type"
+                                    # ),
                                     id="pie-chart",
                                     className="fig",
                                 ),
@@ -102,7 +102,7 @@ layout = html.Div(
                         ),
                         html.Div(
                             dcc.Graph(
-                                figure=figure.draw_bar_chart(df_user, "wday"),
+                                # figure=figure.draw_bar_chart(df_user, "wday"),
                                 className="fig",
                                 id="bar-chart",
                             ),
