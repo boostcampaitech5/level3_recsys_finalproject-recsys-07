@@ -174,5 +174,5 @@ layout = html.Div(
             id="instance-grid",
         ),
     ],
-    className="content no-scrollbar",
+    className="content no-scrollbar w-full",
 )
