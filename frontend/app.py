@@ -2,6 +2,7 @@ import dash
 from dash import Dash, Input, Output, State, dcc, html
 import dash_bootstrap_components as dbc
 import plotly.express as px
+import networkx as nx
 import plotly.graph_objects as go
 from assets import sidebar
 from assets.data import df_user, df_sentence
@@ -273,7 +274,7 @@ def draw_bar_chart(column, range, horizontal=False):
     Output("user-poi", "children"),
     Output("user-news+", "children"),
     Output("user-news", "children"),
-    Input("user-id", "value"),
+    Input("inst-user-id", "value"),
 )
 def get_user_info(user_id):
     user = df_user[df_user.user_id == user_id]
@@ -311,17 +312,24 @@ def get_selected_column(column_list):
 
 
 @app.callback(
+    Output("sf-dialog", "data"),
+    Input("sf-dialog-radio", "value"),
+)
+def get_sf_dialog(val):
+    return df_sentence[df_sentence.recommend_sf == val].to_dict("records")
+
+
+@app.callback(
     Output("sf-bar-chart", "figure"),
-    Input("sf-column-radio", "value"),
     Input("da-slider", "value"),
 )
-def draw_recommend_sf_chart(column, range):
+def draw_recommend_sf_chart(slider, column="recommend_sf"):
     """
     column : 출력 원하는 column명
     min_range, max_range : 함수에 표시할 index 범위(시간의 범위), 기본값 [0, 100]
     """
-    min_range = range[0]
-    max_range = range[1]
+    min_range = slider[0]
+    max_range = slider[1]
 
     # 라벨
     top_labels = ["Success", "Failure"]
@@ -443,6 +451,113 @@ def draw_recommend_sf_chart(column, range):
 
     fig.update_layout(annotations=annotations)
     # fig.show()
+    return fig
+
+
+@app.callback(
+    Output("da-graph", "figure"),
+    Input("da-user-id", "value"),
+)
+def draw_graph(
+    user_id,
+    with_labels=False,
+    node_size=400,
+    width=2,
+    style=None,
+    draw=False,
+    return_graph=False,
+):
+    """
+    with_labels : node에 index 표시
+    -x- node_size : node 크기
+    -x- width : edge 두께
+    style : 그래프 스타일 ('circular', 'spectral', 'kamada_kawai', 'planar', 'spring', 'shell')
+    -x- draw : 그래프 표시
+    -x- return_graph : 반환 값을 graph로 변경. False일 시 대화 시작부터 종료까지 길이를 반환
+    """
+    G = nx.Graph()
+
+    color_map = []
+    before = 0
+    flag = False
+    cdf = df_sentence[df_sentence.user_id == user_id]
+
+    for i in range(cdf.shape[0]):
+        log = cdf.iloc[i]
+        if log.is_user:
+            color_map.append("blue")
+        else:
+            color_map.append("red")
+        G.add_node(i)
+        if i == 0:
+            continue
+        if log.is_user:
+            G.add_edge(i, i - 1)
+            if log.deny:
+                flag = True
+            else:
+                flag = False
+                before = i
+        else:
+            if flag:
+                G.add_edge(i, before)
+            else:
+                G.add_edge(i, i - 1)
+    color_map[0], color_map[-1] = "black", "gray"
+
+    pos = nx.spring_layout(G)
+
+    edge_x = []
+    edge_y = []
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.append(x0)
+        edge_x.append(x1)
+        edge_x.append(None)
+        edge_y.append(y0)
+        edge_y.append(y1)
+        edge_y.append(None)
+
+    edge_trace = go.Scatter(
+        x=edge_x,
+        y=edge_y,
+        line=dict(width=0.5, color="#888"),
+        hoverinfo="none",
+        mode="lines",
+    )
+
+    node_x = []
+    node_y = []
+    for node in G.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+
+    node_trace = go.Scatter(
+        x=node_x,
+        y=node_y,
+        mode="markers",
+        hoverinfo="none",
+        marker=dict(color=color_map, showscale=False, size=10, line_width=2),
+    )
+
+    # layout
+    layout = dict(
+        plot_bgcolor="white",
+        paper_bgcolor="white",
+        margin=dict(t=10, b=10, l=10, r=10, pad=0),
+        showlegend=False,
+        xaxis=dict(
+            linecolor="black", showgrid=False, showticklabels=False, mirror=True
+        ),
+        yaxis=dict(
+            linecolor="black", showgrid=False, showticklabels=False, mirror=True
+        ),
+    )
+
+    # figure
+    fig = go.Figure(data=[edge_trace, node_trace], layout=layout)
     return fig
 
 

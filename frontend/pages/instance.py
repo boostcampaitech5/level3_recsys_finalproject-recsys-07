@@ -57,7 +57,7 @@ layout = html.Div(
                     children=[
                         html.Span("Instance Index : "),
                         dcc.Input(
-                            id="user-id",
+                            id="inst-user-id",
                             type="number",
                             placeholder="Search user-ID",
                             value=11,
