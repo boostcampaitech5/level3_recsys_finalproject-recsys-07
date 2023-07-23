@@ -1,5 +1,5 @@
 import dash
-from dash import html
+from dash import dcc, html, dash_table
 
 dash.register_page(__name__)
 
@@ -30,6 +30,15 @@ layout = html.Div(
                 html.Div(
                     # n-gram graph
                     id="n-gram",
+                ),
+                      # dcc.Location(id="url"),
+                html.Div(
+                    [
+                        # 1. slider - train_sentence_xs.csv파일에 index 사용
+                        # 2. 성공, 실패 figure
+                        # 3. 성공 대화 data_table(추천한 대화+추천받은대화)
+                        # 4. 실패 대화 data_table(추천한 대화+추천받은대화)
+                    ]
                 ),
             ],
             className="grid grid-cols-12 grid-rows-36",
