@@ -73,6 +73,10 @@
     height:250vh;
 }
 
+#model-grid {
+  width: 77vw;
+}
+
 #da-grid {
   height:250vh;
   width: 77vw;
