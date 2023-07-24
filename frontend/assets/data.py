@@ -14,3 +14,7 @@ columns_u = df_user.columns
 columns = list(df_sentence.columns)
 columns.extend(list(df_user.columns))
 user_count = len(df_user)
+
+
+def get_model_eval(col):
+    return model_eval[model_eval[col] == 1].to_dict("records")
