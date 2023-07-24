@@ -100,9 +100,9 @@ def perflexity():
 
     fig = ff.create_distplot([d_pp], group_labels, bin_size=0.1)
     fig.update_layout(
-        autosize=False,
-        width=800,
-        height=800,
+        autosize=True,
+        # width=800,
+        # height=800,
         yaxis=dict(
             title_text="Dialogue Count",
         ),
@@ -120,9 +120,9 @@ def ngram():
 
     fig = ff.create_distplot([d_array], group_labels, bin_size=0.1)
     fig.update_layout(
-        autosize=False,
-        width=800,
-        height=800,
+        autosize=True,
+        # width=800,
+        # height=800,
         yaxis=dict(
             title_text="Dialogue Count",
         ),
