@@ -280,6 +280,35 @@ def get_user_info(user_id):
 
 
 @app.callback(
+    Output("precision-value", "children"),
+    Output("precision-value-1", "children"),
+    Output("precision-value-2", "children"),
+    Output("precision-value-3", "children"),
+    Output("precision-value-4", "children"),
+    Output("precision-value-5", "children"),
+    Output("precision-value-6", "children"),
+    Output("precision-value-7", "children"),
+    Output("precision-value-8", "children"),
+    Output("precision-value-9", "children"),
+    Input("da-user-id", "value"),
+)
+def get_user_precision(user_id):
+    user = df_user[df_user.user_id == user_id]
+    return (
+        user["precision"].iloc[0].round(3),
+        user["precision_1"].iloc[0].round(3),
+        user["precision_2"].iloc[0].round(3),
+        user["precision_3"].iloc[0].round(3),
+        user["precision_4"].iloc[0].round(3),
+        user["precision_5"].iloc[0].round(3),
+        user["precision_6"].iloc[0].round(3),
+        user["precision_7"].iloc[0].round(3),
+        user["precision_8"].iloc[0].round(3),
+        user["precision_9"].iloc[0].round(3),
+    )
+
+
+@app.callback(
     Output("raw-data", "columns"),
     Input("column-list", "value"),
 )
@@ -346,7 +375,7 @@ def draw_recommend_sf_chart(slider, column="recommend_sf"):
     fig.update_layout(
         title=dict(
             text=f"{y_data[0]}",
-            font=dict(size=36),
+            font=dict(size=18),
             x=0.5,
             pad=dict(b=1000, t=1000),
         ),
@@ -363,8 +392,8 @@ def draw_recommend_sf_chart(slider, column="recommend_sf"):
             zeroline=False,
         ),
         barmode="stack",
-        paper_bgcolor="rgb(248, 248, 255)",
-        plot_bgcolor="rgb(248, 248, 255)",
+        paper_bgcolor="rgb(255, 255, 255)",
+        plot_bgcolor="rgb(255, 255, 255)",
         showlegend=False,
         margin=dict(t=140, b=80),
     )

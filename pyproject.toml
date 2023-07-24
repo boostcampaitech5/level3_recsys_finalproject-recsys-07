@@ -20,7 +20,8 @@ ipykernel = "^6.24.0"
 pytailwindcss = "^0.2.0"
 jinja2 = "^3.1.2"
 networkx = "^3.1"
-
+nltk = "^3.8.1"
+stop-words = "^2018.7.23"
 
 [build-system]
 requires = ["poetry-core"]

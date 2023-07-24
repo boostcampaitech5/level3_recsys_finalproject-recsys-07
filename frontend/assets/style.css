@@ -71,7 +71,16 @@
 
 #instance-grid {
     height:250vh;
+}
 
+#da-grid {
+  height:250vh;
+  width: 77vw;
+  row-gap: "10px";
+  /* align-items: center; */
+  /* justify-items: stretch; */
+  justify-content: center;
+  align-content: center;
 }
 
 .grid-rows-36 {
