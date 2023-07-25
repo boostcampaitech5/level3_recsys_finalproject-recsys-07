@@ -143,6 +143,7 @@ layout = html.Div(
                             # data=data.df_sentence.to_dict("records"),
                             columns=[
                                 {"name": "idx", "id": "sentence_index"},
+                                # {"name": "is_user", "id": "is_user"},
                                 {"name": "sentence", "id": "sentence"},
                             ],
                             id="user-dialog",
@@ -163,14 +164,26 @@ layout = html.Div(
                                     "backgroundColor": "#f1f5f9",
                                 },
                                 {
+                                    "if": {
+                                        "filter_query": "{is_user} = 0",
+                                        # 'column_id': 'is_user'
+                                    },
+                                    "backgroundColor": "#e2f0ff",
+                                },
+                                {
                                     "if": {"column_id": "sentence_index"},
                                     "max-width": "2vw",
                                     "min-width": "2vw",
                                 },
                                 {
+                                    "if": {"column_id": "is_user"},
+                                    "max-width": "3vw",
+                                    "min-width": "3vw",
+                                },
+                                {
                                     "if": {"column_id": "sentence"},
-                                    "max-width": "40vw",
-                                    "min-width": "40vw",
+                                    "max-width": "38vw",
+                                    "min-width": "38vw",
                                 },
                             ],
                             style_header={

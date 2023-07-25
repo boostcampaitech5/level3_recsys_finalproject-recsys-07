@@ -12,6 +12,26 @@ dash.register_page(__name__)
 cols = [{"name": "idx", "id": "user_id"}]
 cols.extend([{"name": c, "id": c} for c in columns_u if "precision" in c])
 
+
+def precision_at_K(xtitle=None, ytitle=None, smooth=False):
+    """
+    xtitle, ytitle : x축, y축 제목
+    smooth : 그래프 부드럽게 그리는 여부
+    """
+    precisions = [f"precision_{i}" for i in range(1, 10)]
+    pk = df_user.groupby(by="user_id")[precisions].mean().mean()
+    if smooth:
+        shape = "spline"
+    else:
+        shape = "linear"
+    fig = px.line(pk, line_shape=shape)
+    fig.update_layout(showlegend=False)
+    fig.update_xaxes(title=xtitle)
+    fig.update_yaxes(title=ytitle)
+
+    return fig
+
+
 layout = html.Div(
     [
         html.Div(
@@ -19,7 +39,7 @@ layout = html.Div(
                 html.Div(  # 소제목
                     "• 추천 효과 및 효율",
                     className="title p-4",
-                    style={"grid-area": "1 / 1 / span 1 / span 5"},
+                    style={"grid-area": "1 / 1 / span 1 / span 3"},
                 ),
                 html.Div(
                     children=[
@@ -37,92 +57,23 @@ layout = html.Div(
                     ],
                     className="p-4 fig f-3",
                     style={
-                        "grid-area": "2 / 1 / span 1 / span 4",
+                        "grid-area": "2 / 1 / span 1 / span 5",
                         "display": "flex",
                         "align-items": "center",
                         "justify-content": "space-around",
                     },
                 ),
-                html.Div(
-                    [
-                        html.Div("precision", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value",
-                            className="user-info col-start-2 col-end-3",
-                        ),
-                        html.Div("precision@5", className="col-start-3 col-end-4 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-5",
-                            className="user-info col-start-4 col-end-5",
-                        ),
-                        html.Div("precision@1", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-1",
-                            className="user-info col-start-2 col-end-3",
-                        ),
-                        html.Div("precision@6", className="col-start-3 col-end-4 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-6",
-                            className="user-info col-start-4 col-end-5",
-                        ),
-                        html.Div("precision@2", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-2",
-                            className="user-info col-start-2 col-end-3",
-                        ),
-                        html.Div("precision@7", className="col-start-3 col-end-4 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-7",
-                            className="user-info col-start-4 col-end-5",
-                        ),
-                        html.Div("precision@3", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-3",
-                            className="user-info col-start-2 col-end-3",
-                        ),
-                        html.Div("precision@8", className="col-start-3 col-end-4 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-8",
-                            className="user-info col-start-4 col-end-5",
-                        ),
-                        html.Div("precision@4", className="col-start-1 col-end-2 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-4",
-                            className="user-info col-start-2 col-end-3",
-                        ),
-                        html.Div("precision@9", className="col-start-3 col-end-4 p-2"),
-                        html.Div(
-                            children=[],
-                            id="precision-value-9",
-                            className="user-info col-start-4 col-end-5",
-                        ),
-                    ],
+                dcc.Graph(
+                    figure=precision_at_K(),
+                    id="precisions",
                     className="fig",
-                    style={
-                        "display": "grid",
-                        "grid-area": "3 / 1 / span 5 / span 4",
-                        "grid-template-columns": "2fr 4fr 2fr 4fr",
-                        "grid-template-rows": "repeat(6, minmax(0, 1fr))",
-                        "row-gap": "2rem",
-                        "padding": "2rem",
-                        "justify-items": "start",
-                        "align-items": "center",
-                    },
+                    style={"grid-area": "3 / 1 / span 5 / span 5"},
                 ),
                 # 추천 효율 graph
                 dcc.Graph(
                     id="da-graph",
                     className="fig",
-                    style={"grid-area": "1 / 5 / span 6 / span 8"},
+                    style={"grid-area": "1 / 6 / span 6 / span 7"},
                 ),
                 html.Div(
                     [
@@ -160,7 +111,8 @@ layout = html.Div(
                         dash_table.DataTable(
                             # data=data.df_sentence.to_dict("records"),
                             columns=[
-                                {"name": "idx", "id": "sentence_index"},
+                                {"name": "id", "id": "user_id"},
+                                # {"name": "is_rec", "id": "recdial"},
                                 {"name": "sentence", "id": "sentence"},
                             ],
                             id="sf-dialog",
