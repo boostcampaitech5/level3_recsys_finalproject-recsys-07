@@ -1,5 +1,7 @@
 import dash
-from dash import html, dcc, dash_table
+from dash import Input, Output, callback, dash_table, dcc, html
+import plotly.graph_objects as go
+from assets.data import df_user, df_sentence
 
 dash.register_page(__name__)
 
@@ -369,3 +371,78 @@ layout = html.Div(
     ],
     className="content no-scrollbar",
 )
+
+
+@callback(
+    Output("raw-data", "columns"),
+    Input("column-list", "value"),
+)
+def get_selected_column(column_list):
+    return [{"name": c, "id": c} for c in column_list]
+
+
+@callback(
+    Output("user-dialog", "data"),
+    Output("raw-data", "data"),
+    Output("user-name", "children"),
+    Output("user-gender", "children"),
+    Output("user-age", "children"),
+    Output("user-residence", "children"),
+    Output("user-occupation", "children"),
+    Output("user-food+", "children"),
+    Output("user-movies+", "children"),
+    Output("user-movies-", "children"),
+    Output("user-movie+", "children"),
+    Output("user-music1+", "children"),
+    Output("user-music2+", "children"),
+    Output("user-music-", "children"),
+    Output("user-celebrity+", "children"),
+    Output("user-reject", "children"),
+    Output("user-poi+", "children"),
+    Output("user-poi", "children"),
+    Output("user-news+", "children"),
+    Output("user-news", "children"),
+    Input("inst-user-id", "value"),
+)
+def get_user_info(user_id):
+    user = df_user[df_user.user_id == user_id]
+    sentence = df_sentence[df_sentence.user_id == user_id]
+    return (
+        sentence.to_dict("records"),
+        sentence.to_dict("records"),
+        user["user_profile_name"].iloc[0],
+        user["user_profile_gender"].iloc[0],
+        user["user_profile_age_range"].iloc[0],
+        user["user_profile_residence"].iloc[0],
+        user["user_profile_occupation"].iloc[0],
+        user["user_profile_accepted_food"].iloc[0],
+        user["user_profile_accepted_movies"].iloc[0],
+        user["user_profile_rejected_movies"].iloc[0],
+        user["user_profile_accepted_movie"].iloc[0],
+        user["user_profile_accepted_music"].iloc[0],
+        user["user_profile_accepted_music.1"].iloc[0],
+        user["user_profile_rejected_music"].iloc[0],
+        user["user_profile_accepted_celebrities"].iloc[0],
+        user["user_profile_reject"].iloc[0],
+        user["user_profile_accepted_poi"].iloc[0],
+        user["user_profile_poi"].iloc[0],
+        user["user_profile_favorite_news"].iloc[0],
+        user["user_profile_accepted_news"].iloc[0],
+    )
+
+
+@callback(Output("user-pie-chart", "figure"), Input("user-column-radio", "value"))
+def draw_user_pie_chart(column):
+    """
+    column: 출력 원하는 column명
+    """
+    df = df_user[column].value_counts().to_frame()
+    df.columns = ["count"]
+
+    fig = go.Figure(data=[go.Pie(labels=df.index.to_list(), values=df["count"])])
+    fig.update_traces(textinfo="percent")
+    fig.update_layout(title=f"{column} Distribution")  # 제목
+
+    # fig.show()
+    # age_range, gender, occupation, reject
+    return fig

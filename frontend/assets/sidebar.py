@@ -1,4 +1,4 @@
-from dash import html
+from dash import html, callback, Input, Output, State
 import dash_bootstrap_components as dbc
 
 sidebar_show = [
@@ -119,3 +119,46 @@ sidebar = html.Div(
     className="sidebar side-show",
     id="sidebar",
 )
+
+
+@callback(
+    [
+        Output("header", "className"),
+        Output("sidebar", "className"),
+        Output("sidebar", "children"),
+        Output("page_content", "className"),
+        Output("side_click", "data"),
+    ],
+    [Input("btn-sidebar", "n_clicks")],
+    [
+        State("side_click", "data"),
+    ],
+)
+def toggle_sidebar(n, nclick):
+    if n:
+        if nclick == "SHOW":
+            header_className = "header content-side-hidden"
+            sidebar_className = "sidebar side-hidden"
+            sidebar_children = sidebar_hidden
+            content_className = "content content-side-hidden"
+            cur_nclick = "HIDDEN"
+        else:
+            header_className = "header content-side-show"
+            sidebar_className = "sidebar side-show"
+            sidebar_children = sidebar_show
+            content_className = "content content-side-show"
+            cur_nclick = "SHOW"
+    else:
+        header_className = "header content-side-show"
+        sidebar_className = "sidebar side-show"
+        sidebar_children = sidebar_show
+        content_className = "content content-side-show"
+        cur_nclick = "SHOW"
+
+    return (
+        header_className,
+        sidebar_className,
+        sidebar_children,
+        content_className,
+        cur_nclick,
+    )
