@@ -1,7 +1,9 @@
 import dash
-from dash import dcc, html
 from assets import figure
-from assets.data import df_sentence, size, max_si, user_count, columns
+from assets.data import df_sentence, size, max_si, user_count, columns, df_user
+from dash import Input, Output, callback, dcc, html
+import plotly.express as px
+import plotly.graph_objects as go
 
 dash.register_page(__name__)
 
@@ -189,3 +191,96 @@ layout = html.Div(
     ],
     className="content no-scrollbar flex flex-col",
 )
+
+
+@callback(
+    Output("pie-chart", "figure"),
+    Input("column-radio", "value"),
+    Input("si-slider", "value"),
+)
+def draw_pie_chart(column, range):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+    """
+    min_range = range[0]
+    max_range = range[1]
+    if column in ["wday", "topic", "date", "place", "time"]:
+        df = (
+            df_user[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+        )
+    else:
+        df = (
+            df_sentence[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+        )
+    df.columns = ["count"]
+    df.reset_index(inplace=True)
+    if df.shape[0] > 10:
+        df.loc[9] = ["기타", df["count"].iloc[10:].sum()]
+        df = df.iloc[:10]
+    fig = go.Figure(data=[go.Pie(labels=df[column], values=df["count"])])
+    fig.update_traces(textinfo="percent")
+    fig.update_layout(title=f"{column} Distribution")
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)"
+    )  # figure에서는 테두리를 둥글게 만들 수 없어서 배경색을 투명하게 설정.
+    # fig.show()
+    return fig
+
+
+@callback(
+    Output("bar-chart", "figure"),
+    Input("column-radio", "value"),
+    Input("si-slider", "value"),
+)
+def draw_bar_chart(column, range, horizontal=False):
+    """
+    column : 출력 원하는 column명
+    min_range, max_range : 함수에 표시할 sentence_index 범위, 기본값 [0, 50]
+    horizontal : 가로 출력 여부
+    """
+    min_range = range[0]
+    max_range = range[1]
+    if column in ["wday", "topic", "date", "place", "time"]:
+        df = (
+            df_user[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+            .reset_index()
+        )
+    else:
+        df = (
+            df_sentence[[column]]
+            .loc[
+                (df_sentence["sentence_index"] >= min_range)
+                & (df_sentence["sentence_index"] <= max_range)
+            ]
+            .value_counts()
+            .to_frame()
+            .reset_index()
+        )
+    df.columns = [column, "count"]
+    if horizontal:
+        fig = px.bar(df, x="count", y=column, orientation="h")
+    else:
+        fig = px.bar(df, x=column, y="count")
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)"
+    )  # figure에서는 테두리를 둥글게 만들 수 없어서 배경색을 투명하게 설정.
+    return fig
