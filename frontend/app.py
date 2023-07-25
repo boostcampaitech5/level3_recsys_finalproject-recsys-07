@@ -1,7 +1,7 @@
 import dash
 from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
-from assets import sidebar
+from assets import sidebar, header
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 font_awesome = (
@@ -29,40 +29,7 @@ app.layout = html.Div(
         sidebar.sidebar,
         html.Div(
             [
-                dbc.Navbar(
-                    children=[
-                        html.H1(
-                            children=["Select Dataset🗃️ →"],
-                            style={
-                                "margin-left": "3%",
-                                "font-weight": "bold",
-                                "font-size": "150%",
-                            },
-                        ),
-                        dcc.Dropdown(
-                            [
-                                {
-                                    "label": html.Span(
-                                        ["DuRecDial2.0 (sample)"],
-                                        style={"font-size": 20},
-                                    ),
-                                    "value": "DuRecDial2.0",
-                                },
-                                {
-                                    "label": html.Span(
-                                        ["ReDial (sample)"], style={"font-size": 20}
-                                    ),
-                                    "value": "ReDial",
-                                },
-                            ],
-                            value="DuRecDial2.0",
-                            className="data-selector",
-                            optionHeight=50,
-                        ),
-                    ],
-                    className="header",
-                    id="header",
-                ),
+                header.header,
                 dash.page_container,
             ],
             id="page_content",
