@@ -238,17 +238,17 @@ def draw_graph(
     with_labels=False,
     node_size=400,
     width=2,
-    style=None,
+    style="kamada_kawai",
     draw=False,
     return_graph=False,
 ):
     """
     with_labels : node에 index 표시
-    -x- node_size : node 크기
-    -x- width : edge 두께
+    node_size : node 크기
+    width : edge 두께
     style : 그래프 스타일 ('circular', 'spectral', 'kamada_kawai', 'planar', 'spring', 'shell')
-    -x- draw : 그래프 표시
-    -x- return_graph : 반환 값을 graph로 변경. False일 시 대화 시작부터 종료까지 길이를 반환
+    draw : 그래프 표시
+    return_graph : 반환 값을 graph로 변경. False일 시 대화 시작부터 종료까지 길이를 반환
     """
     G = nx.Graph()
 
@@ -280,8 +280,24 @@ def draw_graph(
                 G.add_edge(i, i - 1)
     color_map[0], color_map[-1] = "black", "gray"
 
-    pos = nx.spring_layout(G)
+    def plotly_style(G, style):
+        if style == "circular":
+            pos = nx.circular_layout(G)
+        elif style == "spectral":
+            pos = nx.spectral_layout(G)
+        elif style == "kamada_kawai":
+            pos = nx.kamada_kawai_layout(G)
+        elif style == "planar":
+            pos = nx.planar_layout(G)
+        elif style == "spring":
+            pos = nx.spring_layout(G)
+        elif style == "shell":
+            pos = nx.shell_layout(G)
+        else:
+            raise ValueError(f"Invalid style: {style}")
+        return pos
 
+    pos = plotly_style(G, style)
     edge_x = []
     edge_y = []
     for edge in G.edges():
@@ -313,7 +329,8 @@ def draw_graph(
         x=node_x,
         y=node_y,
         mode="markers",
-        hoverinfo="none",
+        text=list(cdf.sentence),
+        hoverinfo="text",
         marker=dict(color=color_map, showscale=False, size=10, line_width=2),
     )
 
@@ -333,6 +350,7 @@ def draw_graph(
 
     # figure
     fig = go.Figure(data=[edge_trace, node_trace], layout=layout)
+    # f = go.FigureWidget(fig)
     return fig
 
 
