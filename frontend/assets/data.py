@@ -4,8 +4,9 @@ import pandas as pd
 # nltk.download('averaged_perceptron_tagger')
 # nltk.download('all')
 
-df_user = pd.read_csv("../data/durecdial/train_user_xs.csv")
-df_sentence = pd.read_csv("../data/durecdial/train_sentence_xs.csv")
+df_user = pd.read_csv("../data/durecdial/train_user_small.csv")
+df_sentence = pd.read_csv("../data/durecdial/train_sentence_small.csv")
+df_sentence_small = pd.read_csv("../data/durecdial/train_sentence_xs.csv")
 model_eval = pd.read_csv("../data/model_metric/model_eval.csv")
 max_si = max(df_sentence.sentence_index)
 size = df_sentence.size
