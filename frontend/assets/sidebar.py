@@ -62,6 +62,9 @@ sidebar_show = [
             dcc.Store(
                 id="data-store",
             ),
+            dcc.Store(
+                id="pp-data-store",
+            ),
             html.Ul(id="file-list"),
             dbc.NavLink(
                 [
@@ -265,7 +268,7 @@ def store_output(content_string, filename, date):
 
 
 @callback(
-    Output("data-store", "data"),
+    Output("pp-data-store", "data"),
     Input("data-store", "modified_timestamp"),
     State("data-store", "data"),
     State("date-store", "data"),
