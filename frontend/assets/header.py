@@ -20,6 +20,24 @@ header = html.Div(
                     className="data-selector",
                     optionHeight=50,
                 ),
+                dbc.Alert(
+                    "데이터셋 업로드 진행 중... 데이터 크기에 따라 업로드 시간이 길어질 수 있습니다.",
+                    id="upload-progress-alert",
+                    className="alert",
+                    color="info",
+                    dismissable=True,  # 사용자가 닫을 수 있도록 함
+                    is_open=False,  # 알림창 초기 상태는 닫힘
+                    duration=7000,  # 알림창이 자동으로 닫히는 지연 시간 (밀리초 단위)
+                ),
+                dbc.Alert(
+                    "데이터셋 업로드 완료! 페이지 상단에서 데이터를 선택해주세요.",
+                    id="upload-complete-alert",
+                    className="alert",
+                    color="success",
+                    dismissable=True,  # 사용자가 닫을 수 있도록 함
+                    is_open=False,  # 알림창 초기 상태는 닫힘
+                    duration=7000,  # 알림창이 자동으로 닫히는 지연 시간 (밀리초 단위)
+                ),
             ],
             className="header",
             id="header",
@@ -30,6 +48,7 @@ header = html.Div(
 
 @callback(
     Output("header-data-dropdown", "options"),
+    Output("upload-complete-alert", "is_open"),
     Input("filename-store", "modified_timestamp"),
     State("filename-store", "data"),
 )
@@ -37,7 +56,6 @@ def get_filename(ts, filename):
     if ts is None:
         raise dash.exceptions.PreventUpdate
     return [{"label": filename, "value": filename}], True
-
 
 @callback(
     [
