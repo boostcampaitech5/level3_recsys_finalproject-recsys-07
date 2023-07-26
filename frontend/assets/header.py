@@ -57,8 +57,12 @@ def get_filename(ts, filename):
         raise dash.exceptions.PreventUpdate
     return [{"label": filename, "value": filename}], True
 
+
 @callback(
     [
+        Output("upload-dataset-text", "style"),
+        Output("page0", "style"),
+        Output("upload-data", "style"),
         Output("page1", "style"),
         Output("page2", "style"),
         Output("page3", "style"),
@@ -69,5 +73,13 @@ def get_filename(ts, filename):
 def sidebar_btn_show(value):
     if value == "":
         raise dash.exceptions.PreventUpdate
-    elif value == "DurecDial2.0":
-        return [{"visibility": "show"} for _ in range(4)]
+    else:
+        return [
+            {"display": "none"},
+            {"display": "none"},
+            {"display": "none"},
+            {"visibility": "visible"},
+            {"visibility": "visible"},
+            {"visibility": "visible"},
+            {"visibility": "visible"},
+        ]
