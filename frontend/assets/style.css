@@ -95,6 +95,8 @@
   grid-template-rows: repeat(24, minmax(0, 1fr));
 }
 
+
+
 .content {
     top:7vh;
     position:fixed;
@@ -189,6 +191,22 @@
     scrollbar-width: none; /* Firefox */
   }
 
+}
+
+.alert {
+  position: fixed;
+  left: 40vw;
+  top: 8vh;
+}
+.upload-btn {
+  border: 2px dashed #e4e4e4;
+  border-radius: 5px;
+  padding: 10%;
+  text-align: center;
+  margin: 3% 10% 3% 10%;
+  font-size: 15px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .header {

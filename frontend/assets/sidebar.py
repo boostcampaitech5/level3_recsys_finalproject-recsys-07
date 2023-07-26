@@ -39,19 +39,9 @@ sidebar_show = [
                 className="side-nav",
             ),
             dcc.Upload(
+                children=html.Div("Drag & Drop or Select File"),
                 id="upload-data",
-                children=html.Div([html.A("Drag & Drop or Select File")]),
-                style={
-                    "width": "70%",
-                    "height": "50%",
-                    "lineHeight": "60px",
-                    "borderWidth": "1px",
-                    "borderStyle": "dashed",
-                    "borderRadius": "5px",
-                    "textAlign": "center",
-                    "margin": "5% 3% 3% 10%",
-                    "font-size": "15px",
-                },
+                className="upload-btn",
             ),
             dcc.Store(
                 id="filename-store",
@@ -62,13 +52,13 @@ sidebar_show = [
             dcc.Store(
                 id="data-store",
             ),
-            html.Ul(id="file-list"),
+            # html.Ul(id="file-list"),
             dbc.NavLink(
                 [
                     html.Span(
                         className="bi bi-house-door side-nav-icon",
                     ),
-                    html.Span("Overview"),
+                    html.Span("OVERVIEW"),
                 ],
                 href="/overview",
                 active="exact",
@@ -79,7 +69,7 @@ sidebar_show = [
                     html.Span(
                         className="bi bi-layout-three-columns side-nav-icon",
                     ),
-                    html.Span("Instance"),
+                    html.Span("INSTANCE"),
                 ],
                 href="/instance",
                 active="exact",
@@ -90,7 +80,7 @@ sidebar_show = [
                     html.Span(
                         className="bi bi-columns side-nav-icon",
                     ),
-                    html.Span("Data Analysis"),
+                    html.Span("DATA ANALYSIS"),
                 ],
                 href="/dataanalysis",
                 active="exact",
@@ -101,7 +91,7 @@ sidebar_show = [
                     html.Span(
                         className="bi bi-cpu side-nav-icon",
                     ),
-                    html.Span("Model Evaluation"),
+                    html.Span("MODEL EVALUATION"),
                 ],
                 href="/modelevaluation",
                 active="exact",
@@ -216,12 +206,13 @@ def toggle_sidebar(n, nclick):
     State("upload-data", "filename"),
     State("upload-data", "last_modified"),
 )
-def store_output(content_string, filename, date):
+def update_data_store(content_string, filename, date):
     if content_string is not None:
         print("uploaded file: ", filename)
         try:
             if "csv" in filename:
                 df = pd.read_csv(io.StringIO(content_string))
+                print("csv 데이터파일 읽는 중...")
             elif "xls" in filename:
                 df = pd.read_excel(io.BytesIO(content_string))
         except Exception as e:
@@ -230,3 +221,12 @@ def store_output(content_string, filename, date):
         return filename, date, df.to_dict("records")
     if content_string is None:
         raise dash.exceptions.PreventUpdate
+
+
+@callback(
+    Output("upload-progress-alert", "is_open"),
+    Input("upload-data", "filename"),
+)
+def update_progress_alert(filename):
+    if filename:
+        return True
