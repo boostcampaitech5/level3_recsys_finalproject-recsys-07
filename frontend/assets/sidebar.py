@@ -26,6 +26,7 @@ sidebar_show = [
                 children=["Upload Dataset🗃️"],
                 # style={"margin-left": "10%", "margin-bottom": "5%"},
                 className="side-nav",
+                id="upload-dataset-text",
             ),
             dbc.NavLink(
                 [
@@ -35,6 +36,7 @@ sidebar_show = [
                     html.Span("README"),
                 ],
                 href="/readme",
+                id="page0",
                 active="exact",
                 className="side-nav",
             ),
