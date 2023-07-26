@@ -1,5 +1,12 @@
-from dash import html, callback, Input, Output, State
+from dash import html, callback, Input, Output, State, Dash, dcc, dash_table
 import dash_bootstrap_components as dbc
+import base64
+import datetime
+import io, os
+import pandas as pd
+from urllib.parse import quote as urlquote
+
+
 
 sidebar_show = [
     dbc.Nav(
@@ -19,6 +26,41 @@ sidebar_show = [
                 id="header-side-box",
                 className="side-header",
             ),
+            html.H1(
+                children=['Upload Dataset🗃️'],
+                style={
+                    'margin-left' : '10%',
+                    'margin-bottom' : '5%'
+                }
+                    ),
+            dbc.NavLink(
+                [
+                    html.Span('README'),
+                ],
+                href="/readme",
+                active="exact",
+                className="side-nav",
+            ),
+            dcc.Upload(
+                id='upload-data',
+                children=html.Div([
+                    html.A('Drag & Drop or Select File')
+                ]),
+                style={
+                    'width': '70%',
+                    'height': '50%',
+                    'lineHeight': '60px',
+                    'borderWidth': '1px',
+                    'borderStyle': 'dashed',
+                    'borderRadius': '5px',
+                    'textAlign': 'center',
+                    'margin-left': '10%',
+                    'margin-bottom' : '3%',
+                    'font-size' : '15px'
+                },
+            ),
+            html.Ul(id='file-list'),
+
             dbc.NavLink(
                 [
                     html.Span(
@@ -162,3 +204,40 @@ def toggle_sidebar(n, nclick):
         content_className,
         cur_nclick,
     )
+
+def parse_contents(contents, filename, date):
+    content_type, content_string = contents.split(',')
+
+    decoded = base64.b64decode(content_string)
+    try:
+        if 'csv' in filename:
+            # Assume that the user uploaded a CSV file
+            df = pd.read_csv(
+                io.StringIO(decoded.decode('utf-8')))
+        elif 'xls' in filename:
+            # Assume that the user uploaded an excel file
+            df = pd.read_excel(io.BytesIO(decoded))
+    except Exception as e:
+        print(e)
+        return html.Div([
+            'There was an error processing this file.'
+        ])
+
+    return html.Div([
+        html.H5(filename),
+        html.H6(datetime.datetime.fromtimestamp(date)),
+
+        dash_table.DataTable(
+            df.to_dict('records'),
+            [{'name': i, 'id': i} for i in df.columns]
+        ),
+
+        html.Hr(),  # horizontal line
+
+        # For debugging, display the raw contents provided by the web browser
+        html.Div('Raw Content'),
+        html.Pre(contents[0:200] + '...', style={
+            'whiteSpace': 'pre-wrap',
+            'wordBreak': 'break-all'
+        })
+    ])
