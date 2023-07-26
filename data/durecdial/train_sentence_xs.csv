@@ -165,7 +165,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 164,57,13,It looks good. I'll see it when I have time.,One Night in Mongkok,Movie recommendation,,1,4,0.5728801488876343,0,0,False,
 165,57,14,"Well, it won't let you down.",Say goodbye,Say goodbye,,0,3,0.2834400534629822,0,1,False,
 166,57,15,I'm going home now. Talk to you later.,Say goodbye,Say goodbye,,0,5,0.4161127805709839,0,0,False,
-167,57,16,"OK, see ya!",,,,1,4,0.3629869222640991,0,1,False,Success
+167,57,16,"OK, see ya!",,,,1,4,0.3629869222640991,0,1,False,
 168,60,0,What's the weather like today?,Ask about weather,Ask about weather,"Jiujiang, 2018-11-22, Mostly cloudy with northeast winds. The high will be 14 ℃, and low 5 ℃",0,3,0.3283110857009888,0,1,False,
 169,60,1,It's mostly cloudy with northeast winds today. The high temperature will be 14 ℃ and the low will be 5 ℃. Please keep warm.,Ask about weather,Ask about weather,"Jiujiang, 2018-11-22, Mostly cloudy with northeast winds. The high will be 14 ℃, and low 5 ℃",0,3,0.4883164167404175,0,0,False,
 170,60,2,I'll pay attention. Thank you.,Ask about weather,Ask about weather,,0,5,0.4804245233535767,0,1,False,
@@ -1171,7 +1171,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 1170,407,13,Then I'll have a look after school in the evening.,Fly Me to Polaris,Movie recommendation,,1,4,0.3548308610916137,0,0,False,
 1171,407,14,You're going to love this movie.,Say goodbye,Say goodbye,,0,5,0.8478881716728209,0,1,False,
 1172,407,15,I'm really looking forward to watching it. I'm going to attend class now. Talk to you next time.,Say goodbye,Say goodbye,,0,4,0.4263719022274017,0,0,False,
-1173,407,16,"OK, have a good study. I won't disturb you. Bye.",,,,1,3,0.5207750201225281,0,1,False,Success
+1173,407,16,"OK, have a good study. I won't disturb you. Bye.",,,,1,3,0.5207750201225281,0,1,False,
 1174,426,0,"Good morning, Pingjia Wang. Today is also a hopeful day.",Greetings,Greetings,,0,5,0.6444449424743652,1,0,False,
 1175,426,1,"Yeah, a new day, a new atmosphere.",Greetings,Greetings,,0,5,0.6017564535140991,1,1,False,
 1176,426,2,How do you feel about your work today?,Greetings,Greetings,,0,5,0.4142152667045593,1,0,False,
@@ -1280,7 +1280,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 1279,445,13,"OK, I'll take a look.",Left Right Love Destiny,Movie recommendation,,1,3,0.6839069724082947,0,0,False,
 1280,445,14,"Well, you are bound to have a look!",Say goodbye,Say goodbye,,0,5,0.4440056681632996,0,1,False,
 1281,445,15,"OK, I'll go and have a look, goodbye.",Say goodbye,Say goodbye,,0,3,0.5555433034896851,0,0,False,
-1282,445,16,"Go ahead please , chat with you next time, bye!",,,,1,5,0.4520485401153565,0,1,False,Success
+1282,445,16,"Go ahead please , chat with you next time, bye!",,,,1,5,0.4520485401153565,0,1,False,
 1283,453,0,"Hello, Ms. Qiqin Niu. How are you doing recently?",Greetings,Greetings,,0,5,0.3247421383857727,1,0,False,
 1284,453,1,It's very good. I'm very happy every day,Greetings,Greetings,,0,5,0.6061748862266539,1,1,False,
 1285,453,2,It seems that you lead a happy life. You are in an ideal state.,Greetings,Greetings,,0,5,0.5638797879219055,1,0,False,
@@ -2416,7 +2416,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 2415,903,13,It's very good. I like it.,The Years Flow Like Water,Play music,,0,4,0.5418069362640381,0,0,False,
 2416,903,14,Okay. It's great that you like it.,Say goodbye,Say goodbye,,0,3,0.8353015780448914,0,1,False,
 2417,903,15,"It's getting late. It's time for me to rest. Let's talk next time, goodbye.",Say goodbye,Say goodbye,,0,3,0.3412471711635589,0,0,False,
-2418,903,16,"OK, see ya!",,,,1,4,0.3629869222640991,0,1,False,Success
+2418,903,16,"OK, see ya!",,,,1,4,0.3629869222640991,0,1,False,
 2419,916,0,"Good afternoon, Xinming Sun!",Greetings,Greetings,,0,5,0.4721069037914276,1,0,False,
 2420,916,1,Good afternoon!,Greetings,Greetings,,0,4,0.4462607502937317,1,1,False,
 2421,916,2,How's your study recently?,Greetings,Greetings,,0,5,0.2904739081859589,1,0,False,
@@ -2740,7 +2740,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 2739,1024,13,This song really presented a vivid picture of jianghu! Thank you very much.,Coupe,Play music,,0,5,0.7954090237617493,0,0,False,
 2740,1024,14,I'm glad you like it.,Say goodbye,Say goodbye,,0,5,0.5220687985420227,0,1,False,
 2741,1024,15,I'm going to work. Talk later. Bye!,Say goodbye,Say goodbye,,0,5,0.3067792952060699,0,0,False,
-2742,1024,16,All right. Bye!,,,,1,5,0.6910758018493652,0,1,False,Success
+2742,1024,16,All right. Bye!,,,,1,5,0.6910758018493652,0,1,False,
 2743,1027,0,"Hi, Ling Zhou.",Greetings,Greetings,,0,3,0.2483073770999908,1,0,False,
 2744,1027,1,"Hi, it's a brand new day.",Greetings,Greetings,,0,5,0.4474844038486481,1,1,False,
 2745,1027,2,How are you doing?,Greetings,Greetings,,0,5,0.4286596179008484,1,0,False,
@@ -2871,7 +2871,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 2870,1059,13,I'll see this movie when I have time.,Wu Yen,Movie recommendation,,1,5,0.4352194964885712,0,0,False,
 2871,1059,14,You won't be disappointed.,Say goodbye,Say goodbye,,0,5,0.4900514185428619,0,1,False,
 2872,1059,15,"OK, I'm going to have a meal. Let's talk later, goodbye.",Say goodbye,Say goodbye,,0,3,0.6582578420639038,0,0,False,
-2873,1059,16,"Yeah, goodbeye.",,,,1,5,0.4191608428955078,0,1,False,Success
+2873,1059,16,"Yeah, goodbeye.",,,,1,5,0.4191608428955078,0,1,False,
 2874,1064,0,What's the weather like today?,Ask about weather,Ask about weather,"Chongqing, 2018-10-10, Mostly cloudy with variable winds. The high will be 22 ℃, and low 14 ℃",0,3,0.3283110857009888,0,1,False,
 2875,1064,1,"It's cloudy with no continuous wind direction today. The highest temperature will be 22℃, and the lowest temperature will be 14℃.",Ask about weather,Ask about weather,"Chongqing, 2018-10-10, Mostly cloudy with variable winds. The high will be 22 ℃, and low 14 ℃",0,2,0.4504991173744202,0,0,True,
 2876,1064,2,I see. Thank you!,Ask about weather,Ask about weather,,0,5,0.7206541299819946,0,1,False,
@@ -3332,7 +3332,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 3331,1211,13,It is as wonderful as expected. He has a beautiful voice.,Wonerful Happiness,Play music,,0,5,0.8016113042831421,0,0,False,
 3332,1211,14,You like it is the most important thing.,Say goodbye,Say goodbye,,0,5,0.6110771894454956,0,1,False,
 3333,1211,15,"Well, thank you. Talk to you later.",Say goodbye,Say goodbye,,0,5,0.5971457362174988,0,0,False,
-3334,1211,16,"Okay, goodbye.",,,,1,3,0.7109736800193787,0,1,False,Success
+3334,1211,16,"Okay, goodbye.",,,,1,3,0.7109736800193787,0,1,False,
 3335,1215,0,I'd like to listen to Rainbow,Rainbow,Music on demand,,0,3,0.3024991154670715,0,1,False,
 3336,1215,1,Playing Rainbow for you,Rainbow,Music on demand,,0,5,0.48614010214805603,0,0,False,
 3337,1215,2,Thank you,Rainbow,Music on demand,,0,5,0.5730901956558228,0,1,False,
@@ -3349,7 +3349,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 3348,1215,13,"OK, thank you!",A Life Of Fighting Is But A Dream,Play music,,0,5,0.4852669537067413,0,0,False,
 3349,1215,14,You are welcome.,Say goodbye,Say goodbye,,0,5,0.6619234085083008,0,1,False,
 3350,1215,15,I'm going home. Talk to you later.,Say goodbye,Say goodbye,,0,5,0.3235233426094055,0,0,False,
-3351,1215,16,All right. Bye!,,,,1,5,0.6910758018493652,0,1,False,Success
+3351,1215,16,All right. Bye!,,,,1,5,0.6910758018493652,0,1,False,
 3352,1222,0,What's the weather like today?,Ask about weather,Ask about weather,"Chongqing, 2018-10-27, Mostly cloudy skies come after a light rain. Variable winds. The high will be 19 ℃, and low 16 ℃",0,3,0.3283110857009888,0,1,False,
 3353,1222,1,"It will turn from light rain to cloudy with no continuous wind direction. The highest temperature is 19 ℃, and the lowest temperature is 16 ℃. Please remember to bring an umbrella",Ask about weather,Ask about weather,"Chongqing, 2018-10-27, Mostly cloudy skies come after a light rain. Variable winds. The high will be 19 ℃, and low 16 ℃",0,2,0.4376281499862671,0,0,True,
 3354,1222,2,Thank you for reminding me. I'll take my umbrella with me,Ask about weather,Ask about weather,,0,5,0.6978000402450562,0,1,False,
@@ -3382,7 +3382,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 3381,1248,11,"Sure, please.",Run Toward the Future,Play music,,0,4,0.2854745388031006,0,0,False,
 3382,1248,12,It's playing for you. Please enjoy it!,Say goodbye,Say goodbye,,0,5,0.5093205571174622,0,1,False,
 3383,1248,13,Thank you very much. I am in a hurry and have to leave.,Say goodbye,Say goodbye,,0,5,0.6783750653266907,0,0,False,
-3384,1248,14,"All right, goodbye!",,,,1,5,0.7446917295455933,0,1,False,Success
+3384,1248,14,"All right, goodbye!",,,,1,5,0.7446917295455933,0,1,False,
 3385,1265,0,Please play me the song Hand in Hand Promise,Hand in Hand Promise,Music on demand,,0,5,0.4499017000198364,0,1,False,
 3386,1265,1,Playing Hand in Hand Promisefor you,Hand in Hand Promise,Music on demand,,0,5,0.5167917609214783,0,0,False,
 3387,1265,2,You are so smart.,Hand in Hand Promise,Music on demand,,0,5,0.7335736751556396,0,1,False,
@@ -3399,7 +3399,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 3398,1265,13,This song is really nice. Thank you for your recommendation!,Wonerful Happiness,Play music,,0,5,0.7416920661926271,0,0,False,
 3399,1265,14,You're welcome. I'll recommend more beautiful music for you in the future.,Say goodbye,Say goodbye,,0,5,0.6590410470962524,0,1,False,
 3400,1265,15,I have something else to do now. Bye!,Say goodbye,Say goodbye,,0,5,0.3272552192211151,0,0,False,
-3401,1265,16,See ya!,,,,1,5,0.4948725998401642,0,1,False,Success
+3401,1265,16,See ya!,,,,1,5,0.4948725998401642,0,1,False,
 3402,1278,0,How is the weather today?,Ask about weather,Ask about weather,"Qingdao, 2018-11-16, Mostly cloudy with north winds. The high will be 10 ℃, and low 3 ℃",0,3,0.3190562725067139,0,1,False,
 3403,1278,1,"Mostly cloudy, with north winds. The high will be 10 ℃, and low 3 ℃. Be sure to keep warm.",Ask about weather,Ask about weather,"Qingdao, 2018-11-16, Mostly cloudy with north winds. The high will be 10 ℃, and low 3 ℃",0,3,0.5966011881828308,0,0,False,
 3404,1278,2,I know it.,Ask about weather,Ask about weather,,0,5,0.4631007611751557,0,1,False,
@@ -6564,7 +6564,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 6563,2410,1,"Wuxi's weather is cloudy with north wind, the highest temperature is 22 degrees, the lowest temperature is 13 degrees .",Ask about weather,Ask about weather,"Wuxi, 2018-10-23, Mostly cloudy with north winds. The high will be 22 ℃, and low 13 ℃",0,3,0.3946751654148102,0,0,False,
 6564,2410,2,Very comfortable.,Ask about weather,Ask about weather,,0,5,0.5891821384429932,0,1,False,
 6565,2410,3,Wouldn't it be nice to eat Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce on such a fine day?,Ask about weather,Ask about weather,"Mostly cloudy with north winds. The high will be 22 ℃, and low 13 ℃, Perfect for having, Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce",0,2,0.3419219255447388,0,0,True,
-6566,2410,4,"Yo, you know what's my favourite?",Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce,Food recommendation,,1,5,0.5408726930618286,0,1,False,Success
+6566,2410,4,"Yo, you know what's my favourite?",Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce,Food recommendation,,1,5,0.5408726930618286,0,1,False,
 6567,2410,5,"Absolutely, I certainly know.",Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce,Food recommendation,,1,5,0.5447210073471069,0,0,False,
 6568,2410,6,You are great!,Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce,Food recommendation,,1,5,0.8040856719017029,0,1,False,Success
 6569,2410,7,"If you eat Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce, I recommend you Unforgettable Hunan Restaurant(Powerlong City Plaza), which can also be reserved.",Unforgettable Hunan Restaurant(Powerlong City Plaza),POI recommendation,"Unforgettable Hunan Restaurant(Powerlong City Plaza), Specials, Steamed\xa0Chicken\xa0with\xa0Chili\xa0Sauce",1,4,0.3194433152675629,0,0,False,
@@ -8345,7 +8345,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 8344,2968,15,I'm going to see it later.,L.O.R.D（Legend of Ravaging Dynasties）,Movie recommendation,,1,3,0.4760692119598389,0,0,False,
 8345,2968,16,You won't regret after watching it.,Say goodbye,Say goodbye,,0,5,0.4260813891887665,0,1,False,
 8346,2968,17,"OK, talk to you next time, goodbye.",Say goodbye,Say goodbye,,0,3,0.4082707762718201,0,0,False,
-8347,2968,18,See ya!,,,,1,5,0.4948725998401642,0,1,False,Success
+8347,2968,18,See ya!,,,,1,5,0.4948725998401642,0,1,False,
 8348,2971,0,"Good evening, Lizheng Zhao. What are you doing?",Greetings,Greetings,,0,5,0.4588284492492676,1,0,False,
 8349,2971,1,I got a good result in the exam today. I'm very happy,Greetings,Greetings,,0,5,0.5004003643989563,1,1,False,
 8350,2971,2,Congratulations!,Greetings,Greetings,,0,5,0.6475263237953186,1,0,False,
@@ -8680,7 +8680,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 8679,3039,13,"OK, thanks!",Wish,Play music,,0,4,0.3573170304298401,0,0,False,
 8680,3039,14,"Hey hey, you're welcome.",Say goodbye,Say goodbye,,0,5,0.6683565378189087,0,1,False,
 8681,3039,15,I'm going to school now. Let's talk later.,Say goodbye,Say goodbye,,0,4,0.2999853491783142,0,0,False,
-8682,3039,16,"OK, bye!",,,,1,4,0.3175948262214661,0,1,False,Success
+8682,3039,16,"OK, bye!",,,,1,4,0.3175948262214661,0,1,False,
 8683,3046,0,"Good noon, Jiaoshan Ren.",Greetings,Greetings,,0,5,0.4017042815685272,1,0,False,
 8684,3046,1,Good afternoon!,Greetings,Greetings,,0,4,0.4462607502937317,1,1,False,
 8685,3046,2,How's the exam recently?,Greetings,Greetings,,0,3,0.2773365378379822,1,0,False,
@@ -14320,7 +14320,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 14319,5060,13,I'm very interested in it. I'll watch it later.,Everyday is Valentine,Movie recommendation,,1,4,0.5357119441032411,0,0,False,
 14320,5060,14,It's a movie worth watching.,Say goodbye,Say goodbye,,0,4,0.4734509587287903,0,1,False,
 14321,5060,15,"OK, I have something else to do. Let's talk next time. Bye!",Say goodbye,Say goodbye,,0,3,0.6141812205314636,0,0,False,
-14322,5060,16,"Ok, goodbye.",,,,1,3,0.3526612520217895,0,1,False,Success
+14322,5060,16,"Ok, goodbye.",,,,1,3,0.3526612520217895,0,1,False,
 14323,5062,0,"Hi, what's the weather like today?",Ask about weather,Ask about weather,"Xingtai, 2018-10-22, Mostly cloudy early and sunny later. North winds. The high will be 23 ℃, and low 8 ℃",0,3,0.3233878910541534,0,1,False,
 14324,5062,1,"Cloudy turns to sunny, north winds. The high will be 23 ℃ and low 8 ℃.",Ask about weather,Ask about weather,"Xingtai, 2018-10-22, Mostly cloudy early and sunny later. North winds. The high will be 23 ℃, and low 8 ℃",0,3,0.3898264765739441,0,0,False,
 14325,5062,2,You are great!,Ask about weather,Ask about weather,,0,5,0.8040856719017029,0,1,False,
@@ -15855,7 +15855,7 @@ index,user_id,sentence_index,sentence,goal_topic,goal_type,knowledge,recdial,sen
 15854,5564,15,"OK, thank you!",Rain,Play music,,0,5,0.4852669537067413,0,0,False,
 15855,5564,16,That's all right.,Say goodbye,Say goodbye,,0,3,0.3030633926391601,0,1,False,
 15856,5564,17,I'm going to eat. I'll talk to you tomorrow.,Say goodbye,Say goodbye,,0,5,0.3335112333297729,0,0,False,
-15857,5564,18,Goodbye.,,,,1,5,0.5714333057403564,0,1,False,Success
+15857,5564,18,Goodbye.,,,,1,5,0.5714333057403564,0,1,False,
 15858,5565,0,How is the weather today?,Ask about weather,Ask about weather,"Hohhot, 2018-10-25, Cloudy early and sunny later. Northwest winds. The high will be 8 ℃, and low - 5 ℃",0,3,0.3190562725067139,0,1,False,
 15859,5565,1,It will turn from cloudy to sunny in Hohhot today with northwest winds. The high will be 8 ℃ and the low - 5 ℃.,Ask about weather,Ask about weather,"Hohhot, 2018-10-25, Cloudy early and sunny later. Northwest winds. The high will be 8 ℃, and low - 5 ℃",0,4,0.3309049904346466,0,0,False,
 15860,5565,2,Good for you! You know a lot.,Ask about weather,Ask about weather,,0,4,0.5159074664115906,0,1,False,
