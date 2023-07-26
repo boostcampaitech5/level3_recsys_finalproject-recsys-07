@@ -3,6 +3,7 @@ from dash import Dash, dcc, html
 import dash_bootstrap_components as dbc
 from assets import sidebar, header
 
+
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 font_awesome = (
     "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
@@ -26,6 +27,9 @@ app.layout = html.Div(
     [
         dcc.Store(id="side_click"),
         dcc.Location(id="url"),
+        # TODO: 데이터 업로드 상태에 따라 sidebar 다르게 표시하기.
+        # TODO: 데이터 전처리과정 비동기처리하기.
+        # TODO: Loading State 만들기
         sidebar.sidebar,
         html.Div(
             [

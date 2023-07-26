@@ -1,4 +1,5 @@
-from dash import dcc, html
+from dash import dcc, html, callback, Input, Output, State
+import dash
 import dash_bootstrap_components as dbc
 
 header = html.Div(
@@ -14,22 +15,8 @@ header = html.Div(
                     },
                 ),
                 dcc.Dropdown(
-                    [
-                        {
-                            "label": html.Span(
-                                ["DuRecDial2.0 (sample)"],
-                                style={"font-size": 20},
-                            ),
-                            "value": "DuRecDial2.0",
-                        },
-                        {
-                            "label": html.Span(
-                                ["ReDial (sample)"], style={"font-size": 20}
-                            ),
-                            "value": "ReDial",
-                        },
-                    ],
-                    value="DuRecDial2.0",
+                    id="header-data-dropdown",
+                    value="",
                     className="data-selector",
                     optionHeight=50,
                 ),
@@ -39,3 +26,14 @@ header = html.Div(
         )
     ]
 )
+
+
+@callback(
+    Output("header-data-dropdown", "options"),
+    Input("filename-store", "modified_timestamp"),
+    State("filename-store", "data"),
+)
+def get_filename(ts, filename):
+    if ts is None:
+        raise dash.exceptions.PreventUpdate
+    return [{"label": filename, "value": filename}]
