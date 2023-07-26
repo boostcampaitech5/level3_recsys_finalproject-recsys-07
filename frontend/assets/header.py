@@ -36,4 +36,20 @@ header = html.Div(
 def get_filename(ts, filename):
     if ts is None:
         raise dash.exceptions.PreventUpdate
-    return [{"label": filename, "value": filename}]
+    return [{"label": filename, "value": filename}], True
+
+
+@callback(
+    [
+        Output("page1", "style"),
+        Output("page2", "style"),
+        Output("page3", "style"),
+        Output("page4", "style"),
+    ],
+    Input("header-data-dropdown", "value"),
+)
+def sidebar_btn_show(value):
+    if value == "":
+        raise dash.exceptions.PreventUpdate
+    elif value == "DurecDial2.0":
+        return [{"visibility": "show"} for _ in range(4)]
