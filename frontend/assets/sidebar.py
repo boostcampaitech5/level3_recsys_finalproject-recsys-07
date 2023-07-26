@@ -3,6 +3,7 @@ import dash
 import dash_bootstrap_components as dbc
 import io
 import pandas as pd
+import numpy as np
 
 sidebar_show = [
     dbc.Nav(
@@ -278,9 +279,98 @@ def data_preprocessing(ts, df_dict, date):
     if ts is None:
         raise dash.exceptions.PreventUpdate
 
-    # TODO: 전처리 코드 작성
+    # frontend에 데이터를 업로드 하면 파생변수를 생성하는 전처리 수행하는 코드
+    """
+    index: 모든 대화의 순서(임의: 데이터의 행 번호)
+    recdial: 추천 대화인지 여부(1: 추천 관련 대화, 0: 추천 관련 없는 대화)
+    is_bot_talk_first: 대화에서 봇이 먼저 시작했는지 여부(1: 봇이 대화 시작, 0: 사람이 대화 시작) // Greetings(goal_type) 존재해야 함
+    is_user: 해당 문장이 봇의 대화 인지, 사용자의 대화인지 구분(1: 사람, 0: 봇)
+    # TODO: 변수 설명 작성
+    sentiment_star: 
+    sentiment_score: 
+    deny: 사용자의 추천을 거절했는 지 여부(TRUE: 추천 거절, FALSE: 추천 받아들임)
+    recommend_sf: 추천의 성공 여부(Success: 추천 성공, Failure: 추천 실패)
+    """
 
-    df_pp = pd.DataFrame()
+    # dict 타입의 df_dict를 dataframe으로 변환
+    df = pd.DataFrame.from_dict(data=df_dict, orient='columns')
+
+    # recdial 변수 생성
+    df['recdial'] = np.where(df['goal_type'].str.contains('recommendation'), 1, 0)
+
+    # idx 0번째에는 sentence, idx 1번째에는 goal_type
+    # user_id번째의 index에 두가지 정보가 저장되어 있음
+    # first_start_list[example_user_id][0 or 1] 과 같이 사용가능
+    first_start_list = []
+    user_list = []
+
+    for idx in range(len(df)):
+        if df['user_id'].iloc[idx] not in user_list:
+            first_start_list.append([df['sentence'].iloc[idx], df['goal_type'].iloc[idx]])
+            user_list.append(df['user_id'].iloc[idx])
+                
+    # is_bot_talk_first 변수 생성 // Greetings(goal_type) 존재해야 함
+    data = []
+    for idx in range(len(df)):
+        if first_start_list[df.iloc[idx]['user_id']][1] == 'Greetings':
+            data.append(1)
+        else:
+            data.append(0)
+
+    df['is_bot_talk_first'] = data
+        
+    # is_user 변수 생성
+    is_user = []
+    for idx in range(len(df)):
+        if df.iloc[idx]['is_bot_talk_first'] == 0: # 유저가 먼저 대화 시작
+            if df.iloc[idx]['sentence_index'] % 2 == 0:
+                is_user.append(1) # 유저
+            else:
+                is_user.append(0) # 봇
+        else: # 봇이 먼저 대화 시작
+            if df.iloc[idx]['sentence_index'] % 2 == 0:
+                is_user.append(0) # 봇
+            else:
+                is_user.append(1) # 유저
+
+    df['is_user'] = is_user
+
+    # TODO: 감성 분석
+
+
+    # recommend_sf 변수 생성
+    data = []
+    for idx in range(len(df)):
+        if df.iloc[idx]['recdial'] == 1:
+            if idx != 0 and df.iloc[idx-1]['recdial'] == 0 and df.iloc[idx]['is_user'] == 1:
+                data.append(np.nan)
+                continue
+            if df.iloc[idx]['is_user'] == 1 and df.iloc[idx]['deny']==False:
+                data.append("Success")
+            elif df.iloc[idx]['is_user'] == 1 and df.iloc[idx]['deny']==True:
+                data.append("Failure")
+            else:
+                data.append(np.nan)
+        else:
+            data.append(np.nan)
+
+    df['recommend_sf'] = data
+
+    # index 변수 생성
+    data = []
+    for idx in range(1, len(df)+1):
+        data.append(idx)
+
+    df['index'] = data
+    
+    # 데이터프레임 열 순서 변경 -> index가 맨 앞으로
+    col1 = df.columns[:-1].to_list()
+    col2 = df.columns[-1:].to_list()
+    new_col = col2 + col1
+    df = df[new_col]
+    
+    df_pp = df
+    # df_pp = pd.DataFrame()
     return df_pp.to_dict("records")  # 전처리가 완료된 데이터셋
 
 
