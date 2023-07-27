@@ -1,7 +1,9 @@
 import dash
+import plotly.graph_objects as go
 from dash import dash_table, html, dcc, callback, Input, Output
 from assets.data import (
     get_model_eval,
+    get_model_eval_percent,
     kbrd_result_conversation,
     kgsf_result_conversation,
     redial_result_conversation,
@@ -12,9 +14,48 @@ from assets.data import (
     gen_metric,
     rec_metric,
 )
-import plotly.graph_objects as go
+
 
 dash.register_page(__name__)
+
+df_rec_p = get_model_eval_percent("Recommendation")
+df_rec = get_model_eval("Recommendation")
+
+df_conv_p = get_model_eval_percent("Conversation")
+df_conv = get_model_eval("Conversation")
+
+
+# 최댓값을 갖는 셀에 bold 스타일을 적용하는 함수
+def generate_tooltip(column, value):
+    if column == "Model":
+        return value
+    return f"{column} 최대값 대비 성능: {value}"
+
+
+def style_minmax_cells(df):
+    styles = []
+    for c in range(1, len(df.columns)):
+        cell_style = {
+            "if": {
+                "filter_query": f"{{{df.columns[c]}}} = {df.iloc[:,c].max()}",
+                "column_id": df.columns[c],
+            },
+            "font-weight": "bold",
+            "background-color": "#ffd6f1",
+        }
+        styles.append(cell_style)
+    for c in range(1, len(df.columns)):
+        cell_style = {
+            "if": {
+                "filter_query": f"{{{df.columns[c]}}} = {df.iloc[:,c].min()}",
+                "column_id": df.columns[c],
+            },
+            "font-weight": "bold",
+            "background-color": "#d6e2ff",
+        }
+        styles.append(cell_style)
+    return styles
+
 
 layout = html.Div(
     [
@@ -29,7 +70,7 @@ layout = html.Div(
                     [
                         dash_table.DataTable(
                             # Conversation, Recommendation
-                            data=get_model_eval("Recommendation"),
+                            data=get_model_eval("Recommendation").to_dict("records"),
                             columns=[
                                 {"name": c, "id": c}
                                 for c in [
@@ -58,33 +99,27 @@ layout = html.Div(
                                 "backgroundColor": "white",
                                 "height": "auto",
                             },
-                            style_data_conditional=[
-                                {
-                                    "if": {"row_index": "odd"},
-                                    "backgroundColor": "#f1f5f9",
-                                }
-                            ],
+                            style_data_conditional=style_minmax_cells(df_rec),
                             style_header={
                                 "backgroundColor": "rgb(210, 210, 210)",
                                 "color": "black",
                                 "fontWeight": "bold",
                             },
+                            tooltip_data=[
+                                {
+                                    column: {
+                                        "value": generate_tooltip(column, value),
+                                        "type": "markdown",
+                                    }
+                                    for column, value in row.items()
+                                }
+                                for row in df_rec_p.to_dict("records")
+                            ],
+                            tooltip_delay=0,
+                            tooltip_duration=None,
                             page_size=10,
                         ),
                     ],
-                ),
-                dcc.RadioItems(
-                    options=[
-                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
-                        for m in rec_metric
-                    ],
-                    value="",
-                    id="rec-metric-radio",
-                    className="column-radio",
-                ),
-                dcc.Graph(
-                    id="rec-metric-figure",
-                    className="fig",
                 ),
                 html.Div(  # 소제목
                     "• 모델 문장 생성 성능",
@@ -93,7 +128,7 @@ layout = html.Div(
                 html.Div(
                     [
                         dash_table.DataTable(
-                            data=get_model_eval("Conversation"),
+                            data=get_model_eval("Conversation").to_dict("records"),
                             columns=[
                                 {"name": c, "id": c}
                                 for c in [
@@ -125,17 +160,24 @@ layout = html.Div(
                                 "backgroundColor": "white",
                                 "height": "auto",
                             },
-                            style_data_conditional=[
-                                {
-                                    "if": {"row_index": "odd"},
-                                    "backgroundColor": "#f1f5f9",
-                                }
-                            ],
+                            style_data_conditional=style_minmax_cells(df_conv),
                             style_header={
                                 "backgroundColor": "rgb(210, 210, 210)",
                                 "color": "black",
                                 "fontWeight": "bold",
                             },
+                            tooltip_data=[
+                                {
+                                    column: {
+                                        "value": generate_tooltip(column, value),
+                                        "type": "markdown",
+                                    }
+                                    for column, value in row.items()
+                                }
+                                for row in df_conv_p.to_dict("records")
+                            ],
+                            tooltip_delay=0,
+                            tooltip_duration=None,
                             page_size=10,
                         ),
                     ],
@@ -144,12 +186,29 @@ layout = html.Div(
                         "transition": "all 0.5s"
                     },
                 ),
+                html.Div(  # 소제목
+                    "• 모델 학습 로그",
+                    className="title p-4",
+                ),
+                dcc.RadioItems(
+                    options=[
+                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
+                        for m in rec_metric
+                    ],
+                    value="hit@1",
+                    id="rec-metric-radio",
+                    className="column-radio",
+                ),
+                dcc.Graph(
+                    id="rec-metric-figure",
+                    className="fig",
+                ),
                 dcc.RadioItems(
                     options=[
                         {"label": html.Span(m, className="p-3 text-lg"), "value": m}
                         for m in gen_metric
                     ],
-                    value="",
+                    value="bleu@1",
                     id="gen-metric-radio",
                     className="column-radio",
                 ),
@@ -261,4 +320,5 @@ def rec_metric_figure(metric):
     y_min = 0
     fig.update_yaxes(range=(y_min, None))
     # 차트 출력
-    fig.show()
+    # fig.show()
+    return fig

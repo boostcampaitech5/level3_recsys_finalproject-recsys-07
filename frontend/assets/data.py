@@ -7,7 +7,9 @@ import pandas as pd
 df_user = pd.read_csv("../data/durecdial/train_user_small.csv")
 df_sentence = pd.read_csv("../data/durecdial/train_sentence_small.csv")
 df_sentence_small = pd.read_csv("../data/durecdial/train_sentence_xs.csv")
+data_format = pd.read_csv("../data/data_format.csv")
 model_eval = pd.read_csv("../data/model_metric/model_eval.csv")
+model_eval_percent = pd.read_csv("../data/model_metric/model_eval_percent.csv")
 max_si = max(df_sentence.sentence_index)
 size = df_sentence.size
 columns_s = df_sentence.columns
@@ -107,4 +109,8 @@ for redial in redial_raw:
 
 
 def get_model_eval(col):
-    return model_eval[model_eval[col] == 1].to_dict("records")
+    return model_eval[model_eval[col] == 1]
+
+
+def get_model_eval_percent(col):
+    return model_eval_percent[model_eval_percent[col] == 1]

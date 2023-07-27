@@ -103,10 +103,10 @@ def perflexity():
         autosize=True,
         # width=800,
         # height=800,
-        yaxis=dict(
+        xaxis=dict(
             title_text="Dialogue Count",
         ),
-        xaxis=dict(title_text="Perplexity"),
+        yaxis=dict(title_text="Perplexity"),
         title_text=f"Distribution of Dialogue Perplexity (n=2) <br><br> <sup>Average perplexity of the dataset : \
             {round(sum(d_pp)/len(d_pp),4)}</sup>",
     )
