@@ -61,160 +61,205 @@ layout = html.Div(
     [
         html.Div(
             [
-                html.Div(  # 소제목
-                    "• 모델 추천 성능",
-                    className="title p-4",
-                    style={"grid-area": "1 / 1 / span 1 / span 4"},
+                html.Div(
+                    [
+                        html.Div(  # 소제목
+                            "모델 추천 성능",
+                            className="title",
+                        ),
+                        html.Div(
+                            [
+                                dash_table.DataTable(
+                                    # Conversation, Recommendation
+                                    data=get_model_eval("Recommendation").to_dict(
+                                        "records"
+                                    ),
+                                    columns=[
+                                        {"name": c, "id": c}
+                                        for c in [
+                                            "Model",
+                                            "Hit@1",
+                                            "Hit@10",
+                                            "Hit@50",
+                                            "MRR@1",
+                                            "MRR@10",
+                                            "MRR@50",
+                                            "NDCG@1",
+                                            "NDCG@10",
+                                            "NDCG@50",
+                                        ]
+                                    ],
+                                    id="rec-models",
+                                    sort_action="native",
+                                    style_cell={
+                                        "textAlign": "left",
+                                        "padding": "10px 10px 10px 30px",
+                                    },
+                                    style_as_list_view=True,
+                                    style_data={
+                                        "whiteSpace": "normal",
+                                        "color": "black",
+                                        "backgroundColor": "white",
+                                        "height": "auto",
+                                    },
+                                    style_data_conditional=style_minmax_cells(df_rec),
+                                    style_header={
+                                        "backgroundColor": "rgb(210, 210, 210)",
+                                        "color": "black",
+                                        "fontWeight": "bold",
+                                    },
+                                    tooltip_data=[
+                                        {
+                                            column: {
+                                                "value": generate_tooltip(
+                                                    column, value
+                                                ),
+                                                "type": "markdown",
+                                            }
+                                            for column, value in row.items()
+                                        }
+                                        for row in df_rec_p.to_dict("records")
+                                    ],
+                                    tooltip_delay=0,
+                                    tooltip_duration=None,
+                                    page_size=10,
+                                ),
+                            ],
+                        ),
+                    ],
+                    className="section",
                 ),
                 html.Div(
                     [
-                        dash_table.DataTable(
-                            # Conversation, Recommendation
-                            data=get_model_eval("Recommendation").to_dict("records"),
-                            columns=[
-                                {"name": c, "id": c}
-                                for c in [
-                                    "Model",
-                                    "Hit@1",
-                                    "Hit@10",
-                                    "Hit@50",
-                                    "MRR@1",
-                                    "MRR@10",
-                                    "MRR@50",
-                                    "NDCG@1",
-                                    "NDCG@10",
-                                    "NDCG@50",
-                                ]
+                        html.Div(  # 소제목
+                            "모델 문장 생성 성능",
+                            className="title",
+                        ),
+                        html.Div(
+                            [
+                                dash_table.DataTable(
+                                    data=get_model_eval("Conversation").to_dict(
+                                        "records"
+                                    ),
+                                    columns=[
+                                        {"name": c, "id": c}
+                                        for c in [
+                                            "Model",
+                                            "BLEU@1",
+                                            "BLEU@2",
+                                            "BLEU@3",
+                                            "BLEU@4",
+                                            "Dist@1",
+                                            "Dist@2",
+                                            "Dist@3",
+                                            "Dist@4",
+                                            "Average",
+                                            "Extreme",
+                                            "Greedy",
+                                            "PPL",
+                                        ]
+                                    ],
+                                    id="conv-models",
+                                    sort_action="native",
+                                    style_cell={
+                                        "textAlign": "left",
+                                        "padding": "10px 10px 10px 30px",
+                                    },
+                                    style_as_list_view=True,
+                                    style_data={
+                                        "whiteSpace": "normal",
+                                        "color": "black",
+                                        "backgroundColor": "white",
+                                        "height": "auto",
+                                    },
+                                    style_data_conditional=style_minmax_cells(df_conv),
+                                    style_header={
+                                        "backgroundColor": "rgb(210, 210, 210)",
+                                        "color": "black",
+                                        "fontWeight": "bold",
+                                    },
+                                    tooltip_data=[
+                                        {
+                                            column: {
+                                                "value": generate_tooltip(
+                                                    column, value
+                                                ),
+                                                "type": "markdown",
+                                            }
+                                            for column, value in row.items()
+                                        }
+                                        for row in df_conv_p.to_dict("records")
+                                    ],
+                                    tooltip_delay=0,
+                                    tooltip_duration=None,
+                                    page_size=10,
+                                ),
                             ],
-                            id="rec-models",
-                            sort_action="native",
-                            style_cell={
-                                "textAlign": "left",
-                                "padding": "10px 10px 10px 30px",
+                            style={
+                                # "grid-area": "13 / 1 / span 10 / span 12",
+                                "transition": "all 0.5s"
                             },
-                            style_as_list_view=True,
-                            style_data={
-                                "whiteSpace": "normal",
-                                "color": "black",
-                                "backgroundColor": "white",
-                                "height": "auto",
-                            },
-                            style_data_conditional=style_minmax_cells(df_rec),
-                            style_header={
-                                "backgroundColor": "rgb(210, 210, 210)",
-                                "color": "black",
-                                "fontWeight": "bold",
-                            },
-                            tooltip_data=[
-                                {
-                                    column: {
-                                        "value": generate_tooltip(column, value),
-                                        "type": "markdown",
-                                    }
-                                    for column, value in row.items()
-                                }
-                                for row in df_rec_p.to_dict("records")
-                            ],
-                            tooltip_delay=0,
-                            tooltip_duration=None,
-                            page_size=10,
                         ),
                     ],
-                ),
-                html.Div(  # 소제목
-                    "• 모델 문장 생성 성능",
-                    className="title p-4",
-                ),
-                html.Div(
-                    [
-                        dash_table.DataTable(
-                            data=get_model_eval("Conversation").to_dict("records"),
-                            columns=[
-                                {"name": c, "id": c}
-                                for c in [
-                                    "Model",
-                                    "BLEU@1",
-                                    "BLEU@2",
-                                    "BLEU@3",
-                                    "BLEU@4",
-                                    "Dist@1",
-                                    "Dist@2",
-                                    "Dist@3",
-                                    "Dist@4",
-                                    "Average",
-                                    "Extreme",
-                                    "Greedy",
-                                    "PPL",
-                                ]
-                            ],
-                            id="conv-models",
-                            sort_action="native",
-                            style_cell={
-                                "textAlign": "left",
-                                "padding": "10px 10px 10px 30px",
-                            },
-                            style_as_list_view=True,
-                            style_data={
-                                "whiteSpace": "normal",
-                                "color": "black",
-                                "backgroundColor": "white",
-                                "height": "auto",
-                            },
-                            style_data_conditional=style_minmax_cells(df_conv),
-                            style_header={
-                                "backgroundColor": "rgb(210, 210, 210)",
-                                "color": "black",
-                                "fontWeight": "bold",
-                            },
-                            tooltip_data=[
-                                {
-                                    column: {
-                                        "value": generate_tooltip(column, value),
-                                        "type": "markdown",
-                                    }
-                                    for column, value in row.items()
-                                }
-                                for row in df_conv_p.to_dict("records")
-                            ],
-                            tooltip_delay=0,
-                            tooltip_duration=None,
-                            page_size=10,
-                        ),
-                    ],
+                    className="section no-scrollbar",
                     style={
-                        # "grid-area": "13 / 1 / span 10 / span 12",
-                        "transition": "all 0.5s"
+                        "overflow": "overlay",
                     },
                 ),
-                html.Div(  # 소제목
-                    "• 모델 학습 로그",
-                    className="title p-4",
-                ),
-                dcc.RadioItems(
-                    options=[
-                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
-                        for m in rec_metric
+                html.Div(
+                    [
+                        html.Div(  # 소제목
+                            "모델 학습 로그",
+                            className="title",
+                        ),
+                        html.Div(
+                            [
+                                dcc.RadioItems(
+                                    options=[
+                                        {
+                                            "label": html.Span(
+                                                m, className="p-3 text-lg"
+                                            ),
+                                            "value": m,
+                                        }
+                                        for m in rec_metric
+                                    ],
+                                    value="hit@1",
+                                    id="rec-metric-radio",
+                                    className="column-radio",
+                                ),
+                                dcc.Graph(
+                                    id="rec-metric-figure",
+                                    className="fig",
+                                ),
+                            ],
+                            className="border-clear fig",
+                        ),
+                        html.Div(
+                            [
+                                dcc.RadioItems(
+                                    options=[
+                                        {
+                                            "label": html.Span(
+                                                m, className="p-3 text-lg"
+                                            ),
+                                            "value": m,
+                                        }
+                                        for m in gen_metric
+                                    ],
+                                    value="bleu@1",
+                                    id="gen-metric-radio",
+                                    className="column-radio",
+                                ),
+                                dcc.Graph(
+                                    id="gen-metric-figure",
+                                    className="fig",
+                                ),
+                            ],
+                            className="border-clear fig",
+                        ),
                     ],
-                    value="hit@1",
-                    id="rec-metric-radio",
-                    className="column-radio",
-                ),
-                dcc.Graph(
-                    id="rec-metric-figure",
-                    className="fig",
-                ),
-                dcc.RadioItems(
-                    options=[
-                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
-                        for m in gen_metric
-                    ],
-                    value="bleu@1",
-                    id="gen-metric-radio",
-                    className="column-radio",
-                ),
-                dcc.Graph(
-                    id="gen-metric-figure",
-                    className="fig",
+                    className="section",
                 ),
             ],
             id="model-grid",
