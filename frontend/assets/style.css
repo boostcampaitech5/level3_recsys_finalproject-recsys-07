@@ -74,13 +74,7 @@
 }
 
 #da-grid {
-  height:250vh;
-  width: 77vw;
-  row-gap: "10px";
-  /* align-items: center; */
-  /* justify-items: stretch; */
-  justify-content: center;
-  align-content: center;
+  height:300vh;
 }
 
 .grid-rows-36 {
@@ -97,6 +91,7 @@
     top:7vh;
     position:fixed;
     overflow: auto;
+    width: 85vw;
     height: 100vh;
     transition: all 0.5s;
     background-color: #f1f5f9;
