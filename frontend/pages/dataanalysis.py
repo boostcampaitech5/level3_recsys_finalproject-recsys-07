@@ -36,144 +36,211 @@ layout = html.Div(
     [
         html.Div(
             [
-                html.Div(  # 소제목
-                    "• 추천 효과 및 효율",
-                    className="title p-4",
-                    style={"grid-area": "1 / 1 / span 1 / span 3"},
-                ),
                 html.Div(
-                    children=[
-                        html.Span(" 사용자 ID : "),
-                        dcc.Input(
-                            id="da-user-id",
-                            type="number",
-                            placeholder="Search user-ID",
-                            value=12,
-                            style={
-                                "font-weight": "bold",
-                                "border": "solid 2px #ffdada",
-                            },
+                    [
+                        html.Div(  # 소제목
+                            "추천 효과 및 효율",
+                            className="title",
+                        ),
+                        html.Div(
+                            [
+                                dcc.Graph(
+                                    figure=precision_at_K(),
+                                    id="precisions",
+                                    className="fig border-clear",
+                                    style={"grid-area": "1 / 1 / span 3 / span 12"},
+                                ),
+                                html.Div(
+                                    children=[
+                                        html.Span(" Precision : "),
+                                        html.Div(
+                                            [],
+                                            id="user-precision",
+                                        ),
+                                    ],
+                                    className="fig border-clear p-4",
+                                    style={
+                                        "display": "flex",
+                                        "align-items": "center",
+                                        "justify-content": "space-around",
+                                        "grid-area": "4 / 1 / span 1 / span 6",
+                                    },
+                                ),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            children=[
+                                                html.Span(" 사용자 ID : "),
+                                                dcc.Input(
+                                                    id="da-user-id",
+                                                    type="number",
+                                                    placeholder="Search user-ID",
+                                                    value=12,
+                                                    style={
+                                                        "font-weight": "bold",
+                                                        "border": "solid 2px #ffdada",
+                                                    },
+                                                ),
+                                            ],
+                                            className="p-4 fig f-3",
+                                            style={
+                                                "display": "flex",
+                                                "align-items": "center",
+                                                "justify-content": "space-around",
+                                            },
+                                        ),
+                                        # 추천 효율 graph
+                                        dcc.Graph(
+                                            id="da-graph",
+                                            className="fig",
+                                        ),
+                                    ],
+                                    className="border-clear fig",
+                                    style={
+                                        "grid-area": "5 / 1 / span 3 / span 6",
+                                    },
+                                ),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            [
+                                                dcc.RangeSlider(
+                                                    0,
+                                                    100,
+                                                    10,
+                                                    value=[0, 100],
+                                                    id="da-slider",
+                                                ),
+                                            ],
+                                            className="fig p-4",
+                                        ),
+                                        # 성공 실패 bar chart
+                                        dcc.Graph(
+                                            id="sf-bar-chart",
+                                            className="fig",
+                                        ),
+                                    ],
+                                    style={
+                                        "grid-area": "4 / 7 / span 4 / span 6",
+                                    },
+                                    className="fig border-clear",
+                                ),
+                                html.Div(
+                                    [
+                                        dcc.RadioItems(  # 사용자 프로필 column 선택 버튼
+                                            options=[
+                                                {
+                                                    "label": html.Span(
+                                                        "성공", className="p-3 text-lg"
+                                                    ),
+                                                    "value": "Success",
+                                                },
+                                                {
+                                                    "label": html.Span(
+                                                        "실패", className="p-3 text-lg"
+                                                    ),
+                                                    "value": "Failure",
+                                                },
+                                            ],
+                                            value="Success",
+                                            id="sf-dialog-radio",
+                                            className="column-radio",
+                                        ),
+                                        html.Div(
+                                            [
+                                                dash_table.DataTable(
+                                                    # data=data.df_sentence.to_dict("records"),
+                                                    columns=[
+                                                        {"name": "id", "id": "user_id"},
+                                                        # {"name": "is_rec", "id": "recdial"},
+                                                        {
+                                                            "name": "sentence",
+                                                            "id": "sentence",
+                                                        },
+                                                    ],
+                                                    id="sf-dialog",
+                                                    style_cell={
+                                                        "textAlign": "left",
+                                                        "padding": "10px 10px 10px 30px",
+                                                    },
+                                                    style_as_list_view=True,
+                                                    style_data={
+                                                        "whiteSpace": "normal",
+                                                        "color": "black",
+                                                        "backgroundColor": "white",
+                                                        "height": "auto",
+                                                    },
+                                                    style_data_conditional=[
+                                                        {
+                                                            "if": {
+                                                                "column_id": "sentence_index"
+                                                            },
+                                                            "max-width": "2vw",
+                                                            "min-width": "2vw",
+                                                        },
+                                                        {
+                                                            "if": {
+                                                                "column_id": "sentence"
+                                                            },
+                                                            "max-width": "25vw",
+                                                            "min-width": "25vw",
+                                                        },
+                                                    ],
+                                                    style_header={
+                                                        "backgroundColor": "rgb(210, 210, 210)",
+                                                        "color": "black",
+                                                        "fontWeight": "bold",
+                                                    },
+                                                    page_size=10,
+                                                ),
+                                            ],
+                                            style={
+                                                "overflow": "overlay",
+                                            },
+                                        ),
+                                    ],
+                                    className="fig border-clear",
+                                    style={
+                                        "grid-area": "8 / 1 / span 4 / span 12",
+                                        "overflow": "overlay",
+                                    },
+                                ),
+                            ],
+                            className="grid grid-cols-12 grid-rows-12",
                         ),
                     ],
-                    className="p-4 fig f-3",
-                    style={
-                        "grid-area": "2 / 1 / span 1 / span 5",
-                        "display": "flex",
-                        "align-items": "center",
-                        "justify-content": "space-around",
-                    },
-                ),
-                dcc.Graph(
-                    figure=precision_at_K(),
-                    id="precisions",
-                    className="fig",
-                    style={"grid-area": "3 / 1 / span 5 / span 5"},
-                ),
-                # 추천 효율 graph
-                dcc.Graph(
-                    id="da-graph",
-                    className="fig",
-                    style={"grid-area": "1 / 6 / span 6 / span 7"},
+                    className="section",
                 ),
                 html.Div(
                     [
-                        dcc.RangeSlider(0, 100, 10, value=[0, 100], id="da-slider"),
-                    ],
-                    style={
-                        "grid-area": "8 / 1 / span 1 / span 5",
-                    },
-                    className="fig p-6",
-                ),
-                # 성공 실패 bar chart
-                dcc.Graph(
-                    id="sf-bar-chart",
-                    className="fig",
-                    style={"grid-area": "9 / 1 / span 7 / span 5"},
-                ),
-                dcc.RadioItems(  # 사용자 프로필 column 선택 버튼
-                    options=[
-                        {
-                            "label": html.Span("성공", className="p-3 text-lg"),
-                            "value": "Success",
-                        },
-                        {
-                            "label": html.Span("실패", className="p-3 text-lg"),
-                            "value": "Failure",
-                        },
-                    ],
-                    value="Success",
-                    id="sf-dialog-radio",
-                    className="column-radio",
-                    style={"grid-area": "7 / 6 / span 1 / span 7"},
-                ),
-                html.Div(
-                    [
-                        dash_table.DataTable(
-                            # data=data.df_sentence.to_dict("records"),
-                            columns=[
-                                {"name": "id", "id": "user_id"},
-                                # {"name": "is_rec", "id": "recdial"},
-                                {"name": "sentence", "id": "sentence"},
+                        html.Div(  # 소제목
+                            "데이터 품질",
+                            className="title",
+                        ),
+                        html.Div(
+                            [
+                                # perflexity graph
+                                dcc.Graph(
+                                    figure=perflexity(),
+                                    id="perflexity-dist",
+                                    className="fig border-clear",
+                                    style={"grid-area": "1 / 1 / span 1 / span 1"},
+                                ),
+                                # n-gram graph
+                                dcc.Graph(
+                                    figure=ngram(),
+                                    id="n-gram",
+                                    className="fig border-clear",
+                                    style={"grid-area": "1 / 2 / span 1 / span 1"},
+                                ),
+                                # dcc.Location(id="url"),
                             ],
-                            id="sf-dialog",
-                            style_cell={
-                                "textAlign": "left",
-                                "padding": "10px 10px 10px 30px",
-                            },
-                            style_as_list_view=True,
-                            style_data={
-                                "whiteSpace": "normal",
-                                "color": "black",
-                                "backgroundColor": "white",
-                                "height": "auto",
-                            },
-                            style_data_conditional=[
-                                {
-                                    "if": {"column_id": "sentence_index"},
-                                    "max-width": "2vw",
-                                    "min-width": "2vw",
-                                },
-                                {
-                                    "if": {"column_id": "sentence"},
-                                    "max-width": "25vw",
-                                    "min-width": "25vw",
-                                },
-                            ],
-                            style_header={
-                                "backgroundColor": "rgb(210, 210, 210)",
-                                "color": "black",
-                                "fontWeight": "bold",
-                            },
-                            page_size=10,
+                            className="grid grid-cols-2",
                         ),
                     ],
-                    style={
-                        "grid-area": "8 / 6 / span 9 / span 7",
-                        "overflow": "overlay",
-                    },
+                    className="section",
                 ),
-                html.Div(  # 소제목
-                    "• 데이터 품질",
-                    className="title p-4",
-                    style={"grid-area": "17 / 1 / span 1 / span 4"},
-                ),
-                # perflexity graph
-                dcc.Graph(
-                    figure=perflexity(),
-                    id="perflexity-dist",
-                    className="fig",
-                    style={"grid-area": "18 / 1 / span 12 / span 6"},
-                ),
-                # n-gram graph
-                dcc.Graph(
-                    figure=ngram(),
-                    id="n-gram",
-                    className="fig",
-                    style={"grid-area": "18 / 7 / span 12 / span 6"},
-                ),
-                # dcc.Location(id="url"),
             ],
-            className="grid grid-cols-12 grid-rows-36",
             id="da-grid",
         ),
     ],
@@ -293,10 +360,10 @@ def draw_graph(
         margin=dict(t=10, b=10, l=10, r=10, pad=0),
         showlegend=False,
         xaxis=dict(
-            linecolor="black", showgrid=False, showticklabels=False, mirror=True
+            linecolor="white", showgrid=False, showticklabels=False, mirror=True
         ),
         yaxis=dict(
-            linecolor="black", showgrid=False, showticklabels=False, mirror=True
+            linecolor="white", showgrid=False, showticklabels=False, mirror=True
         ),
     )
 
@@ -453,29 +520,9 @@ def draw_recommend_sf_chart(slider, column="recommend_sf"):
 
 
 @callback(
-    Output("precision-value", "children"),
-    Output("precision-value-1", "children"),
-    Output("precision-value-2", "children"),
-    Output("precision-value-3", "children"),
-    Output("precision-value-4", "children"),
-    Output("precision-value-5", "children"),
-    Output("precision-value-6", "children"),
-    Output("precision-value-7", "children"),
-    Output("precision-value-8", "children"),
-    Output("precision-value-9", "children"),
+    Output("user-precision", "children"),
     Input("da-user-id", "value"),
 )
 def get_user_precision(user_id):
     user = df_user[df_user.user_id == user_id]
-    return (
-        user["precision"].iloc[0].round(3),
-        user["precision_1"].iloc[0].round(3),
-        user["precision_2"].iloc[0].round(3),
-        user["precision_3"].iloc[0].round(3),
-        user["precision_4"].iloc[0].round(3),
-        user["precision_5"].iloc[0].round(3),
-        user["precision_6"].iloc[0].round(3),
-        user["precision_7"].iloc[0].round(3),
-        user["precision_8"].iloc[0].round(3),
-        user["precision_9"].iloc[0].round(3),
-    )
+    return (user["precision"].iloc[0].round(3),)

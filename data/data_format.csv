@@ -1,0 +1,29 @@
+열 이름,데이터 타입,설명,예시
+user_id,integer,각 사용자의 고유번호,0
+user_profile_age_range,String,사용자의 연령대 (임의설정 가능),Over 50 years old
+user_profile_name,String,사용자의 이름 (암호화 가능),Fangyang Liu
+user_profile_residence,String,사용자의 거주지,Qingdao
+user_profile_accepted_food,String,사용자의 선호 음식,Ziaoji stuffed with mackerel
+user_profile_accepted_movies,List of String,사용자의 선호 영화,"['Left Right Love Destiny', 'Hot Summer Days', 'Fly Me to Polaris',                 'Help!!!', 'One Night in Mongkok', 'The Bullet Vanishes']"
+user_profile_accepted_music,List of String,사용자의 선호 음악,['Once']
+user_profile_rejected_music,List of String,사용자의 불호 음악,['Its Time']
+user_profile_gender,String,사용자의 성별,Female
+user_profile_accepted_celebrities,List of String,사용자의 선호 유명인,"['Cecilia Cheung', 'Kris Wu', 'Nicholas Tse']"
+user_profile_accepted_movie,String,사용자의 선호 영화,The Legend of Speed
+user_profile_reject,String,사용자의 불호 매체,News
+user_profile_rejected_movies,List of String,사용자의 불호 영화,"['Everyday is Valentine', 'Unforgettable', 'King of Comedy']"
+user_profile_occupation,String,사용자의 직업 및 고용상태,Student
+user_profile_accepted_poi,String,사용자가 선호 관심 지점,Minguo Seafood Dumpling House
+user_profile_favorite_news,List of String,사용자가 가장 선호하는 뉴스기사,['Jacky Cheungs news']
+user_profile_accepted_news,List of String,사용자의 선호 뉴스,"['Leslie Cheungs news, Leehom Wangs news']"
+user_profile_poi,String,사용자가 밝힌 관심 지점,Mingyuan Spicy Hot Pot-Chongqing Roasted Fish
+time,time,발화가 이루어진 시각,12:00:00 PM
+place,String,발화가 이루어진 장소,at school
+date,date,발화가 이루어진 날짜,2018-10-19
+topic,String,발화의 상황 주제,Academic setback
+wday,String,발화가 이루어진 요일,Wednesday
+sentence_index,integer,한 대화 내 발화의 순번,0
+sentence,String,발화 문장의 내용,Who is the leading actor of the movie Left Right Love Destiny?
+goal_topic,String,발화 목적 키워드,Cecilia Cheung
+goal_type,String,발화 목적,Chat about stars
+knowledge,String,발화에 쓰인 배경지식 키워드,"Cecilia Cheung, Stars, Left Right Love Destiny"
