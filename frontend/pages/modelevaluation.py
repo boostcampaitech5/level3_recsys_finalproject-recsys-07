@@ -89,6 +89,7 @@ layout = html.Div(
                                             "NDCG@50",
                                         ]
                                     ],
+                                    export_format="csv",
                                     id="rec-models",
                                     sort_action="native",
                                     style_cell={
@@ -160,6 +161,8 @@ layout = html.Div(
                                         ]
                                     ],
                                     id="conv-models",
+                                    export_format="csv",
+
                                     sort_action="native",
                                     style_cell={
                                         "textAlign": "left",
