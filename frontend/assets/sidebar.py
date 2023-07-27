@@ -24,12 +24,6 @@ sidebar_show = [
                 id="header-side-box",
                 className="side-header",
             ),
-            html.H1(
-                children=["Upload Dataset🗃️"],
-                # style={"margin-left": "10%", "margin-bottom": "5%"},
-                className="side-nav",
-                id="upload-dataset-text",
-            ),
             dbc.NavLink(
                 [
                     html.Span(
@@ -46,6 +40,12 @@ sidebar_show = [
                 children=html.Div("Drag & Drop or Select File"),
                 id="upload-data",
                 className="upload-btn",
+            ),
+            html.H1(
+                children=["Upload Dataset🗃️"],
+                style={"margin-left": "8%", "margin-bottom": "5%"},
+                className="side-nav",
+                id="upload-dataset-text",
             ),
             dcc.Store(
                 id="filename-store",
@@ -80,7 +80,7 @@ sidebar_show = [
                     html.Span(
                         className="bi bi-layout-three-columns side-nav-icon",
                     ),
-                    html.Span("INSTANCE"),
+                    html.Span("USER INSTANCE"),
                 ],
                 href="/instance",
                 active="exact",
@@ -262,24 +262,68 @@ def update_data_store(content_string, filename, date):
         raise dash.exceptions.PreventUpdate
 
 
+# @callback(
+#     Output("preprocessing-alert", "is_open"),
+#     Output("preprocessing-alert","children"),
+#     Input("data-store", "modified_timestamp"),
+#     State("data-store", "data"),
+#     State("filename-store", "data"),
+# )
+# def check_preprocessing_data(ts, df_dict,filename):
+#     if ts is None:
+#         raise dash.exceptions.PreventUpdate
+#     df_columns = pd.DataFrame.from_dict(data=df_dict, orient='columns').columns
+#     if 'recdial' in df_columns:
+#         return False, []
+#     else:
+#         return True, \
+#             [
+#                 html.Span(filename, className='bold'),
+#                 html.Span("은(는) 아직 전처리가 진행되지 않은 데이터셋이에요. 전처리를 수행하시겠어요?"),
+#                 dbc.Button(
+#                     children="네",
+#                     className="btn-alert",
+#                     id='pp-yes',
+#                 ),
+#                 dbc.Button(
+#                     children="아니오",
+#                     className="btn-alert",
+#                     id='pp-no',
+#                 ),
+#             ],
+
+# @callback(
+#     Output("preprocessing-alert", "is_open"),
+#     [Input("pp-yes", "n_clicks"),
+#     Input("pp-no", "n_clicks"),],
+
+# )
+# def close_pp_alert(ny,nn):
+#     if ny is None or nn is None:
+#         raise dash.exceptions.PreventUpdate
+#     return False
+
+
 @callback(
     Output("pp-data-store", "data"),
-    Input("data-store", "modified_timestamp"),
-    State("data-store", "data"),
-    State("date-store", "data"),
+    [
+        Input("pp-yes", "n_clicks"),
+    ],
+    [
+        State("data-store", "data"),
+    ],
+    prevent_initial_call=True,
 )
-def data_preprocessing(ts, df_dict, date):
-    # ts : 무시하면 됨.
+async def data_preprocessing(n, df_dict):
+    # n : 무시하면 됨.
     # 데이터가 저장된 store 객체의 data 파일을
     # callback 함수에서 Input으로 바로 불러올 수 없기 때문에
     # 우회하기 위해 Store의 파라미터 modified_timestamp를 호출하는 것.
     # ---
     # df_dict : to_dict('record')가 적용된 df. 즉, dict 타입.
-    # ---
-    # date : 무시하면 됨. 데이터가 업로드된 시점을 의미하는 변수.
-    if ts is None:
+    if n is None:
         raise dash.exceptions.PreventUpdate
-
+    raise dash.exceptions.PreventUpdate
     # frontend에 데이터를 업로드 하면 파생변수를 생성하는 전처리 수행하는 코드
     """
     index: 모든 대화의 순서(임의: 데이터의 행 번호)
@@ -287,17 +331,17 @@ def data_preprocessing(ts, df_dict, date):
     is_bot_talk_first: 대화에서 봇이 먼저 시작했는지 여부(1: 봇이 대화 시작, 0: 사람이 대화 시작) // Greetings(goal_type) 존재해야 함
     is_user: 해당 문장이 봇의 대화 인지, 사용자의 대화인지 구분(1: 사람, 0: 봇)
     # TODO: 변수 설명 작성
-    sentiment_star: 
-    sentiment_score: 
+    sentiment_star:
+    sentiment_score:
     deny: 사용자의 추천을 거절했는 지 여부(TRUE: 추천 거절, FALSE: 추천 받아들임)
     recommend_sf: 추천의 성공 여부(Success: 추천 성공, Failure: 추천 실패)
     """
 
     # dict 타입의 df_dict를 dataframe으로 변환
-    df = pd.DataFrame.from_dict(data=df_dict, orient='columns')
+    df = pd.DataFrame.from_dict(data=df_dict, orient="columns")
 
     # recdial 변수 생성
-    df['recdial'] = np.where(df['goal_type'].str.contains('recommendation'), 1, 0)
+    df["recdial"] = np.where(df["goal_type"].str.contains("recommendation"), 1, 0)
 
     # idx 0번째에는 sentence, idx 1번째에는 goal_type
     # user_id번째의 index에 두가지 정보가 저장되어 있음
@@ -306,79 +350,87 @@ def data_preprocessing(ts, df_dict, date):
     user_list = []
 
     for idx in range(len(df)):
-        if df['user_id'].iloc[idx] not in user_list:
-            first_start_list.append([df['sentence'].iloc[idx], df['goal_type'].iloc[idx]])
-            user_list.append(df['user_id'].iloc[idx])
-                
+        if df["user_id"].iloc[idx] not in user_list:
+            first_start_list.append(
+                [df["sentence"].iloc[idx], df["goal_type"].iloc[idx]]
+            )
+            user_list.append(df["user_id"].iloc[idx])
+
     # is_bot_talk_first 변수 생성 // Greetings(goal_type) 존재해야 함
     data = []
     for idx in range(len(df)):
-        if first_start_list[df.iloc[idx]['user_id']][1] == 'Greetings':
+        if first_start_list[df.iloc[idx]["user_id"]][1] == "Greetings":
             data.append(1)
         else:
             data.append(0)
 
-    df['is_bot_talk_first'] = data
-        
+    df["is_bot_talk_first"] = data
+
     # is_user 변수 생성
     is_user = []
     for idx in range(len(df)):
-        if df.iloc[idx]['is_bot_talk_first'] == 0: # 유저가 먼저 대화 시작
-            if df.iloc[idx]['sentence_index'] % 2 == 0:
-                is_user.append(1) # 유저
+        if df.iloc[idx]["is_bot_talk_first"] == 0:  # 유저가 먼저 대화 시작
+            if df.iloc[idx]["sentence_index"] % 2 == 0:
+                is_user.append(1)  # 유저
             else:
-                is_user.append(0) # 봇
-        else: # 봇이 먼저 대화 시작
-            if df.iloc[idx]['sentence_index'] % 2 == 0:
-                is_user.append(0) # 봇
+                is_user.append(0)  # 봇
+        else:  # 봇이 먼저 대화 시작
+            if df.iloc[idx]["sentence_index"] % 2 == 0:
+                is_user.append(0)  # 봇
             else:
-                is_user.append(1) # 유저
+                is_user.append(1)  # 유저
 
-    df['is_user'] = is_user
+    df["is_user"] = is_user
 
     # user와 sentence로 분리
     def split_user_sentence(df):
-        '''
+        """
         user_df, sentence_df를 반환하는 함수
-        '''
+        """
         dfa = df.copy()
-        col_uniq = dfa.groupby(by='user_id').nunique().sum()
+        col_uniq = dfa.groupby(by="user_id").nunique().sum()
         user_num = dfa.user_id.nunique()
         user_col = col_uniq[col_uniq <= user_num].index.to_list()
         sentence_col = [col for col in dfa.columns if col not in user_col]
-        user_df = dfa[['user_id', *(user_col)]]
+        user_df = dfa[["user_id", *(user_col)]]
         sentence_df = dfa[sentence_col]
         return user_df, sentence_df
-    
+
     user_df, sentence_df = split_user_sentence(df)
 
     # 감성 분석
     def add_deny(df):
         dfa = df.copy()
-        pipe = pipeline("text-classification", model="nlptown/bert-base-multilingual-uncased-sentiment")
+        pipe = pipeline(
+            "text-classification",
+            model="nlptown/bert-base-multilingual-uncased-sentiment",
+        )
+
         def score(df):
-            if (df.is_user == 1):
-                star = int(pipe(df.sentence)[0]['label'][0])
+            if df.is_user == 1:
+                star = int(pipe(df.sentence)[0]["label"][0])
                 return int(star < 3)
             else:
                 return np.NaN
-        sent = dfa[['sentence', 'is_user']].apply(score, axis=1)
-        dfa['deny'] = sent
+
+        sent = dfa[["sentence", "is_user"]].apply(score, axis=1)
+        dfa["deny"] = sent
         return dfa
-    
+
     sentence_df = add_deny(sentence_df)
 
     # user에 precision, P@K 추가
     def add_precision(user_df, sentence_df):
-        '''
+        """
         user_df, sentence_df를 입력받아 user_df를 반환
-        '''
+        """
+
         def precision(df, uid):
             tdf = df.copy()
             tdf = tdf[tdf.user_id == uid]
             prec = 1 - sum(tdf.deny) / tdf.shape[0]
             return prec
-        
+
         def precision_K(df, K, uid):
             tdf = df.copy()
             tdf = tdf[(tdf.user_id == uid) & (tdf.is_user)]
@@ -387,54 +439,64 @@ def data_preprocessing(ts, df_dict, date):
             else:
                 prec_k = 1 - sum(tdf.iloc[:K].deny) / K
             return prec_k
-        
+
         dfu = user_df.copy()
-        #precision
-        precisions = {i:precision(sentence_df, i) for i in dfu.user_id}
-        dfu['precision'] = pd.Series(precisions)
-        #P@K
-        for i in range(1,10):
-            prec = {j:precision_K(sentence_df, i, j) for j in dfu.user_id}
-            dfu[f'precision_{i}'] = pd.Series(prec)
-        
+        # precision
+        precisions = {i: precision(sentence_df, i) for i in dfu.user_id}
+        dfu["precision"] = pd.Series(precisions)
+        # P@K
+        for i in range(1, 10):
+            prec = {j: precision_K(sentence_df, i, j) for j in dfu.user_id}
+            dfu[f"precision_{i}"] = pd.Series(prec)
+
         return dfu
-    
+
     user_df = add_precision(user_df, sentence_df)
 
     # recommend_sf 변수 생성
     data = []
     for idx in range(len(sentence_df)):
-        if sentence_df.iloc[idx]['recdial'] == 1:
-            if idx != 0 and sentence_df.iloc[idx-1]['recdial'] == 0 and sentence_df.iloc[idx]['is_user'] == 1:
+        if sentence_df.iloc[idx]["recdial"] == 1:
+            if (
+                idx != 0
+                and sentence_df.iloc[idx - 1]["recdial"] == 0
+                and sentence_df.iloc[idx]["is_user"] == 1
+            ):
                 data.append(np.nan)
                 continue
-            if sentence_df.iloc[idx]['is_user'] == 1 and sentence_df.iloc[idx]['deny']==False:
+            if (
+                sentence_df.iloc[idx]["is_user"] == 1
+                and sentence_df.iloc[idx]["deny"] is False
+            ):
                 data.append("Success")
-            elif sentence_df.iloc[idx]['is_user'] == 1 and sentence_df.iloc[idx]['deny']==True:
+            elif (
+                sentence_df.iloc[idx]["is_user"] == 1
+                and sentence_df.iloc[idx]["deny"] is True
+            ):
                 data.append("Failure")
             else:
                 data.append(np.nan)
         else:
             data.append(np.nan)
 
-    sentence_df['recommend_sf'] = data
+    sentence_df["recommend_sf"] = data
 
     # index 변수 생성
     data = []
-    for idx in range(1, len(sentence_df)+1):
+    for idx in range(1, len(sentence_df) + 1):
         data.append(idx)
 
-    sentence_df['index'] = data
-    
+    sentence_df["index"] = data
+
     # 데이터프레임 열 순서 변경 -> index가 맨 앞으로
     col1 = sentence_df.columns[:-1].to_list()
     col2 = sentence_df.columns[-1:].to_list()
     new_col = col2 + col1
     sentence_df = sentence_df[new_col]
-    
-    sentence_dict = sentence_df.to_dict("records")
-    user_dict = user_df.to_dict("records")
-    return sentence_dict, user_dict  # 전처리가 완료된 데이터셋
+
+    df_pp = df
+    # df_pp = pd.DataFrame()
+    return df_pp.to_dict("records")  # 전처리가 완료된 데이터셋
 
 
 @callback(

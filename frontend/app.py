@@ -5,15 +5,13 @@ from assets import sidebar, header
 
 
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
-font_awesome = (
-    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-)
+pretendard = "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css"
 icons = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"
 external_script = ["https://tailwindcss.com/", {"src": "https://cdn.tailwindcss.com"}]
 
 app = Dash(
     __name__,
-    external_stylesheets=[dbc.themes.BOOTSTRAP, font_awesome, icons],
+    external_stylesheets=[dbc.themes.BOOTSTRAP, pretendard, icons],
     external_scripts=external_script,
     use_pages=True,
     suppress_callback_exceptions=True,
@@ -27,9 +25,7 @@ app.layout = html.Div(
     [
         dcc.Store(id="side_click"),
         dcc.Location(id="url"),
-        # TODO: 데이터 업로드 상태에 따라 sidebar 다르게 표시하기.
         # TODO: 데이터 전처리과정 비동기처리하기.
-        # TODO: Loading State 만들기
         sidebar.sidebar,
         html.Div(
             [

@@ -14,9 +14,8 @@ layout = html.Div(
                 html.Div(
                     children=[
                         html.Div(
-                            "• 데이터셋 개괄",
+                            "데이터셋 개괄",
                             className="title",
-                            style={"margin-bottom": "0.8%"},
                         ),
                     ],
                     className="col-start-1 col-end-5",
@@ -27,7 +26,7 @@ layout = html.Div(
                         html.Div(size, className="card-value"),
                         html.Div("Instances (Rows)"),
                     ],
-                    className="figure-card",
+                    className="figure-card border-clear",
                 ),
                 html.Div(
                     children=[
@@ -35,7 +34,7 @@ layout = html.Div(
                         html.Div(children=[user_count], className="card-value"),
                         html.Div("Users"),
                     ],
-                    className="figure-card",
+                    className="figure-card border-clear",
                 ),
                 html.Div(
                     children=[
@@ -45,7 +44,7 @@ layout = html.Div(
                         html.Div(len(columns), className="card-value"),
                         html.Div("Features (Columns)"),
                     ],
-                    className="figure-card",
+                    className="figure-card border-clear",
                 ),
                 html.Div(
                     children=[
@@ -66,16 +65,16 @@ layout = html.Div(
                             className="grid grid-cols-2 grid-rows-2",
                         ),
                     ],
-                    className="figure-card",
+                    className="figure-card border-clear",
                 ),
             ],
-            className="grid grid-cols-4",
+            className="grid grid-cols-4 section",
         ),
         html.Div(
             children=[
                 html.Div(
                     children=[
-                        html.Div("• 특성 별 분포 시각화", className="card-value title"),
+                        html.Div("대화 특성별 발화 분포 시각화", className="title"),
                     ],
                     className="col-start-1 col-end-7",
                 ),
@@ -88,7 +87,7 @@ layout = html.Div(
                                     #     df_sentence, "goal_type"
                                     # ),
                                     id="pie-chart",
-                                    className="fig",
+                                    className="fig border-clear",
                                 ),
                             ],
                             className="col-start-1 col-end-3 row-start-2 row-end-6",
@@ -100,12 +99,12 @@ layout = html.Div(
                                 ),
                                 html.Div(id="slider-output"),
                             ],
-                            className="col-start-3 col-end-7 row-start-2 row-end-3 fig p-6",
+                            className="col-start-3 col-end-7 row-start-2 row-end-3 fig border-clear p-6",
                         ),
                         html.Div(
                             dcc.Graph(
                                 # figure=figure.draw_bar_chart(df_user, "wday"),
-                                className="fig",
+                                className="fig border-clear",
                                 id="bar-chart",
                             ),
                             className="col-start-3 col-end-7 row-start-3 row-end-7",
@@ -152,35 +151,40 @@ layout = html.Div(
                                 ],
                                 value="goal_type",
                                 id="column-radio",
-                                className="fig p-4 column-radio",
+                                className="fig border-clear p-3 column-radio",
                             ),
                             className="col-start-1 col-end-3 row-start-6 row-end-7",
                         ),
                     ],
-                    className="col-start-1 col-end-7 row-start-2 row-end-4 grid-cols-6 grid grid-row-6",
-                ),
-                html.Div(
-                    children=[
-                        html.Div("• 대화 의도 분포 시각화", className="card-value title"),
-                    ],
-                    className="col-start-1 col-end-7",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_line_chart(df_sentence, "goal_type"),
-                        className="fig",
-                    ),
-                    className="col-start-1 col-end-5",
-                ),
-                html.Div(
-                    dcc.Graph(
-                        figure=figure.draw_pie_chart(df_sentence, "goal_topic"),
-                        className="fig",
-                    ),
-                    className="col-start-5 col-end-7",
+                    className="grid-cols-6 grid grid-row-6",
                 ),
             ],
-            className="grid grid-cols-6",
+            className="section",
+        ),
+        html.Div(
+            children=[
+                html.Div("대화 진행에 따른 발화 의도 분포 시각화", className="title"),
+                html.Div(
+                    [
+                        html.Div(
+                            dcc.Graph(
+                                figure=figure.draw_line_chart(df_sentence, "goal_type"),
+                                className="fig border-clear",
+                            ),
+                            className="col-start-1 col-end-5",
+                        ),
+                        html.Div(
+                            dcc.Graph(
+                                figure=figure.draw_pie_chart(df_sentence, "goal_topic"),
+                                className="fig border-clear",
+                            ),
+                            className="col-start-5 col-end-7",
+                        ),
+                    ],
+                    className="grid grid-cols-6",
+                ),
+            ],
+            className="section",
         ),
         html.Div(
             "Loading...",
