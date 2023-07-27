@@ -7,7 +7,7 @@ header = html.Div(
         dbc.Navbar(
             children=[
                 html.H1(
-                    children=["Select Dataset🗃️ →"],
+                    children=["Select Dataset🗃️"],
                     style={
                         "margin-left": "3%",
                         "font-weight": "bold",

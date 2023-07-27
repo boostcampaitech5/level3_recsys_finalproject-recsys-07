@@ -112,16 +112,25 @@
     color:rgb(29, 29, 29);
 }
 
+.export {
+    border: 1px solid #1A2434;
+    border-radius: 5px;
+    padding: 10%;
+    text-align: center;
+    margin: 10%;
+    font-size: 15px;
+}
+
 .section {
   background-color: white;
   border-radius: 10px;
   box-shadow: rgb(215 218 221) 2px 2px 10px 1px;
-  margin: 2vh 3vw;
+  margin: 3vh 3vw;
   padding: 20px;
 }
 
 .user-text {
-  right: 5vw;
+  right: 6vw;
   position:fixed;
   display: flex;
   align-items: center;
@@ -187,7 +196,8 @@
 
 .data-selector {
     min-width:20vw;
-    padding: 1vh 0vw 1vh 5vw;
+    position: fixed;
+    padding: 1vh 0vw 1vh 2vw;
     border-radius: 0px;
 }
 
@@ -241,7 +251,7 @@
   border-radius: 5px;
   padding: 10%;
   text-align: center;
-  margin: 3% 10% 3% 10%;
+  margin: 10%;
   font-size: 15px;
   display: flex;
   flex-wrap: wrap;
