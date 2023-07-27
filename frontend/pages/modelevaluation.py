@@ -1,6 +1,17 @@
 import dash
 from dash import dash_table, html, dcc, callback, Input, Output
-from assets.data import get_model_eval
+from assets.data import (
+    get_model_eval,
+    kbrd_result_conversation,
+    kgsf_result_conversation,
+    redial_result_conversation,
+    insp_result_recommendation,
+    kbrd_result_recommendation,
+    redial_result_recommendation,
+    kgsf_result_recommendation,
+    gen_metric,
+    rec_metric,
+)
 import plotly.graph_objects as go
 
 dash.register_page(__name__)
@@ -61,6 +72,15 @@ layout = html.Div(
                             page_size=10,
                         ),
                     ],
+                ),
+                dcc.RadioItems(
+                    options=[
+                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
+                        for m in rec_metric
+                    ],
+                    value="",
+                    id="rec-metric-radio",
+                    className="column-radio",
                 ),
                 dcc.Graph(
                     id="rec-metric-figure",
@@ -124,6 +144,15 @@ layout = html.Div(
                         "transition": "all 0.5s"
                     },
                 ),
+                dcc.RadioItems(
+                    options=[
+                        {"label": html.Span(m, className="p-3 text-lg"), "value": m}
+                        for m in gen_metric
+                    ],
+                    value="",
+                    id="gen-metric-radio",
+                    className="column-radio",
+                ),
                 dcc.Graph(
                     id="gen-metric-figure",
                     className="fig",
@@ -134,100 +163,6 @@ layout = html.Div(
     ],
     className="content no-scrollbar",
 )
-
-rec_metric = [
-    "hit@1",
-    "hit@10",
-    "hit@50",
-    "mrr@1",
-    "mrr@10",
-    "mrr@50",
-    "ndcg@1",
-    "ndcg@10",
-    "ndcg@50",
-]
-conv_metric = [
-    "bleu@1",
-    "bleu@2",
-    "bleu@3",
-    "bleu@4",
-    "dist@1",
-    "dist@2",
-    "dist@3",
-    "dist@4",
-]
-
-kgsf_raw = [eval(t) for t in open("KGSF")]
-
-kgsf_result_recommendation = {rm: list() for rm in rec_metric}
-kgsf_result_conversation = {rm: list() for rm in conv_metric}
-
-for kgsf in kgsf_raw:
-    # recommendation
-    if "hit@1" in kgsf:
-        for k in kgsf:
-            if k in kgsf_result_recommendation:
-                kgsf_result_recommendation[k].append(kgsf[k])
-
-    # conversation
-    if "bleu@1" in kgsf:
-        for k in kgsf:
-            if k in kgsf_result_conversation:
-                kgsf_result_conversation[k].append(kgsf[k])
-
-kbrd_raw = [eval(t) for t in open("KBRD")]
-
-kbrd_result_recommendation = {rm: list() for rm in rec_metric}
-kbrd_result_conversation = {rm: list() for rm in conv_metric}
-
-for kbrd in kbrd_raw:
-    # recommendation
-    if "hit@1" in kbrd:
-        for k in kbrd:
-            if k in kbrd_result_recommendation:
-                kbrd_result_recommendation[k].append(kbrd[k])
-
-    # conversation
-    if "bleu@1" in kbrd:
-        for k in kbrd:
-            if k in kbrd_result_conversation:
-                kbrd_result_conversation[k].append(kbrd[k])
-
-insp_raw = [eval(t) for t in open("insp")]
-
-insp_result_recommendation = {rm: list() for rm in rec_metric}
-insp_result_conversation = {rm: list() for rm in conv_metric}
-
-for insp in insp_raw:
-    # recommendation
-    if "hit@1" in insp:
-        for k in insp:
-            if k in insp_result_recommendation:
-                insp_result_recommendation[k].append(insp[k])
-
-    # conversation
-    if "bleu@1" in insp:
-        for k in insp:
-            if k in insp_result_conversation:
-                insp_result_conversation[k].append(insp[k])
-
-redial_raw = [eval(t) for t in open("Redial")]
-
-redial_result_recommendation = {rm: list() for rm in rec_metric}
-redial_result_conversation = {rm: list() for rm in conv_metric}
-
-for redial in redial_raw:
-    # recommendation
-    if "hit@1" in redial:
-        for k in redial:
-            if k in redial_result_recommendation:
-                redial_result_recommendation[k].append(redial[k])
-
-    # conversation
-    if "bleu@1" in redial:
-        for k in redial:
-            if k in redial_result_conversation:
-                redial_result_conversation[k].append(redial[k])
 
 
 @callback(
