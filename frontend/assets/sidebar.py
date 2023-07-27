@@ -4,6 +4,7 @@ import dash_bootstrap_components as dbc
 import io
 import pandas as pd
 import numpy as np
+from transformers import pipeline
 
 sidebar_show = [
     dbc.Nav(
@@ -335,43 +336,105 @@ def data_preprocessing(ts, df_dict, date):
 
     df['is_user'] = is_user
 
-    # TODO: 감성 분석
+    # user와 sentence로 분리
+    def split_user_sentence(df):
+        '''
+        user_df, sentence_df를 반환하는 함수
+        '''
+        dfa = df.copy()
+        col_uniq = dfa.groupby(by='user_id').nunique().sum()
+        user_num = dfa.user_id.nunique()
+        user_col = col_uniq[col_uniq <= user_num].index.to_list()
+        sentence_col = [col for col in dfa.columns if col not in user_col]
+        user_df = dfa[['user_id', *(user_col)]]
+        sentence_df = dfa[sentence_col]
+        return user_df, sentence_df
+    
+    user_df, sentence_df = split_user_sentence(df)
 
+    # 감성 분석
+    def add_deny(df):
+        dfa = df.copy()
+        pipe = pipeline("text-classification", model="nlptown/bert-base-multilingual-uncased-sentiment")
+        def score(df):
+            if (df.is_user == 1):
+                star = int(pipe(df.sentence)[0]['label'][0])
+                return int(star < 3)
+            else:
+                return np.NaN
+        sent = dfa[['sentence', 'is_user']].apply(score, axis=1)
+        dfa['deny'] = sent
+        return dfa
+    
+    sentence_df = add_deny(sentence_df)
+
+    # user에 precision, P@K 추가
+    def add_precision(user_df, sentence_df):
+        '''
+        user_df, sentence_df를 입력받아 user_df를 반환
+        '''
+        def precision(df, uid):
+            tdf = df.copy()
+            tdf = tdf[tdf.user_id == uid]
+            prec = 1 - sum(tdf.deny) / tdf.shape[0]
+            return prec
+        
+        def precision_K(df, K, uid):
+            tdf = df.copy()
+            tdf = tdf[(tdf.user_id == uid) & (tdf.is_user)]
+            if tdf.shape[0] <= K:
+                prec_k = 1 - sum(tdf.deny) / tdf.shape[0]
+            else:
+                prec_k = 1 - sum(tdf.iloc[:K].deny) / K
+            return prec_k
+        
+        dfu = user_df.copy()
+        #precision
+        precisions = {i:precision(sentence_df, i) for i in dfu.user_id}
+        dfu['precision'] = pd.Series(precisions)
+        #P@K
+        for i in range(1,10):
+            prec = {j:precision_K(sentence_df, i, j) for j in dfu.user_id}
+            dfu[f'precision_{i}'] = pd.Series(prec)
+        
+        return dfu
+    
+    user_df = add_precision(user_df, sentence_df)
 
     # recommend_sf 변수 생성
     data = []
-    for idx in range(len(df)):
-        if df.iloc[idx]['recdial'] == 1:
-            if idx != 0 and df.iloc[idx-1]['recdial'] == 0 and df.iloc[idx]['is_user'] == 1:
+    for idx in range(len(sentence_df)):
+        if sentence_df.iloc[idx]['recdial'] == 1:
+            if idx != 0 and sentence_df.iloc[idx-1]['recdial'] == 0 and sentence_df.iloc[idx]['is_user'] == 1:
                 data.append(np.nan)
                 continue
-            if df.iloc[idx]['is_user'] == 1 and df.iloc[idx]['deny']==False:
+            if sentence_df.iloc[idx]['is_user'] == 1 and sentence_df.iloc[idx]['deny']==False:
                 data.append("Success")
-            elif df.iloc[idx]['is_user'] == 1 and df.iloc[idx]['deny']==True:
+            elif sentence_df.iloc[idx]['is_user'] == 1 and sentence_df.iloc[idx]['deny']==True:
                 data.append("Failure")
             else:
                 data.append(np.nan)
         else:
             data.append(np.nan)
 
-    df['recommend_sf'] = data
+    sentence_df['recommend_sf'] = data
 
     # index 변수 생성
     data = []
-    for idx in range(1, len(df)+1):
+    for idx in range(1, len(sentence_df)+1):
         data.append(idx)
 
-    df['index'] = data
+    sentence_df['index'] = data
     
     # 데이터프레임 열 순서 변경 -> index가 맨 앞으로
-    col1 = df.columns[:-1].to_list()
-    col2 = df.columns[-1:].to_list()
+    col1 = sentence_df.columns[:-1].to_list()
+    col2 = sentence_df.columns[-1:].to_list()
     new_col = col2 + col1
-    df = df[new_col]
+    sentence_df = sentence_df[new_col]
     
-    df_pp = df
-    # df_pp = pd.DataFrame()
-    return df_pp.to_dict("records")  # 전처리가 완료된 데이터셋
+    sentence_dict = sentence_df.to_dict("records")
+    user_dict = user_df.to_dict("records")
+    return sentence_dict, user_dict  # 전처리가 완료된 데이터셋
 
 
 @callback(
