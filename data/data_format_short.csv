@@ -1,0 +1,29 @@
+열 이름,데이터 타입,설명,예시
+user_id,integer,각 사용자의 고유번호,23
+user_profile_{feature},{feature}의 dtype,사용자의 정보(필요한 만큼 생성)," user_profile_age_range
+user_profile_name
+user_profile_residence
+user_profile_accepted_food
+user_profile_accepted_movies
+user_profile_accepted_music
+user_profile_rejected_music
+user_profile_gender
+user_profile_accepted_celebrities
+user_profile_accepted_movie
+user_profile_reject
+user_profile_rejected_movies
+user_profile_occupation
+user_profile_accepted_poi
+user_profile_favorite_news
+user_profile_accepted_news
+user_profile_poi"
+time,time,발화가 이루어진 시각,12:00:00 PM
+place,String,발화가 이루어진 장소,at school
+date,date,발화가 이루어진 날짜,2018-10-19
+topic,String,발화의 상황 주제,Academic setback
+wday,String,발화가 이루어진 요일,Wednesday
+sentence_index,integer,한 대화 내 발화의 순번,7
+sentence,String,발화 문장의 내용,Who is the leading actor of the movie Left Right Love Destiny?
+goal_topic,String,발화 목적 키워드,Cecilia Cheung
+goal_type,String,발화 목적,Chat about stars
+knowledge,String,발화에 쓰인 배경지식 키워드,"Cecilia Cheung, Stars, Left Right Love Destiny"

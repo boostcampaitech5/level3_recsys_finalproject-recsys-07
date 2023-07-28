@@ -162,7 +162,6 @@ layout = html.Div(
                                     ],
                                     id="conv-models",
                                     export_format="csv",
-
                                     sort_action="native",
                                     style_cell={
                                         "textAlign": "left",
