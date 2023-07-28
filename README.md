@@ -1,6 +1,6 @@
 # DASHMON
 대화형 추천시스템의 효과적인 모니터링을 위한 시각화 도구  
-<img src = "https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/c75b0b35-8deb-456b-bd63-c9d0e8a7318e" width="80%" height="80%">
+<img src = "./images/logo.png" width="80%" height="80%">
    
 ## 프로젝트 소개
 
@@ -17,30 +17,30 @@ DashMon은 챗봇으로 대표되는 대화형 추천시스템을 운영할 때,
 > 시스템과 사용자 간의 자연어 대화를 통해 사용자의 흥미와 선호를 파악하고 이를 추천에 활용하여 사용자에게 보다 적합한 추천 결과를 제공하는 시스템입니다.  
 
 ## 서비스 아키텍쳐
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/3426e77d-724d-4d1d-a19f-3c3c1b6d3fdf)
+![서비스 아키텍쳐](./images/architecture.png)
 
 ## DashMon 웹 페이지 기능
 DashMon은 크게 Overview, Instance, Data Analysis, Model Evaluation 페이지로 구성됩니다.
 #### 1. Overview 페이지
 - 대상 데이터셋의 여러 속성들과 분포등을 확인할 수 있으며, 페이지 중앙에 위치한 Slider를 조정하여 대화 시점에 따른 데이터의 분포를 확인할 수 있습니다.
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/32de14a9-590a-4c17-979b-65291275391c)
+![Overview](./images/overview1.png)
 
 #### 2. Instance 페이지
 - 데이터셋을 직접 확인할 수 있습니다. DuRecDial2.0 데이터셋의 경우 각 대화마다 User Profile 정보가 함께 주어지는데, 해당 내용을 편하게 확인할 수 있도록 유저 정보와 대화 정보를 구분하여 제공합니다.
 - 데이터를 확인할 때, 열을 선택할 수 있어 필요한 정보만 확인할 수 있습니다.
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/6bb80bec-a35a-4657-8f31-eaf1af05ee55)
+![Instance](./images/instance1.png)
 
 #### 3. Data Analysis 페이지
 - Overview에서 얻지 못한 심층적인 정보를 얻을 수 있습니다.
 - 데이터셋에 포함되는 추천의 효과 및 효율, 대화형 데이터의 사용 품질 등을 막대 그래프와 그래프 자료구조 시각화를 통해 확인할 수 있으며, 사용자 임베딩 시각화를 확인할 수 있습니다.
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/2a73cb6f-389f-4df8-a5a4-999eb948699a)
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/89eb664d-f334-4eb5-9216-590e06b9d6b0)
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/6bde4717-3791-4ee7-83df-b46393a4df14)
+![Data Analysis](./images/dataanalysis1.png)
+![Data Analysis](./images/dataanalysis2.png)
+![Data Analysis](./images/dataanalysis3.png)
 
 #### 4. Model Evalution 페이지
 - 데이터셋을 CRS모델 학습에 활용했을 때의 정량적인 성능 지표를 확인할 수 있으며, 지표에 따른 모델별 순위를 확인할 수 있습니다.
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/c1ce0ddf-4277-445b-8ce6-60f399c94e79)
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-07/assets/86915357/700a9492-03d0-414f-8e80-bbc59a7cf2dc)
+![Model Evalution](./images/modeleval1.png)
+![Model Evalution](./images/modeleval2.png)
 
 ## DashMon 사용법
 1. DashMon 설치    
