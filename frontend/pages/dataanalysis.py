@@ -89,6 +89,29 @@ layout = html.Div(
                                                 "justify-content": "space-around",
                                             },
                                         ),
+                                        html.Div(
+                                            [
+                                                html.Span(" 채팅인 경우 "),
+                                                html.Span(
+                                                    "초록색", className="bg-green-300"
+                                                ),
+                                                html.Span("은 사용자, "),
+                                                html.Span(
+                                                    "보라색", className="bg-purple-300"
+                                                ),
+                                                html.Span("은 봇을 의미하고, "),
+                                                html.Br(),
+                                                html.Span(
+                                                    "검정색", className="bg-gray-400"
+                                                ),
+                                                html.Span("은 대화의 시작,"),
+                                                html.Span(
+                                                    "회색", className="bg-gray-200"
+                                                ),
+                                                html.Span("은 대화의 끝을 의미합니다. "),
+                                            ],
+                                            className="fig",
+                                        ),
                                         # 추천 효율 graph
                                         dcc.Graph(
                                             id="da-graph",
