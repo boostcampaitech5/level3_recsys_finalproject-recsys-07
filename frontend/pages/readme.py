@@ -5,6 +5,20 @@ from assets.data import data_format_short
 
 dash.register_page(__name__)
 
+def style_bold(data):
+    styles = []
+    for c in range(1, len(df.columns)):
+        cell_style = {
+            "if": {
+                "filter_query": f"{{{df.columns[c]}}} = {df.iloc[:,c].max()}",
+                "column_id": df.columns[c],
+            },
+            "font-weight": "bold",
+            "background-color": "#ffd6f1",
+        }
+        styles.append(cell_style)
+    return styles
+
 layout = html.Div(
     children=[
         html.Div(
@@ -22,7 +36,7 @@ layout = html.Div(
                     children=[
                         "DashMon에 대화형 추천시스템의 로그데이터를 업로드하여 정량적, 정성적으로 분석할 수 있습니다.",
                         html.Br(),
-                        "DashMon을 효과적으로 이용하기 위해 아래와 같은 포맷을 지켜 업로드해주세요.",
+                        "DashMon을 효과적으로 이용하기 위해 아래 bold 처리된 feature를 꼭 포함해주세요.",
                     ],
                     style={"margin-left": "5%", "line-height": "200%"},
                 ),
