@@ -4,7 +4,7 @@
    
 ## 프로젝트 소개
 
-최근 ChatGPT, AskUP 등의 대화형 AI가 각광받으면서 **대화형 추천시스템(Conversational Recommender System)**에 대한 기대와 수요가 높아지고 있습니다.
+최근 ChatGPT, AskUP 등의 대화형 AI가 각광받으면서 **대화형 추천시스템**(Conversational Recommender System)에 대한 기대와 수요가 높아지고 있습니다.
 
 DashMon은 챗봇으로 대표되는 대화형 추천시스템을 운영할 때,
 그 효과와 효율, 품질을 시각화하는 대시보드를 제공하여 시스템 개선을 돕습니다.
@@ -53,15 +53,13 @@ DashMon은 챗봇으로 대표되는 대화형 추천시스템을 운영할 때,
     curl -sSL https://install.python-poetry.org | python3 -
     echo 'export PATH="/opt/ml/.local/bin:$PATH"' >> /etc/bash.bashrc
     ```
-    가상환경 활성화: \
-    ```poetry shell```\
-    기록된 패키지 설치:\
-    ```poetry install```\
-    frontend 폴더로 이동: \
-    ```cd frontend```\
-    대시보드 실행: \
-    ```python app.py```
-     
+    가상환경 활성화 및 대시보드 실행:
+    ```
+    poetry shell
+    poetry install
+    cd frontend
+    python app.py
+    ```
 
 ## 팀원 구성 및 역할
 | [<img src="https://github.com/ji-yunkim.png" width="100px">](https://github.com/ji-yunkim) | [<img src="https://github.com/YirehEum.png" width="100px">](https://github.com/YirehEum) | [<img src="https://github.com/osmin625.png" width="100px">](https://github.com/osmin625) | [<img src="https://github.com/Grievle.png" width="100px">](https://github.com/Grievle) | [<img src="https://github.com/HannahYun.png" width="100px">](https://github.com/HannahYun) |
