@@ -118,7 +118,7 @@ def perflexity():
 def ngram():
     group_labels = ["Distinct N-gram"]  # name of the dataset
 
-    fig = ff.create_distplot([d_array], group_labels, bin_size=0.05)
+    fig = ff.create_distplot([d_array], group_labels, bin_size=0.005)
     fig.update_layout(
         autosize=True,
         # width=800,

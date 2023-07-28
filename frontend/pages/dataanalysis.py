@@ -302,9 +302,9 @@ def draw_graph(
     for i in range(cdf.shape[0]):
         log = cdf.iloc[i]
         if log.is_user:
-            color_map.append("blue")
+            color_map.append("green")
         else:
-            color_map.append("red")
+            color_map.append("purple")
         G.add_node(i)
         if i == 0:
             continue
