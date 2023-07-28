@@ -128,6 +128,7 @@ layout = html.Div(
         "flex-direction": "column",
         "height": "93vh",
         "overflow": "scroll",
+        "margin": "5vh 4vw",
     },
-    className="no-scrollbar",
+    className="no-scrollbar content",
 )
