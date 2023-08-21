@@ -1,5 +1,5 @@
 # DASHMON
-대화형 추천시스템의 효과적인 모니터링을 위한 시각화 도구  
+### 대화형 추천시스템의 효과적인 모니터링을 위한 시각화 도구  
 <img src = "./images/logo.png" width="80%" height="80%">
 
 ![project record](./images/final_record.gif)
