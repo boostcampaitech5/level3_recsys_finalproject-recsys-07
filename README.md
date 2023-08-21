@@ -1,7 +1,9 @@
 # DASHMON
 대화형 추천시스템의 효과적인 모니터링을 위한 시각화 도구  
 <img src = "./images/logo.png" width="80%" height="80%">
-   
+
+![project record](./images/final_record.gif)
+
 ## 프로젝트 소개
 
 최근 ChatGPT, AskUP 등의 대화형 AI가 각광받으면서 **대화형 추천시스템**(Conversational Recommender System)에 대한 기대와 수요가 높아지고 있습니다.
@@ -15,9 +17,6 @@ DashMon은 챗봇으로 대표되는 대화형 추천시스템을 운영할 때,
 관리자들은 DashMon을 통해 데이터에 대한 정보를 얻고 LLM 및 추천시스템 모델 개선 여부를 결정하는 데 도움을 얻을 수 있습니다.
 > **대화형 추천시스템이란?**\
 > 시스템과 사용자 간의 자연어 대화를 통해 사용자의 흥미와 선호를 파악하고 이를 추천에 활용하여 사용자에게 보다 적합한 추천 결과를 제공하는 시스템입니다.  
-## 시연 영상
-
-![project record](./images/final_record.gif)
 
 ## 서비스 아키텍쳐
 ![서비스 아키텍쳐](./images/architecture.png)
