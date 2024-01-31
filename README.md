@@ -18,9 +18,6 @@ DashMon은 챗봇으로 대표되는 대화형 추천시스템을 운영할 때,
 > **대화형 추천시스템이란?**\
 > 시스템과 사용자 간의 자연어 대화를 통해 사용자의 흥미와 선호를 파악하고 이를 추천에 활용하여 사용자에게 보다 적합한 추천 결과를 제공하는 시스템입니다.  
 
-## 서비스 아키텍쳐
-![서비스 아키텍쳐](./images/architecture.png)
-
 ## DashMon 웹 페이지 기능
 DashMon은 크게 Overview, Instance, Data Analysis, Model Evaluation 페이지로 구성됩니다.
 #### 1. Overview 페이지
